@@ -115,9 +115,9 @@ analytics:
 author:
   name             : "Juhyun Jung (JJ)"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
+  bio              : "Mechanical Eng. and AI student"
   location         : "Chicago, IL"
-  email            :
+  email            : jjung28@hawk.iit.edu
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
@@ -136,7 +136,7 @@ author:
       # url: "https://github.com/"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
-      # url: "https://instagram.com/"
+      # url: "https://www.instagram.com/juhyunn0/"
 
 # Site Footer
 footer:
