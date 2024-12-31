@@ -17,11 +17,11 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 # Site Settings
 locale                   : "en-US"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Site Title"
+title                    : "Juhyun Jung (JJ)"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Your Name"
-description              : "An amazing website."
+name                     : "Juhyun Jung (JJ)"
+description              : "I am a senior student in Mechanical Engineering at IIT, and I will be graduating in December 2024. I have worked as an Undergraduate Research Assistant under Professors Goh Jaesung, Abhinav Bhushan, and Yan Yan, and I am currently working on my thesis.I am a student with a background in Mechanical Engineering and AI, with a strong interest in interdisciplinary research."
 url                      : "https://Juhyunn0.github.io"# the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "Juhyunn0/Juhyunn0.github.io"# GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
