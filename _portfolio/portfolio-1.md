@@ -4,4 +4,14 @@ excerpt: "Understanding the varied economic impact of Tax Increment Financing (T
 collection: portfolio
 ---
 
-This is an item in your portfolio. It can be have images or nice text. If you name the file .md, it will be parsed as markdown. If you name the file .html, it will be parsed as HTML. 
+---
+title: "Poster Presentation [July 2024] | Chicago, IL"
+excerpt: "Autonomous control using automated image analysis <br/><img src='/files/Presentation.jpeg'> 
+collection: portfolio
+---
+
+---
+title: "Awards [Dec 2021] | Seoul, Korea"
+excerpt: "Autonomous Mobility Competition - Vision Lane Following Project <br/><img src='/files/VLF_.jpeg'> 
+collection: portfolio
+---
