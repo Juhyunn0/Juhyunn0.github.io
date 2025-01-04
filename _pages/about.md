@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Juhyun Jung (JJ)"
+title: "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀Juhyun Jung (JJ)"
 author_profile: true
 redirect_from: 
   - /about/
