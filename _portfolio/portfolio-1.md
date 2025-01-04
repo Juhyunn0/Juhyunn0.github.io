@@ -1,6 +1,6 @@
 ---
-title: "Portfolio item number 1"
-excerpt: "Short description of portfolio item number 1<br/><img src='/images/500x300.png'>"
+title: "Poster Presentation / Illinois Institute of Technology | Chicago, IL"
+excerpt: "Understanding the varied economic impact of Tax Increment Financing (TIF) May 2024 <br/><img src='/files/TIF_1.jpeg'> <br/><imgsrc='/files/TIF_2.jpeg"
 collection: portfolio
 ---
 
