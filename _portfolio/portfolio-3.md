@@ -1,5 +1,5 @@
 ---
-title: "2. Automated decision-making system of scheduling"
+title: "Automated decision-making system of scheduling"
 excerpt: Jan 2023 – April 2023, Chicago, IL
 
 ---
