@@ -4,7 +4,7 @@ excerpt: Spring 2023, Chicago, IL
 
 ---
  
-<img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> : [Sudoku-Solver](https://github.com/Juhyunn0/Sudoku-Solver)
+<img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> : [Tic-Tac-Toe-solver](https://github.com/Juhyunn0/Tic-Tac-Toe-solver)
 
 This project was completed as part of the CS480 course at the Illinois Institute of Technology.   
 Tic-tac-toe solver is a Python program designed to play and solve the classic game of tic-tac-toe. It employs various algorithms and strategies to provide an optimal gameplay experience, whether playing against a human opponent or autonomously solving the game.
