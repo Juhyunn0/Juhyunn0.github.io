@@ -1,6 +1,6 @@
 ---
 title: "1. Understanding the varied economic impact of Tax Increment Financing (TIF)"
-excerpt: May 2024  Chicago, IL
+excerpt: Jan 2024 – May 2024  Chicago, IL
 
 ---
 Advisor: [Dr. Robert Ellis](https://math.iit.edu/~rellis/) (IIT Applied Math)   
