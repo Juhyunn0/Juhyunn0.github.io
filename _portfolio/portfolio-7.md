@@ -1,6 +1,6 @@
 ---
 title: "Naive Bayes Model for Yelp Star Rating Prediction"
-excerpt: Spring 2023, Chicago, IL
+excerpt: Fall 2023, Chicago, IL
 
 ---
  
