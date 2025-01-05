@@ -1,8 +1,8 @@
 ---
-title: Multimodality implementation 
+title: "Multimodality implementation "
+excerpt:
 
 ---
-
 
 
 # Multimodality
