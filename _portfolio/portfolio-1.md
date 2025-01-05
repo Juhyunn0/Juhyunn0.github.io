@@ -1,6 +1,6 @@
 ---
 title: "#### 1. Understanding the varied economic impact of Tax Increment Financing (TIF)"
-excerpt: May 2024, Chicago, IL
+excerpt: Advisor: Dr. Robert Ellis (IIT Applied Math), Consulting Expert: Tom Tresser (CivicLab Co-Founder)
 
 ---
 
