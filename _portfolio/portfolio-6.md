@@ -1,6 +1,6 @@
 ---
 title: "Tic-Tac-Toe-solver"
-excerpt: Spring 2023, Chicago, IL
+excerpt: Fall 2023, Chicago, IL
 
 ---
  
