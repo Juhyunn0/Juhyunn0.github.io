@@ -1,5 +1,5 @@
 ---
-title: "3. Autonomous Mobility Competition - Vision Lane Following Project"
+title: "Autonomous Mobility Competition - Vision Lane Following Project"
 excerpt: Sep 2021 – Dec 2021  Seoul, South Korea
 
 ---
@@ -10,3 +10,4 @@ lane following algorithm, utilizing advanced image processing and PID control to
 improved model car performance.
 
 <br/><img src='/files/VLF_.jpeg'>
+<br/><img src='/files/VLF_2.jpeg'>
