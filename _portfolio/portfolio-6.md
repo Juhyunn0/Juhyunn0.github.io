@@ -1,6 +1,6 @@
 ---
 title: "Autonomous Mobility Competition - Vision Lane Following Project"
-excerpt: Sep 2021 – Dec 2021  Seoul, South Korea
+excerpt: Sep 2021 – Dec 2021,  Seoul, South Korea
 
 ---
 
