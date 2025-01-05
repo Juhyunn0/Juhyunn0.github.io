@@ -9,6 +9,7 @@ excerpt: Spring 2023, Chicago, IL
 This project was completed as part of the CS480 course at the Illinois Institute of Technology.   
 Naive Bayes Model for Yelp Star Rating Prediction  
 
+Dataset : [Yelp dataset](https://www.kaggle.com/datasets/yelp-dataset/yelp-dataset) from Kaggle
 Overview  
   
 The Naive Bayes model developed in this project predicts star ratings for Yelp reviews based on their content. Leveraging the Naive Bayes algorithm, a popular choice for text classification tasks, the model analyzes review text and assigns a star rating ranging from 1 to 5.  
