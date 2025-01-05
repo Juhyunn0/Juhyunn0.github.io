@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-I am currently applying for a Master's program in Mechanical Engineering, having studied Mechanical Engineering and AI at Illinois Institute of Technology. During my undergraduate studies, I was advised by [Prof. Yan](https://tomyan555.github.io) on deep multimodal learning, [Prof. Bhushan](https://sites.google.com/iit.edu/bhushan-research-group/people) on control systems with Reinforcement learning, and [Prof. Koh](http://most.ajou.ac.kr) on Dielectric Elastomer actuator(DEA) research.
+<p style="font-family: Arial, sans-serif;">이 텍스트는 Arial 글꼴입니다.</p> I am currently applying for a Master's program in Mechanical Engineering, having studied Mechanical Engineering and AI at Illinois Institute of Technology. During my undergraduate studies, I was advised by [Prof. Yan](https://tomyan555.github.io) on deep multimodal learning, [Prof. Bhushan](https://sites.google.com/iit.edu/bhushan-research-group/people) on control systems with Reinforcement learning, and [Prof. Koh](http://most.ajou.ac.kr) on Dielectric Elastomer actuator(DEA) research.
 
 I previously received my dual B.S. in Mechanical Engineering from Ajou University and Illinois Institute of Technology, where I developed a strong foundation in both mechanical engineering and artificial intelligence.
 
