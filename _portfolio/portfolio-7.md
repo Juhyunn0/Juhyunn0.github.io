@@ -6,7 +6,7 @@ excerpt: Spring 2024, Chicago, IL
  
 <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> : [Naive-Bayes-Model-for-Yelp-Star-Rating-Prediction](https://github.com/Juhyunn0/Naive-Bayes-Model-for-Yelp-Star-Rating-Prediction)
 
-This project was completed as part of the CS480 course at the Illinois Institute of Technology.   
+This project was completed as part of the CS481 course at the Illinois Institute of Technology.   
 # Naive Bayes Model for Yelp Star Rating Prediction  
 
 ## Dataset : [Yelp dataset](https://www.kaggle.com/datasets/yelp-dataset/yelp-dataset) from Kaggle
