@@ -1,6 +1,6 @@
 ---
 title: "Autonomous control using automated image analysis"
-excerpt: May 2024 – Present  Chicago, IL
+excerpt: May 2024 – Present,  Chicago, IL
 
 ---
 Advisor: [Prof. Yan](https://tomyan555.github.io) 
