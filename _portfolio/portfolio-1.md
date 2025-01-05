@@ -1,5 +1,5 @@
 ---
-title: "1. Understanding the varied economic impact of Tax Increment Financing (TIF)"
+title: "Understanding the varied economic impact of Tax Increment Financing (TIF)"
 excerpt: Jan 2024 – May 2024  Chicago, IL
 
 ---
