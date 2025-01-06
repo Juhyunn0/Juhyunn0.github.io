@@ -5,9 +5,8 @@ excerpt:
 ---
 
 
-# Multimodality
-
-# Scene Classification: Images and Audio
+## Multimodality  
+## Scene Classification: Images and Audio
 
 This project aims to develop a scene classification model that utilizes both image and audio data, leveraging a dataset from Kaggle. You can find the dataset [here](https://www.kaggle.com/datasets/birdy654/scene-classification-images-and-audio).
 
