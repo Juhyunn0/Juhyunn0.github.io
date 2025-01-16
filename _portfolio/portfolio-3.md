@@ -1,5 +1,5 @@
 ---
-title: "Autonomous control using automated image analysis"
+title: "Multimodality"
 excerpt: May 2024 – Present,  Chicago, IL
 
 ---
