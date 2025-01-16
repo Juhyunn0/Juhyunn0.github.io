@@ -1,6 +1,6 @@
 ---
 title: "Multimodality implementation "
-excerpt:
+excerpt: ⠀⠀⠀⠀⠀⠀
 
 ---
 
