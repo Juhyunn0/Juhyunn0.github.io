@@ -11,7 +11,6 @@ I am currently applying for a Master's program in Mechanical Engineering, having
 
 I previously received my dual B.S. in Mechanical Engineering from Ajou University and Illinois Institute of Technology, where I developed a strong foundation in both mechanical engineering and artificial intelligence.
 
-I support diversity, equity, and inclusion. If you would like to have a chat with me regrading research, career plans or anything, feel free to reach out! I would be happy to support people from underrepresented groups in the STEM research community, and hope my expertise can help you.
 
 
 
