@@ -1,6 +1,6 @@
 ---
 title: "Autonomous control using automated image analysis"
-excerpt: May 2024 – Present,  Chicago, IL
+excerpt: May 2024 – Dec 2024,  Chicago, IL
 
 ---
 Advisor: [Prof. Bhushan](https://sites.google.com/iit.edu/bhushan-research-group) 
