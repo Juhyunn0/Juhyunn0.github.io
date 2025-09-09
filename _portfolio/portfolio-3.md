@@ -1,6 +1,6 @@
 ---
 title: "Multimodality"
-excerpt: May 2024 – Present,  Chicago, IL
+excerpt: May 2024 – Dec 2024,  Chicago, IL
 
 ---
 Advisor: [Prof. Yan](https://tomyan555.github.io) 
