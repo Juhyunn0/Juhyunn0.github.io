@@ -11,7 +11,7 @@ locale                   : "en-US"
 title                    : "JJ's Homepage"
 title_separator          : "-"
 name                     : &name "Juhyun Jung (JJ)"
-description              : "Hi, I'm JJ. 4th year Mechanical Eng. and AI student"
+description              : "Hi, I'm JJ. 1st year Mechanical Eng student"
 url                      : https://Juhyunn0.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "Juhyunn0/Juhyunn0.github.io"
@@ -25,10 +25,10 @@ author:
   name             : "Juhyun Jung (JJ)"
   pronouns         : # example: "she/her"  
   bio              : "Hi, I'm JJ.  </br>  4th year Mechanical Eng. and AI student"
-  location         : "Chicago, IL"
-  employer         : "Illinois Institute of Technology"
+  location         : "Stanford, CA"
+  employer         : "Stanford University"
   uri              : # URL
-  email            : "jjung28@hawk.iit.edu" 
+  email            : "jj0523@stanford.edu" 
 
   # Academic websites
   arxiv            : # URL - Update with the correct link to your profile
