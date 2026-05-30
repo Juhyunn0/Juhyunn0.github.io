@@ -1,0 +1,2440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juhyun Jung · Robotics & Bio-Inspired Systems Researcher</title>
+  <meta name="description" content="Personal portfolio of Juhyun Jung — M.S. Mechanical Engineering at Stanford University. Research on bio-inspired underwater robotics, tactile sensing, and robust manipulation." />
+
+  <!--
+    ════════════════════════════════════════════════════════════════════
+    📊 Google Analytics 4 (GA4) — 방문자 위치/트래픽 추적
+    ────────────────────────────────────────────────────────────────────
+    1) https://analytics.google.com 접속 → 새 GA4 속성 생성
+    2) 측정 ID (예: G-XXXXXXXXXX)를 아래 두 군데에 붙여넣고
+       바깥쪽 <!-- ... --> 주석을 제거하세요.
+    3) 실제 방문자 수 / 위치는 GA 대시보드에서 확인할 수 있습니다.
+       (관리자 패널의 "Open Google Analytics" 버튼으로 바로 이동 가능)
+    ════════════════════════════════════════════════════════════════════
+  -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- GridStack.js — 12열 자유 드래그 그리드 (Notion / Elementor 스타일)
+       관리자 모드에서 블록을 그리드 셀 위로 자유롭게 드래그·리사이즈 가능
+       float:true 설정으로 빈 셀이 자동 채워지지 않음 (사용자 의도 보존) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@10.3.1/dist/gridstack.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/gridstack@10.3.1/dist/gridstack-all.js"></script>
+
+  <!-- PDF.js — PowerPoint 슬라이드(PDF로 export한 파일)를 슬라이드 뷰어로 렌더
+       PowerPoint에서 "다른 이름으로 저장 → PDF"로 export한 후 슬라이드 블록에 업로드하세요.
+       애니메이션이 중요한 슬라이드는 PowerPoint에서 그 슬라이드만 MP4로 export해서
+       "이 슬라이드를 영상으로 교체" 기능으로 덮어쓸 수 있어요. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (window.pdfjsLib) {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+          },
+          colors: {
+            ink: { 950:'#070b18', 900:'#0b1226', 800:'#111a35', 700:'#1a2547', 600:'#243160' },
+            accent: { 400:'#7c93ff', 500:'#5b75f6', 600:'#4458d8' },
+          },
+          boxShadow: { 'glow': '0 0 60px -10px rgba(91,117,246,0.45)' }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family:'Inter',sans-serif; background:#070b18; color:#e6e9f5; }
+    h1,h2,h3,.font-serif { font-family:'Playfair Display',serif; letter-spacing:-0.01em; }
+
+    .bg-hero{
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(91,117,246,0.25), transparent 60%),
+        radial-gradient(ellipse 50% 50% at 80% 20%, rgba(124,147,255,0.15), transparent 60%),
+        linear-gradient(180deg,#070b18 0%,#0b1226 60%,#070b18 100%);
+    }
+    .section-divider{ background:linear-gradient(90deg,transparent,rgba(124,147,255,0.4),transparent); height:1px; }
+
+    .card { transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
+    .card:hover { transform:translateY(-4px); border-color:rgba(124,147,255,0.5); box-shadow:0 12px 40px -12px rgba(91,117,246,0.35); }
+
+    .social-icon { transition:transform .2s ease, color .2s ease; }
+    .social-icon:hover { transform:translateY(-2px); color:#7c93ff; }
+
+    .profile-ring {
+      background: conic-gradient(from 180deg, #4458d8, #7c93ff, #243160, #4458d8);
+      padding:4px; border-radius:9999px; box-shadow:0 0 80px -10px rgba(91,117,246,0.6);
+    }
+
+    .mobile-menu { transition:max-height .35s ease, opacity .25s ease; max-height:0; overflow:hidden; opacity:0; }
+    .mobile-menu.open { max-height:600px; opacity:1; }
+
+    .video-frame { background:linear-gradient(135deg, rgba(91,117,246,0.15), rgba(36,49,96,0.25)); border:1px solid rgba(124,147,255,0.2); }
+
+    .skill-badge { background:rgba(26,37,71,0.6); border:1px solid rgba(124,147,255,0.25); transition:all .2s ease; }
+    .skill-badge:hover { background:rgba(36,49,96,0.8); border-color:rgba(124,147,255,0.6); transform:translateY(-1px); }
+
+    .fade-in { opacity:0; transform:translateY(20px); transition:opacity .7s ease, transform .7s ease; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+
+    .pulse-dot {
+      width:8px; height:8px; border-radius:9999px; background:#34d399;
+      box-shadow:0 0 0 0 rgba(52,211,153,0.7);
+      animation:pulse 2s infinite; display:inline-block; margin-right:8px;
+    }
+    @keyframes pulse {
+      0%{box-shadow:0 0 0 0 rgba(52,211,153,0.7);}
+      70%{box-shadow:0 0 0 12px rgba(52,211,153,0);}
+      100%{box-shadow:0 0 0 0 rgba(52,211,153,0);}
+    }
+
+    /* 📸 갤러리 */
+    .gallery-grid {
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+    @media (min-width: 640px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 1024px){ .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .gallery-tile {
+      position:relative;
+      aspect-ratio: 4/3;
+      border-radius: 0.6rem;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.08);
+      background:#0b1226;
+      cursor:pointer;
+      transition: transform .25s ease, border-color .25s ease;
+    }
+    .gallery-tile:hover { transform: scale(1.025); border-color: rgba(124,147,255,0.5); }
+    .gallery-tile img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    .gallery-add {
+      display:flex; align-items:center; justify-content:center;
+      aspect-ratio: 4/3;
+      border-radius: 0.6rem;
+      border: 2px dashed rgba(124,147,255,0.4);
+      color:#7c93ff;
+      cursor:pointer;
+      transition: background .2s ease, border-color .2s ease;
+    }
+    .gallery-add:hover { background:rgba(91,117,246,0.08); border-color:#7c93ff; }
+
+    .tile-delete {
+      position:absolute; top:6px; right:6px;
+      width:24px; height:24px; border-radius:9999px;
+      background:rgba(0,0,0,0.6); color:#fff; font-size:11px;
+      display:none; align-items:center; justify-content:center; cursor:pointer;
+    }
+    .admin-mode .tile-delete { display:flex; }
+
+    /* 💡 Lightbox */
+    .lightbox {
+      position:fixed; inset:0; z-index:80;
+      background:rgba(7,11,24,0.92); backdrop-filter:blur(8px);
+      display:none; align-items:center; justify-content:center;
+      padding:2rem;
+    }
+    .lightbox.open { display:flex; }
+    .lightbox img { max-width:95vw; max-height:90vh; border-radius:0.5rem; box-shadow:0 20px 80px rgba(0,0,0,0.6); }
+    .lightbox-close {
+      position:absolute; top:1.5rem; right:1.5rem;
+      width:44px; height:44px; border-radius:9999px;
+      background:rgba(255,255,255,0.1); color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; font-size:18px;
+    }
+
+    /* 🔒 로그인 모달 */
+    .modal-backdrop {
+      position:fixed; inset:0; z-index:90;
+      background:rgba(7,11,24,0.8); backdrop-filter:blur(6px);
+      display:none; align-items:center; justify-content:center; padding:1rem;
+    }
+    .modal-backdrop.open { display:flex; }
+    .modal-card {
+      width:100%; max-width:400px;
+      background:#0b1226; border:1px solid rgba(124,147,255,0.25);
+      border-radius:1rem; padding:2rem;
+      box-shadow:0 30px 80px rgba(0,0,0,0.6);
+    }
+    .login-input {
+      width:100%;
+      background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+      border-radius:0.5rem; padding:0.7rem 1rem; color:#fff; font-size:14px;
+    }
+    .login-input:focus { outline:none; border-color:#7c93ff; }
+
+    /* 🛠️ 관리자 바 */
+    .admin-bar {
+      position:fixed; bottom:1.25rem; left:50%; transform:translateX(-50%);
+      z-index:70;
+      background:rgba(11,18,38,0.95); backdrop-filter:blur(10px);
+      border:1px solid rgba(124,147,255,0.3);
+      border-radius:9999px;
+      padding:0.55rem 0.55rem 0.55rem 1.1rem;
+      display:none; align-items:center; gap:0.5rem;
+      box-shadow:0 20px 60px rgba(91,117,246,0.3);
+    }
+    .admin-mode .admin-bar { display:flex; }
+    .admin-bar .ab-label {
+      font-size:11px; color:#34d399; letter-spacing:0.1em; text-transform:uppercase; font-weight:600;
+      padding-right:0.6rem; border-right:1px solid rgba(255,255,255,0.1);
+    }
+    .ab-btn {
+      display:inline-flex; align-items:center; gap:0.4rem;
+      padding:0.5rem 0.85rem; border-radius:9999px;
+      background:rgba(255,255,255,0.05); color:#cbd5ff;
+      font-size:12px; font-weight:500; cursor:pointer;
+      border:1px solid transparent;
+      transition: all .2s ease;
+    }
+    .ab-btn:hover { background:rgba(91,117,246,0.2); color:#fff; border-color:rgba(124,147,255,0.3); }
+    .ab-btn.danger:hover { background:rgba(239,68,68,0.2); border-color:rgba(239,68,68,0.4); }
+
+    .paper-figure { background:#fafafa; padding:1rem; border-radius:0.75rem; border:1px solid rgba(255,255,255,0.08); }
+
+    [contenteditable="true"] {
+      outline:2px dashed rgba(124,147,255,0.5);
+      outline-offset:4px;
+      border-radius:4px;
+      transition: outline-color .2s ease;
+    }
+    [contenteditable="true"]:focus { outline-color:#7c93ff; }
+
+    /* 🧱 Life Custom Blocks — GridStack 기반 자유 드래그 그리드
+       컨테이너 자체가 GridStack root가 됨 (.grid-stack 클래스를 JS에서 추가)
+       각 블록은 .grid-stack-item > .grid-stack-item-content > .life-block 구조
+       12열 그리드 위에 자유롭게 드래그/리사이즈하면 그 위치에 그대로 고정됨 */
+    .life-blocks-container {
+      margin-top: 3.5rem;
+      min-height: 100px;
+    }
+    /* GridStack 셀 배경 — 관리자 모드에서만 그리드 선이 살짝 보이게 */
+    .admin-mode .life-blocks-container.grid-stack {
+      background-image:
+        linear-gradient(to right, rgba(124,147,255,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(124,147,255,0.04) 1px, transparent 1px);
+      background-size: calc(100%/12) 70px;
+      border-radius: 1rem;
+      padding: 4px;
+    }
+    /* GridStack 아이템 콘텐츠 — 기본 박스를 비우고 .life-block이 모양을 담당 */
+    .grid-stack-item-content {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      inset: 6px !important;
+    }
+    /* 실제 블록 카드 — .grid-stack-item-content를 100% 채움 */
+    .life-block {
+      position:relative;
+      width: 100%;
+      height: 100%;
+      background: rgba(11,18,38,0.55);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: border-color .25s ease, box-shadow .25s ease;
+      overflow: auto;     /* 콘텐츠가 셀보다 크면 내부 스크롤 */
+      box-sizing: border-box;
+    }
+    .life-block img, .life-block video {
+      max-height: 100%;
+      object-fit: contain;
+    }
+    /* GridStack 드래그/리사이즈 중 시각적 피드백 */
+    .grid-stack-item.ui-draggable-dragging .life-block,
+    .grid-stack-item.ui-resizable-resizing .life-block {
+      border-color: rgba(124,147,255,0.7) !important;
+      box-shadow: 0 12px 40px rgba(91,117,246,0.35);
+    }
+    /* placeholder — 드래그 중 빈 자리 표시 */
+    .grid-stack > .grid-stack-placeholder > .placeholder-content {
+      background: rgba(91,117,246,0.15) !important;
+      border: 2px dashed rgba(124,147,255,0.6) !important;
+      border-radius: 1rem !important;
+    }
+    /* 리사이즈 핸들 색상 — 관리자 모드에서 보이게 */
+    .grid-stack-item > .ui-resizable-se,
+    .grid-stack-item > .ui-resizable-s,
+    .grid-stack-item > .ui-resizable-e {
+      filter: invert(1) hue-rotate(180deg);
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .admin-mode .grid-stack-item:hover > .ui-resizable-se,
+    .admin-mode .grid-stack-item:hover > .ui-resizable-s,
+    .admin-mode .grid-stack-item:hover > .ui-resizable-e {
+      opacity: 0.7;
+    }
+    @media (max-width: 768px) {
+      .admin-mode .life-blocks-container.grid-stack { background: none; }
+    }
+
+    /* (구버전 .resize-handle, .row-break, .life-row 스타일은 모두 제거됨
+        — GridStack이 드래그/리사이즈/레이아웃을 모두 담당) */
+
+    /* 활성화된 toolbar 버튼 */
+    .block-toolbar button.active {
+      background: rgba(91,117,246,0.45);
+      color: #fff;
+    }
+    .block-toolbar button.active:hover { background: rgba(91,117,246,0.6); }
+    .admin-mode .life-block { border-color: rgba(124,147,255,0.25); }
+    .admin-mode .life-block:hover { border-color: rgba(124,147,255,0.6); }
+    .life-block .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 640px) { .life-block .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .block-toolbar {
+      position:absolute; top:0.75rem; right:0.75rem;
+      display:none; gap:0.25rem;
+      background:rgba(7,11,24,0.92); backdrop-filter:blur(8px);
+      border:1px solid rgba(124,147,255,0.3);
+      border-radius:9999px; padding:0.3rem;
+      z-index:2;
+    }
+    .admin-mode .life-block .block-toolbar { display:flex; }
+    .block-toolbar button {
+      width:30px; height:30px; border-radius:9999px;
+      background:transparent; color:#cbd5ff; font-size:11px;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition:all .2s; border:none;
+    }
+    .block-toolbar button:hover { background:rgba(91,117,246,0.3); color:#fff; }
+    .block-toolbar button.danger:hover { background:rgba(239,68,68,0.3); color:#fff; }
+    .block-toolbar button:disabled { opacity:0.3; cursor:not-allowed; }
+    .block-toolbar button:disabled:hover { background:transparent; }
+
+    .add-block-bar {
+      display:none;
+      margin-top:2.5rem; padding:1.75rem 1.5rem;
+      border: 2px dashed rgba(124,147,255,0.35);
+      border-radius:1rem; text-align:center;
+      background: rgba(91,117,246,0.04);
+    }
+    .admin-mode .add-block-bar { display:block; }
+    .add-block-bar h4 {
+      font-size:11px; color:#7c93ff;
+      letter-spacing:0.15em; text-transform:uppercase;
+      margin-bottom:1rem; font-weight:600;
+    }
+    .add-block-buttons {
+      display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center;
+    }
+    .add-block-buttons button {
+      display:inline-flex; align-items:center; gap:0.45rem;
+      padding:0.65rem 1.2rem; border-radius:9999px;
+      background: rgba(91,117,246,0.15); color:#cbd5ff;
+      border:1px solid rgba(124,147,255,0.3);
+      font-size:13px; font-weight:500;
+      cursor:pointer; transition:all .2s;
+    }
+    .add-block-buttons button:hover {
+      background: rgba(91,117,246,0.3); color:#fff;
+      border-color:#7c93ff; transform:translateY(-1px);
+    }
+
+    /* ▶ Replace-video 오버레이 (관리자) — 영상 좌우 어디에 붙어도 재사용 */
+    .climbing-replace-btn {
+      display:none;
+      position:absolute; top:0.75rem; right:0.75rem;
+      z-index:5;
+      padding:0.45rem 0.9rem;
+      background:rgba(7,11,24,0.9); backdrop-filter:blur(8px);
+      border:1px solid rgba(124,147,255,0.35);
+      border-radius:9999px;
+      color:#cbd5ff; font-size:11px; font-weight:500;
+      cursor:pointer; gap:0.4rem;
+    }
+    .admin-mode .climbing-replace-btn { display:inline-flex; align-items:center; }
+    .climbing-replace-btn:hover { background:rgba(91,117,246,0.3); color:#fff; border-color:#7c93ff; }
+
+    /* 🎬 Whisker 섹션 — Additional Videos */
+    .extra-video {
+      position:relative;
+      background: rgba(11,18,38,0.4);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 0.75rem;
+      padding: 0.5rem;
+    }
+    .admin-mode .extra-video { border-color: rgba(124,147,255,0.25); }
+
+    /* "Add a video" 버튼 — 관리자 모드에서만 표시 */
+    .add-extra-video-btn {
+      display:none;
+      margin-top: 0.75rem;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px dashed rgba(124,147,255,0.35);
+      border-radius: 0.75rem;
+      background: rgba(91,117,246,0.04);
+      color: #7c93ff;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .add-extra-video-btn:hover {
+      background: rgba(91,117,246,0.12);
+      border-color: #7c93ff;
+      color: #fff;
+    }
+    .admin-mode .add-extra-video-btn { display:inline-flex; align-items:center; justify-content:center; gap:0.5rem; }
+
+    /* 추가 영상의 툴바 — 일반 .block-toolbar 재사용 */
+    .admin-mode .extra-video .block-toolbar { display:flex; }
+
+    /* 📊 슬라이드 뷰어 — PDF(PowerPoint export)를 슬라이드처럼 렌더 */
+    .life-block.life-block-slides {
+      padding: 0; overflow: hidden;
+      background: #000;
+    }
+    .slide-viewer {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      background: #000;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .slide-viewer:focus { outline: 2px solid #7c93ff; outline-offset: -2px; }
+    .slide-stage {
+      position: relative;
+      flex: 1; min-height: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: #000;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .slide-canvas, .slide-video {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .slide-loading {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: #cbd5ff; font-size: 13px;
+      background: rgba(11,18,38,0.85); backdrop-filter: blur(8px);
+    }
+    .slide-loading.hidden { display: none; }
+    .slide-empty {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem; padding: 2rem; text-align: center;
+      color: #7c93ff;
+    }
+    .slide-empty .icon { font-size: 48px; opacity: 0.5; }
+    .slide-empty button {
+      padding: 0.6rem 1.4rem; border-radius: 9999px;
+      background: rgba(91,117,246,0.25); color: #fff;
+      border: 1px solid rgba(124,147,255,0.4);
+      cursor: pointer; font-size: 13px; font-weight: 500;
+      transition: all .2s;
+    }
+    .slide-empty button:hover {
+      background: rgba(91,117,246,0.4); border-color: #7c93ff;
+    }
+    .slide-controls {
+      display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+      padding: 0.6rem 0.75rem;
+      background: rgba(11,18,38,0.92);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      flex-wrap: wrap;
+    }
+    .slide-controls button {
+      width: 32px; height: 32px;
+      border-radius: 9999px;
+      background: rgba(91,117,246,0.2);
+      color: #fff;
+      border: none;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all .15s;
+      font-size: 16px;
+    }
+    .slide-controls button:hover:not(:disabled) { background: rgba(91,117,246,0.45); }
+    .slide-controls button:disabled { opacity: 0.3; cursor: not-allowed; }
+    .slide-counter {
+      color: #cbd5ff; font-size: 12px;
+      min-width: 70px; text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+    .slide-admin-bar {
+      display: none;
+      padding: 0.5rem 0.6rem;
+      background: rgba(11,18,38,0.95);
+      border-top: 1px dashed rgba(124,147,255,0.25);
+      gap: 0.4rem; flex-wrap: wrap;
+    }
+    .admin-mode .life-block-slides .slide-admin-bar { display: flex; }
+    .slide-admin-bar button {
+      flex: 1 1 auto; min-width: 110px;
+      padding: 0.35rem 0.7rem;
+      font-size: 10px; font-weight: 500;
+      background: rgba(91,117,246,0.12);
+      color: #cbd5ff;
+      border: 1px solid rgba(124,147,255,0.25);
+      border-radius: 0.5rem;
+      cursor: pointer; transition: all .15s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.3rem;
+    }
+    .slide-admin-bar button:hover {
+      background: rgba(91,117,246,0.3); border-color: #7c93ff; color: #fff;
+    }
+    .slide-admin-bar button.danger:hover {
+      background: rgba(239,68,68,0.3); border-color: #ef4444;
+    }
+    /* 슬라이드 영상 모드 표시 (관리자만) */
+    .slide-viewer.video-mode .slide-counter::after {
+      content: ' 🎬'; opacity: 0.7;
+    }
+    /* 모바일 — 컨트롤 살짝 작게 */
+    @media (max-width: 768px) {
+      .slide-controls button { width: 28px; height: 28px; font-size: 14px; }
+      .slide-controls { padding: 0.5rem; gap: 0.5rem; }
+    }
+
+    /* 드래그 핸들 — GridStack의 .drag-handle (블록 툴바에 있음) */
+    .drag-handle { cursor: move; }
+    .drag-handle:active { cursor: grabbing; }
+    .admin-mode .life-block {
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    /* GridStack 드래그 중 시각 효과 */
+    .grid-stack-item.gs-w-1 .life-block,
+    .grid-stack-item.gs-w-2 .life-block { padding: 0.75rem; }
+    .grid-stack-item.gs-w-3 .life-block { padding: 1rem; }
+  </style>
+</head>
+
+<body class="bg-ink-950 text-slate-200 antialiased">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🧭 NAVIGATION BAR — 우측 끝에 🔒 로그인 버튼 추가
+       ═══════════════════════════════════════════════════════════ -->
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-ink-950/70 border-b border-white/5">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-10 py-4 flex items-center justify-between">
+      <a href="#home" class="font-serif text-xl md:text-2xl font-semibold text-white tracking-tight">
+        Juhyun's <span class="text-accent-400">Space</span>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <li><a href="#about" class="hover:text-accent-400 transition">About</a></li>
+        <li><a href="#research" class="hover:text-accent-400 transition">Research</a></li>
+        <li><a href="#current" class="hover:text-accent-400 transition">Current Work</a></li>
+        <li><a href="#publications" class="hover:text-accent-400 transition">Publications</a></li>
+        <li><a href="#projects" class="hover:text-accent-400 transition">Projects</a></li>
+        <li><a href="#life" class="hover:text-accent-400 transition">Life</a></li>
+        <li>
+          <a href="CV.pdf" target="_blank"
+             class="ml-2 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-600 hover:bg-accent-500 text-white transition shadow-glow">
+            <i class="fa-solid fa-file-arrow-down text-xs"></i> CV
+          </a>
+        </li>
+        <!-- 🔒 로그인 아이콘 (관리자만 사용) -->
+        <li>
+          <button id="loginBtn" class="ml-1 text-slate-400 hover:text-accent-400 transition" aria-label="Admin login" title="Admin login">
+            <i class="fa-solid fa-lock"></i>
+          </button>
+        </li>
+      </ul>
+
+      <button id="menuBtn" class="md:hidden text-white text-2xl" aria-label="Open menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </nav>
+
+    <div id="mobileMenu" class="mobile-menu md:hidden bg-ink-900/95 border-t border-white/5">
+      <ul class="flex flex-col px-6 py-4 gap-4 text-slate-200">
+        <li><a href="#about" class="block py-1">About</a></li>
+        <li><a href="#research" class="block py-1">Research</a></li>
+        <li><a href="#current" class="block py-1">Current Work</a></li>
+        <li><a href="#publications" class="block py-1">Publications</a></li>
+        <li><a href="#projects" class="block py-1">Projects</a></li>
+        <li><a href="#life" class="block py-1">Life</a></li>
+        <li><a href="CV.pdf" target="_blank" class="block py-1 text-accent-400"><i class="fa-solid fa-file-arrow-down"></i> Download CV</a></li>
+        <li><button id="loginBtnMobile" class="block py-1 text-slate-400"><i class="fa-solid fa-lock"></i> Admin</button></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🌟 HERO
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="home" class="bg-hero pt-32 pb-20 md:pt-40 md:pb-28">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-in">
+        <p class="text-accent-400 font-medium tracking-widest text-sm uppercase mb-4">
+          Robotics & Autonomous Systems Researcher
+        </p>
+        <h1 class="font-serif text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+          Hi, I'm <span class="text-accent-400">Juhyun.</span>
+        </h1>
+        <p data-editable="hero-intro" class="text-lg text-slate-300 leading-relaxed mb-8 max-w-xl">
+          M.S. student in Mechanical Engineering at Stanford University,
+          working at the <a href="https://bdml.stanford.edu" target="_blank" class="text-accent-400 hover:underline font-medium">Biomimetics and Dextrous Manipulation Lab (BDML)</a>
+          under Prof. Mark Cutkosky. I build underwater robots that perceive, plan, and manipulate — even when the ocean refuses to hold still.
+        </p>
+
+        <div class="flex flex-wrap gap-4 mb-8">
+          <a href="CV.pdf" target="_blank"
+             class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent-600 hover:bg-accent-500 text-white font-medium transition shadow-glow">
+            <i class="fa-solid fa-file-arrow-down"></i> Download CV
+          </a>
+          <a href="#current"
+             class="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/15 hover:border-accent-400 hover:text-accent-400 text-slate-200 font-medium transition">
+            <i class="fa-solid fa-water"></i> Current Work
+          </a>
+        </div>
+
+        <div class="flex items-center gap-6 text-slate-400 text-xl">
+          <a href="https://github.com" target="_blank" class="social-icon" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.linkedin.com" target="_blank" class="social-icon" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="mailto:jj0523@stanford.edu" class="social-icon" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+
+      <div class="flex justify-center md:justify-end fade-in">
+        <div class="profile-ring">
+          <img
+            src="민증사진1.jpeg"
+            alt="Juhyun Jung — profile photo"
+            class="w-64 h-64 md:w-80 md:h-80 object-cover rounded-full ring-4 ring-ink-950"
+            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=600&h=600&fit=crop&auto=format';"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       👤 ABOUT
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="about" class="py-24 md:py-32">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14 fade-in">
+        <p class="text-accent-400 text-sm tracking-widest uppercase mb-3">01 — About Me</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-white font-semibold">Engineer · Researcher · Climber</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-10 items-start">
+        <div class="md:col-span-2 space-y-5 text-slate-300 leading-relaxed text-lg fade-in" data-editable="about-body">
+          <p>I'm a graduate researcher at the <a href="https://bdml.stanford.edu" target="_blank" class="text-accent-400 hover:underline font-semibold">Biomimetics and Dextrous Manipulation Lab (BDML)</a> under Prof. Mark Cutkosky. My work explores how robots can sense and act in the underwater world — from biomimetic tactile sensors that mimic seal whiskers, to dexterous manipulation policies that stay robust in dynamic ocean currents.</p>
+          <p>My research sits at the intersection of bio-inspired sensing, intelligent control, and manipulation. I believe the most elegant robots are those that borrow from biology — compliant beams, distributed sensing, soft skins — and pair them with learning-based decision-making that's grounded in physics.</p>
+          <p>Before Stanford, I earned dual B.S. degrees in Mechanical Engineering from Illinois Institute of Technology (with an AI minor) and Ajou University in South Korea (1st in class). I've previously worked on computer vision research with Prof. Yan Yan and dielectric-elastomer-actuator research with Prof. Je-sung Koh.</p>
+        </div>
+
+        <div class="fade-in p-6 rounded-2xl bg-ink-900/60 border border-white/10 card">
+          <h3 class="font-serif text-xl text-white mb-4">Quick Facts</h3>
+          <ul class="space-y-3 text-sm text-slate-300">
+            <li><i class="fa-solid fa-location-dot text-accent-400 w-5"></i> Stanford, CA</li>
+            <li><i class="fa-solid fa-building-columns text-accent-400 w-5"></i> Stanford University · M.S. ME</li>
+            <li><i class="fa-solid fa-flask text-accent-400 w-5"></i>
+              <a href="https://bdml.stanford.edu" target="_blank" class="hover:text-accent-400 underline-offset-2 hover:underline">BDML — Cutkosky Group</a>
+            </li>
+            <li><i class="fa-solid fa-envelope text-accent-400 w-5"></i> jj0523@stanford.edu</li>
+            <li><i class="fa-solid fa-mountain-sun text-accent-400 w-5"></i> Climbing enthusiast</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-16 fade-in">
+        <p class="text-center text-slate-400 text-sm tracking-widest uppercase mb-6">Toolset</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <span class="skill-badge px-4 py-2 rounded-full text-sm"><i class="fa-brands fa-python text-accent-400 mr-2"></i>Python</span>
+          <span class="skill-badge px-4 py-2 rounded-full text-sm">C / C++</span>
+          <span class="skill-badge px-4 py-2 rounded-full text-sm">ROS 2</span>
+          <span class="skill-badge px-4 py-2 rounded-full text-sm">PyTorch</span>
+          <span class="skill-badge px-4 py-2 rounded-full text-sm">MATLAB</span>
+          <span class="skill-badge px-4 py-2 rounded-full text-sm">Julia</span>
+          <span class="skill-badge px-4 py-2 rounded-full text-sm"><i class="fa-brands fa-linux text-accent-400 mr-2"></i>Linux Ubuntu</span>
+          <span class="skill-badge px-4 py-2 rounded-full text-sm">SolidWorks</span>
+          <span class="skill-badge px-4 py-2 rounded-full text-sm">OpenCV</span>
+        </div>
+      </div>
+
+      <!-- 🧱 About 섹션 — 사용자 커스텀 블록 (드래그 가능) -->
+      <div data-blocks="about" class="life-blocks-container"></div>
+      <div class="add-block-bar">
+        <h4>➕ Add a new block to About</h4>
+        <div class="add-block-buttons">
+          <button onclick="addTextBlock('about')"><i class="fa-solid fa-align-left"></i> Text</button>
+          <button onclick="addImageBlock('about')"><i class="fa-solid fa-image"></i> Photo</button>
+          <button onclick="addGalleryBlock('about')"><i class="fa-solid fa-images"></i> Gallery</button>
+          <button onclick="addVideoBlock('about')"><i class="fa-solid fa-film"></i> Video</button>
+          <button onclick="addSlidesBlock('about')"><i class="fa-solid fa-file-pdf"></i> Slides (PDF)</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🔬 RESEARCH INTERESTS
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="research" class="py-24 md:py-32">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14 fade-in">
+        <p class="text-accent-400 text-sm tracking-widest uppercase mb-3">02 — Research Interests</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-white font-semibold">What I'm Curious About</h2>
+        <p class="mt-4 text-slate-400 max-w-2xl mx-auto">Three overlapping themes guide my work — perception, planning, and embodiment.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="card p-8 rounded-2xl bg-ink-900/60 border border-white/10 fade-in">
+          <div class="w-14 h-14 rounded-xl bg-accent-600/20 flex items-center justify-center mb-5">
+            <i class="fa-solid fa-microchip text-accent-400 text-2xl"></i>
+          </div>
+          <h3 class="font-serif text-xl text-white mb-3">Bio-Inspired Sensing</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Whisker-like tactile arrays, soft skins, and optical-fiber strain sensing — designing sensors that capture the rich, distributed signals animals use to navigate their worlds.</p>
+        </div>
+        <div class="card p-8 rounded-2xl bg-ink-900/60 border border-white/10 fade-in">
+          <div class="w-14 h-14 rounded-xl bg-accent-600/20 flex items-center justify-center mb-5">
+            <i class="fa-solid fa-route text-accent-400 text-2xl"></i>
+          </div>
+          <h3 class="font-serif text-xl text-white mb-3">Motion Planning & Control</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Optimal and learning-based control for underwater vehicles and manipulators — blending MPC with diffusion policies for robust behavior in dynamic ocean currents.</p>
+        </div>
+        <div class="card p-8 rounded-2xl bg-ink-900/60 border border-white/10 fade-in">
+          <div class="w-14 h-14 rounded-xl bg-accent-600/20 flex items-center justify-center mb-5">
+            <i class="fa-solid fa-hand text-accent-400 text-2xl"></i>
+          </div>
+          <h3 class="font-serif text-xl text-white mb-3">Underwater Manipulation</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Closing the loop between touch and action — cable routing, connector mating, and other contact-rich tasks under turbidity, drift, and unpredictable disturbances.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🌊 CURRENT RESEARCH
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="current" class="py-24 md:py-32">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14 fade-in">
+        <p class="text-accent-400 text-sm tracking-widest uppercase mb-3">03 — Current Research</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-white font-semibold">What I'm Building Right Now</h2>
+        <p class="mt-4 text-slate-400 max-w-2xl mx-auto">Two active projects at Stanford BDML — both pushing the limits of how robots sense and act underwater.</p>
+      </div>
+
+      <!-- ═══ UMI-Underwater (LEAD) ═══ -->
+      <article class="mb-20 fade-in">
+        <div class="mb-8 flex flex-wrap items-center gap-3">
+          <span class="inline-flex items-center text-xs px-3 py-1.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/30 font-medium">
+            <span class="pulse-dot"></span> Project Lead · In Progress
+          </span>
+          <span class="text-xs text-slate-400">Target: ICRA 2027 submission</span>
+        </div>
+
+        <h3 class="font-serif text-3xl md:text-4xl text-white mb-3">UMI-Underwater: Robust Manipulation in Dynamic Ocean Currents</h3>
+        <p class="text-slate-400 mb-6">
+          <i class="fa-solid fa-user-tie text-accent-400 mr-1.5"></i>
+          <span class="text-white font-medium">Juhyun Jung</span> (project lead) ·
+          with <span class="text-slate-200">Prof. Shuran Song</span> &amp;
+          <span class="text-slate-200">Prof. Mark Cutkosky</span>, Stanford University
+        </p>
+
+        <div class="space-y-5 text-slate-300 leading-relaxed" data-editable="umi-body">
+          <p>I'm leading a new line of work that asks: <em class="text-accent-400 not-italic">how can an underwater robot achieve <strong>robust</strong> and <strong>energy-efficient</strong> manipulation in dynamic ocean currents?</em> Building on the <a href="https://arxiv.org/abs/2603.27012" target="_blank" class="text-accent-400 hover:underline">UMI-Underwater</a> framework — a diffusion-policy approach to underwater manipulation trained without underwater teleoperation — I'm extending the system from <em>static pool</em> conditions to the chaotic regime of <em>real ocean dynamics</em>.</p>
+          <p>The core insight: existing underwater policies fail in two ways when currents hit — they <span class="text-white font-medium">overshoot and drift</span> because their state estimation is fragile, and they keep trying to execute the original plan even when the body has been displaced. My approach addresses both: a depth + IMU based relative-pose estimator anchored to the target object, and a control stack that halts diffusion-policy inference during massive disturbances, hands control to a low-level posture-recovery controller, and resumes the manipulation task only once the body is stable.</p>
+          <p>Looking further ahead, I'm exploring <span class="text-accent-400">flow-exploiting control</span> — instead of fighting against ocean currents, leverage them. Real-time flow estimates feed into an MPC cost function, so the robot opportunistically uses currents to reach the target with minimum energy. Target tasks include <em>cable routing</em> and <em>underwater connector mating</em>, with planned field deployment at Hopkins Marine Station.</p>
+        </div>
+
+        <!-- 📸 UMI Gallery — 사용자가 사진 추가/변경 가능 -->
+        <div class="mt-10">
+          <div class="flex items-center justify-between mb-4">
+            <h4 class="text-sm uppercase tracking-widest text-accent-400">Gallery</h4>
+            <span class="text-xs text-slate-500">Click any photo to enlarge</span>
+          </div>
+          <div id="gallery-umi" class="gallery-grid" data-gallery="umi"></div>
+        </div>
+      </article>
+
+      <div class="section-divider max-w-3xl mx-auto my-16"></div>
+
+      <!-- ═══ Whisker Array ═══ -->
+      <article class="fade-in">
+        <div class="mb-8 flex flex-wrap items-center gap-3">
+          <span class="inline-flex items-center text-xs px-3 py-1.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/30 font-medium">
+            <span class="pulse-dot"></span> In Progress
+          </span>
+          <span class="text-xs text-slate-400">Extension of the published FBG-whisker work</span>
+        </div>
+
+        <h3 class="font-serif text-3xl md:text-4xl text-white mb-3">Whisker Array for Distributed Hydrodynamic Perception</h3>
+        <p class="text-slate-400 mb-6">
+          <i class="fa-solid fa-user-group text-accent-400 mr-1.5"></i>
+          BDML team · Advisor: <span class="text-slate-200">Prof. Mark Cutkosky</span>
+        </p>
+
+        <div class="space-y-5 text-slate-300 leading-relaxed" data-editable="whisker-array-body">
+          <p>Our published work demonstrated that a <em>single</em> bioinspired FBG whisker mounted on the nose of a small underwater vehicle is enough to detect a moving target and decide whether to go straight or turn. The natural next question: <em>what happens when you have many?</em></p>
+          <p>I'm building a <span class="text-accent-400">whisker array</span> — multiple whiskers distributed around an ROV, each multiplexed on shared optical fibers — that recovers richer hydrodynamic structure: flow direction, vortex location, wake geometry, and contact discrimination. The goal is to give underwater robots a low-power, fully-passive perception channel that works where vision and acoustics fail (turbidity, particulates, low-light, ecologically sensitive areas).</p>
+        </div>
+      </article>
+
+      <!-- 🧱 Current Research 섹션 — 사용자 커스텀 블록 (드래그 가능) -->
+      <div data-blocks="research" class="life-blocks-container"></div>
+      <div class="add-block-bar">
+        <h4>➕ Add a new block to Current Research</h4>
+        <div class="add-block-buttons">
+          <button onclick="addTextBlock('research')"><i class="fa-solid fa-align-left"></i> Text</button>
+          <button onclick="addImageBlock('research')"><i class="fa-solid fa-image"></i> Photo</button>
+          <button onclick="addGalleryBlock('research')"><i class="fa-solid fa-images"></i> Gallery</button>
+          <button onclick="addVideoBlock('research')"><i class="fa-solid fa-film"></i> Video</button>
+          <button onclick="addSlidesBlock('research')"><i class="fa-solid fa-file-pdf"></i> Slides (PDF)</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       📚 PUBLICATIONS
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="publications" class="py-24 md:py-32">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14 fade-in">
+        <p class="text-accent-400 text-sm tracking-widest uppercase mb-3">04 — Publications</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-white font-semibold">Selected Work</h2>
+      </div>
+
+      <article class="mb-16 fade-in">
+        <div class="mb-5 flex flex-wrap items-center gap-2">
+          <span class="text-xs px-2.5 py-1 rounded-full bg-accent-600/20 text-accent-400 font-medium">Featured Publication</span>
+          <span class="text-xs text-slate-400">Stanford BDML · 2026</span>
+        </div>
+
+        <h3 class="font-serif text-2xl md:text-3xl text-white mb-3 leading-snug">
+          Fiber Bragg Grating Whiskers for Bioinspired Hydrodynamic Perception on Underwater Robots
+        </h3>
+
+        <p class="text-sm text-slate-400 mb-3 leading-relaxed">
+          Hao Li*, Tianyu Tu, Siyue Yao, Ziyang Chang,
+          <span class="text-white font-semibold underline decoration-accent-400/60 underline-offset-2">Juhyun Jung</span>,
+          Xiaochi Xie, Long Yin Chung, Tian-Ao Ren, Genliang Chen, Mark R. Cutkosky*
+        </p>
+        <p class="text-xs text-slate-500 italic mb-6">
+          *Corresponding authors. Affiliations: Stanford University, Shanghai Jiao Tong University, Tsinghua University.
+        </p>
+
+        <div class="grid lg:grid-cols-5 gap-8 items-start">
+          <!-- 좌측: 영상 + 갤러리 -->
+          <div class="lg:col-span-3 space-y-5">
+            <figure class="video-frame rounded-xl overflow-hidden p-1.5 shadow-glow relative">
+              <!-- 🛠️ 관리자 모드에서만 보이는 영상 교체 버튼 -->
+              <button class="climbing-replace-btn" id="whiskerReplaceBtn" title="새 영상으로 교체">
+                <i class="fa-solid fa-arrows-rotate"></i> Replace
+              </button>
+              <video id="whiskerVideo" class="w-full rounded-lg bg-black" controls playsinline preload="metadata" poster="assets/whisker_poster.jpg">
+                <source src="Paper/Movie_S1.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <figcaption class="px-3 py-2 text-xs text-slate-400">Movie S1 — controlled towing experiments comparing whisker morphologies.</figcaption>
+            </figure>
+
+            <!-- 🎬 Additional Videos (사용자가 추가하는 영상들) -->
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h4 class="text-sm uppercase tracking-widest text-accent-400">Additional Videos</h4>
+                <span class="text-xs text-slate-500">Admin: click + to add</span>
+              </div>
+              <div id="whisker-videos" class="space-y-4"></div>
+              <!-- 관리자 모드에서만 보이는 영상 추가 버튼 -->
+              <button id="addWhiskerVideoBtn" class="add-extra-video-btn">
+                <i class="fa-solid fa-plus"></i> Add a video
+              </button>
+            </div>
+
+            <!-- 📸 Whisker Paper Gallery -->
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <h4 class="text-sm uppercase tracking-widest text-accent-400">Paper Figures</h4>
+                <span class="text-xs text-slate-500">Click to enlarge</span>
+              </div>
+              <div id="gallery-whisker" class="gallery-grid" data-gallery="whisker"></div>
+            </div>
+          </div>
+
+          <!-- 우측: 초록 + 버튼 -->
+          <div class="lg:col-span-2 space-y-4 text-slate-300 text-sm leading-relaxed" data-editable="whisker-abstract">
+            <p>Harbor seals track hydrodynamic trails with their vibrissae, enabling passive perception of moving targets in dark or turbid water. Inspired by this capability, we present compact <span class="text-accent-400">fiber Bragg grating (FBG) whiskers</span> for underwater robots. Like seal whiskers, they have a non-uniform taper and elliptical cross-section.</p>
+            <p>Controlled towing experiments show a monotonic relative-flow response from <span class="text-white font-medium">0.1 – 0.6 m/s</span>, a strong reduction of self-induced oscillation compared to a cylindrical baseline, and a pronounced dependence on angle of attack. In a field deployment, a single front-mounted whisker enabled a small ROV to distinguish between continuing straight and executing a turn — correctly selecting the branch in <span class="text-white font-medium">17 of 20 trials (85.0 %)</span> from whisker signals alone.</p>
+            <p class="text-slate-400">I contributed to the experimental platform design, signal-processing pipeline, and underwater field testing.</p>
+
+            <div class="flex flex-wrap gap-2 pt-2">
+              <a href="Paper/ArticleContent_v7.pdf" target="_blank" class="px-3 py-1.5 text-xs rounded-full bg-white/5 hover:bg-accent-600/30 border border-white/10 transition"><i class="fa-solid fa-file-pdf mr-1.5"></i> Paper</a>
+              <a href="Paper/SupplementalMaterial_v5.pdf" target="_blank" class="px-3 py-1.5 text-xs rounded-full bg-white/5 hover:bg-accent-600/30 border border-white/10 transition"><i class="fa-solid fa-file-lines mr-1.5"></i> Supplement</a>
+              <a href="Paper/Movie_S1.mp4" target="_blank" class="px-3 py-1.5 text-xs rounded-full bg-white/5 hover:bg-accent-600/30 border border-white/10 transition"><i class="fa-solid fa-video mr-1.5"></i> Movie S1</a>
+              <a href="https://bdml.stanford.edu" target="_blank" class="px-3 py-1.5 text-xs rounded-full bg-white/5 hover:bg-accent-600/30 border border-white/10 transition"><i class="fa-solid fa-flask mr-1.5"></i> BDML</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="space-y-5">
+        <article class="card p-6 rounded-2xl bg-ink-900/60 border border-white/10 fade-in">
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="text-xs px-2.5 py-1 rounded-full bg-slate-600/20 text-slate-300 font-medium">Poster</span>
+            <span class="text-xs text-slate-400">Armour R&amp;D Expo · Nov 2024</span>
+          </div>
+          <h4 class="text-lg font-semibold text-white mb-1">Autonomous Control Using Automated Image Analysis</h4>
+          <p class="text-sm text-slate-400 mb-2"><span class="text-slate-200 font-medium">Juhyun Jung</span> · Advisor: Yan Yan (IIT)</p>
+          <p class="text-slate-300 text-sm leading-relaxed">Behavior classification pipelines combining LSTM and Vision Transformer architectures over mouse pose / video datasets — exploring multimodal fusion strategies for fine-grained behavioral state recognition.</p>
+        </article>
+        <article class="card p-6 rounded-2xl bg-ink-900/60 border border-white/10 fade-in">
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="text-xs px-2.5 py-1 rounded-full bg-slate-600/20 text-slate-300 font-medium">Conference Talk</span>
+            <span class="text-xs text-slate-400">KOSSE Fall Conference · Jun 2021</span>
+          </div>
+          <h4 class="text-lg font-semibold text-white mb-1">Assessment of Cybersickness in VR Social Media Services</h4>
+          <p class="text-sm text-slate-400 mb-2"><span class="text-slate-200 font-medium">Juhyun Jung</span> · Advisor: Peom Park (Ajou)</p>
+          <p class="text-slate-300 text-sm leading-relaxed">A systems-engineering analysis of VR-induced cybersickness, paired with sensor-fusion mitigation strategies validated through user studies.</p>
+        </article>
+      </div>
+
+      <!-- 🧱 Publications 섹션 — 사용자 커스텀 블록 (드래그 가능) -->
+      <div data-blocks="publications" class="life-blocks-container"></div>
+      <div class="add-block-bar">
+        <h4>➕ Add a new block to Publications</h4>
+        <div class="add-block-buttons">
+          <button onclick="addTextBlock('publications')"><i class="fa-solid fa-align-left"></i> Text</button>
+          <button onclick="addImageBlock('publications')"><i class="fa-solid fa-image"></i> Photo</button>
+          <button onclick="addGalleryBlock('publications')"><i class="fa-solid fa-images"></i> Gallery</button>
+          <button onclick="addVideoBlock('publications')"><i class="fa-solid fa-film"></i> Video</button>
+          <button onclick="addSlidesBlock('publications')"><i class="fa-solid fa-file-pdf"></i> Slides (PDF)</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🛠️ PROJECTS
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="projects" class="py-24 md:py-32">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14 fade-in">
+        <p class="text-accent-400 text-sm tracking-widest uppercase mb-3">05 — Projects</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-white font-semibold">Hands-On Work</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="card p-7 rounded-2xl bg-ink-900/60 border border-white/10 fade-in">
+          <div class="flex items-center gap-3 mb-4">
+            <i class="fa-solid fa-car text-accent-400 text-2xl"></i>
+            <span class="text-xs px-2 py-1 rounded-full bg-accent-600/20 text-accent-400">2nd Place · HL Mando</span>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Vision Lane Following — Autonomous Mobility</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Designed a vision-based lane-following stack with classical image processing + PID control, tuned for real-time performance on a 1/10-scale autonomous platform.</p>
+        </div>
+        <div class="card p-7 rounded-2xl bg-ink-900/60 border border-white/10 fade-in">
+          <div class="flex items-center gap-3 mb-4">
+            <i class="fa-solid fa-diagram-project text-accent-400 text-2xl"></i>
+            <span class="text-xs px-2 py-1 rounded-full bg-slate-600/20 text-slate-300">IIT · 2023</span>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Automated Scheduling Decision System</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Built a graph-theory + linear-algebra optimizer for university course / exam scheduling, minimizing student time conflicts and balancing weekly load.</p>
+        </div>
+        <div class="card p-7 rounded-2xl bg-ink-900/60 border border-white/10 fade-in">
+          <div class="flex items-center gap-3 mb-4">
+            <i class="fa-solid fa-bolt text-accent-400 text-2xl"></i>
+            <span class="text-xs px-2 py-1 rounded-full bg-slate-600/20 text-slate-300">Ajou · MOST Lab</span>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">Dielectric Elastomer Actuators (DEA)</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Designed an experimental rig sweeping frequency, electrode geometry, elastomer composition, and pre-strain — achieving a peak DEA strain of <span class="text-accent-400">12.3%</span>.</p>
+        </div>
+        <div class="card p-7 rounded-2xl bg-ink-900/60 border border-white/10 fade-in">
+          <div class="flex items-center gap-3 mb-4">
+            <i class="fa-solid fa-chart-line text-accent-400 text-2xl"></i>
+            <span class="text-xs px-2 py-1 rounded-full bg-slate-600/20 text-slate-300">IIT · 2024</span>
+          </div>
+          <h3 class="text-lg font-semibold text-white mb-2">TIF Economic Impact Analysis (Chicago)</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Quantitative analysis of Tax Increment Financing impact on median income across Chicago communities — surfaced demographic disparities masked by aggregate metrics.</p>
+        </div>
+      </div>
+
+      <!-- 🧱 Projects 섹션 — 사용자 커스텀 블록 (드래그 가능) -->
+      <div data-blocks="projects" class="life-blocks-container"></div>
+      <div class="add-block-bar">
+        <h4>➕ Add a new block to Projects</h4>
+        <div class="add-block-buttons">
+          <button onclick="addTextBlock('projects')"><i class="fa-solid fa-align-left"></i> Text</button>
+          <button onclick="addImageBlock('projects')"><i class="fa-solid fa-image"></i> Photo</button>
+          <button onclick="addGalleryBlock('projects')"><i class="fa-solid fa-images"></i> Gallery</button>
+          <button onclick="addVideoBlock('projects')"><i class="fa-solid fa-film"></i> Video</button>
+          <button onclick="addSlidesBlock('projects')"><i class="fa-solid fa-file-pdf"></i> Slides (PDF)</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-5xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🧗 LIFE
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="life" class="py-24 md:py-32">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14 fade-in">
+        <p class="text-accent-400 text-sm tracking-widest uppercase mb-3">06 — Life Beyond Research</p>
+        <h2 class="font-serif text-4xl md:text-5xl text-white font-semibold">Off the Lab</h2>
+        <p class="mt-4 text-slate-400 max-w-2xl mx-auto">When I'm not running experiments, you'll probably find me on a climbing wall — chalk on hands, mind on the next hold.</p>
+      </div>
+      <div class="grid md:grid-cols-5 gap-8 items-center">
+        <div class="md:col-span-3 fade-in">
+          <div class="video-frame rounded-2xl overflow-hidden p-2 shadow-glow relative">
+            <!-- 🛠️ 관리자 모드에서만 보이는 영상 교체 버튼 -->
+            <button class="climbing-replace-btn" id="climbingReplaceBtn" title="새 영상으로 교체">
+              <i class="fa-solid fa-arrows-rotate"></i> Replace
+            </button>
+            <video id="climbingVideo" class="w-full rounded-xl bg-black" controls playsinline preload="metadata" poster="assets/climbing_poster.jpg">
+              <!-- 기본 영상: 압축된 mp4 -->
+              <source src="climbing1.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <div class="md:col-span-2 fade-in space-y-4" data-editable="climbing-body">
+          <h3 class="font-serif text-2xl text-white"><i class="fa-solid fa-mountain-sun text-accent-400 mr-2"></i> Climbing as Motion Planning</h3>
+          <p class="text-slate-300 leading-relaxed">Climbing feels surprisingly close to robotics. You <span class="text-accent-400">scan the route</span>, estimate the cost of each hold, and choose the path that gets you to the top with the lowest total effort. It's <span class="text-accent-400">motion planning, embodied</span> — a real-time optimization where the state space is your body and the dynamics are gravity, friction, and fatigue.</p>
+          <p class="text-slate-400 text-sm leading-relaxed italic">The best climbs, like the best controllers, are the ones that look effortless.</p>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════════════════════════
+           🧱 사용자 커스텀 블록 (Life 섹션) — 드래그 앤 드롭 지원
+           - 4가지 타입: Text / Photo / Gallery / Video
+           - 🖐 핸들로 드래그해서 자유롭게 순서 변경
+           - ↔ 너비 토글 (전체 / 절반) → 한 줄에 2개 배치 가능
+           - 업로드한 사진/영상은 현재 브라우저에만 저장됩니다 (IndexedDB)
+           ════════════════════════════════════════════════════════════ -->
+      <div data-blocks="life" class="life-blocks-container"></div>
+
+      <div class="add-block-bar">
+        <h4>➕ Add a new block</h4>
+        <div class="add-block-buttons">
+          <button onclick="addTextBlock('life')"><i class="fa-solid fa-align-left"></i> Text</button>
+          <button onclick="addImageBlock('life')"><i class="fa-solid fa-image"></i> Photo</button>
+          <button onclick="addGalleryBlock('life')"><i class="fa-solid fa-images"></i> Gallery</button>
+          <button onclick="addVideoBlock('life')"><i class="fa-solid fa-film"></i> Video</button>
+          <button onclick="addSlidesBlock('life')"><i class="fa-solid fa-file-pdf"></i> Slides (PDF)</button>
+        </div>
+        <p class="text-xs text-slate-500 mt-4 leading-relaxed max-w-md mx-auto">
+          ⚠️ 업로드한 사진·영상은 <b>현재 브라우저에만</b> 저장됩니다. 다른 사람한테는 안 보여요.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🦶 FOOTER
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="border-t border-white/5 bg-ink-900/40 py-12 mt-10">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 grid md:grid-cols-3 gap-8 items-start">
+      <div>
+        <p class="font-serif text-xl text-white mb-2">Juhyun's Space</p>
+        <p class="text-slate-400 text-sm leading-relaxed">Bio-inspired underwater robotics, robust manipulation, and the joy of building things that move.</p>
+      </div>
+      <div>
+        <p class="text-slate-300 font-semibold mb-3 text-sm">Sitemap</p>
+        <ul class="text-slate-400 text-sm space-y-1.5">
+          <li><a href="#about" class="hover:text-accent-400 transition">About</a></li>
+          <li><a href="#research" class="hover:text-accent-400 transition">Research</a></li>
+          <li><a href="#current" class="hover:text-accent-400 transition">Current Work</a></li>
+          <li><a href="#publications" class="hover:text-accent-400 transition">Publications</a></li>
+          <li><a href="#projects" class="hover:text-accent-400 transition">Projects</a></li>
+          <li><a href="#life" class="hover:text-accent-400 transition">Life</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-slate-300 font-semibold mb-3 text-sm">Get in Touch</p>
+        <ul class="text-slate-400 text-sm space-y-1.5">
+          <li><i class="fa-solid fa-envelope w-5 text-accent-400"></i> jj0523@stanford.edu</li>
+          <li><i class="fa-solid fa-location-dot w-5 text-accent-400"></i> Stanford, CA</li>
+          <li><a href="https://bdml.stanford.edu" target="_blank" class="hover:text-accent-400 transition"><i class="fa-solid fa-flask w-5 text-accent-400"></i> BDML — Cutkosky Group</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 mt-10 pt-6 border-t border-white/5 text-center text-slate-500 text-xs">
+      © <span id="year">2026</span> Juhyun Jung. All rights reserved. · Built with Tailwind CSS &amp; Font Awesome.
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🔒 로그인 모달
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="loginModal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-full bg-accent-600/20 flex items-center justify-center">
+          <i class="fa-solid fa-lock text-accent-400"></i>
+        </div>
+        <div>
+          <h3 class="font-serif text-xl text-white">Admin Login</h3>
+          <p class="text-xs text-slate-400">Sign in to edit your site</p>
+        </div>
+      </div>
+      <form id="loginForm" class="space-y-3">
+        <input type="text" id="loginId" placeholder="ID" autocomplete="username" class="login-input" />
+        <input type="password" id="loginPw" placeholder="Password" autocomplete="current-password" class="login-input" />
+        <p id="loginError" class="text-xs text-red-400 hidden">Wrong ID or password.</p>
+        <div class="flex gap-2 pt-2">
+          <button type="button" id="loginCancel" class="flex-1 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 text-sm transition">Cancel</button>
+          <button type="submit" class="flex-1 px-4 py-2.5 rounded-lg bg-accent-600 hover:bg-accent-500 text-white text-sm font-medium transition">Sign in</button>
+        </div>
+      </form>
+      <p class="text-[10px] text-slate-500 mt-4 leading-relaxed">
+        ⚠️ 이 로그인은 정적 사이트의 약식 인증입니다. 진짜 보안이 필요한 데이터는 저장하지 마세요.
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🛠️ 관리자 바 (로그인 후 표시)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="admin-bar" id="adminBar">
+    <span class="ab-label"><i class="fa-solid fa-user-shield mr-1"></i> Admin</span>
+    <button class="ab-btn" id="abEditToggle"><i class="fa-solid fa-pen"></i> Edit text</button>
+    <button class="ab-btn" id="abGA"><i class="fa-solid fa-chart-line"></i> Analytics</button>
+    <button class="ab-btn" id="abReset"><i class="fa-solid fa-arrow-rotate-left"></i> Reset</button>
+    <button class="ab-btn danger" id="abLogout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       💡 LIGHTBOX
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="lightbox" class="lightbox">
+    <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       📜 JAVASCRIPT
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+  /* ──────────────────────────────────────────────────────────────
+     🖼️ 갤러리 기본 이미지 목록
+     ──────────────────────────────────────────────────────────────
+     아래 배열에 파일명을 추가/제거하면 갤러리에 반영됩니다.
+     사진을 추가하려면:
+       1) 파일을 assets/ 폴더에 넣기 (예: assets/umi-5.jpg)
+       2) 아래 배열에 'assets/umi-5.jpg' 추가
+     또는 관리자 로그인 후 + 버튼으로 업로드하면 됩니다.
+     (업로드한 사진은 현재 브라우저에만 저장됩니다.)
+     ────────────────────────────────────────────────────────────── */
+  const DEFAULT_GALLERIES = {
+    umi: [
+      'assets/umi-1.jpg',
+      'assets/umi-2.jpg',
+      'assets/umi-3.jpg',
+      'assets/umi-4.jpg'
+    ],
+    whisker: [
+      'assets/whisker-1.jpg',
+      'assets/whisker-2.jpg',
+      'assets/whisker-3.jpg',
+      'assets/whisker-4.jpg'
+    ]
+  };
+
+  /* ──────────────────────────────────────────────────────────────
+     🔒 로그인 자격증명 (SHA-256 해시)
+     ──────────────────────────────────────────────────────────────
+     비밀번호를 바꾸려면:
+       1) Node나 온라인 SHA-256 계산기로 새 ID/PW의 해시 계산
+       2) 아래 ID_HASH / PW_HASH 값 교체
+     ⚠️ 정적 HTML이라 해시가 노출됩니다. 강력한 보안이 필요하면
+        서버 백엔드가 있는 사이트로 옮기세요.
+     ────────────────────────────────────────────────────────────── */
+  const ID_HASH = '56707353998140b088ee30affb65505788cc8e3af470d32818bf8a66d145f1c8'; // jj0523
+  const PW_HASH = '72ab994fa2eb426c051ef59cad617750bfe06d7cf6311285ff79c19c32afd236'; // 1q2w3e4r
+
+  /* ──────────────────────────────────────────────────────────────
+     📊 Google Analytics 대시보드 URL
+     ──────────────────────────────────────────────────────────────
+     GA4 속성을 만든 후 자신의 보고서 URL로 교체할 수 있습니다.
+     기본값: GA 첫 화면. 실시간 보고서는 자동으로 위치/방문자 표시.
+     ────────────────────────────────────────────────────────────── */
+  const GA_DASHBOARD_URL = 'https://analytics.google.com/analytics/web/';
+
+  // ════════════ 유틸: SHA-256 해시 ════════════
+  async function sha256(text) {
+    const buf = new TextEncoder().encode(text);
+    const hash = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  // ════════════ 모바일 메뉴 ════════════
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    const icon = menuBtn.querySelector('i');
+    icon.classList.toggle('fa-bars'); icon.classList.toggle('fa-xmark');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      const icon = menuBtn.querySelector('i');
+      icon.classList.add('fa-bars'); icon.classList.remove('fa-xmark');
+    });
+  });
+
+  // ════════════ 스크롤 fade-in ════════════
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ════════════ 연도 자동 갱신 ════════════
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ════════════ 🖼️ 갤러리 렌더링 ════════════
+  function getGalleryImages(key) {
+    const stored = localStorage.getItem('gallery_' + key);
+    if (stored) {
+      try { return JSON.parse(stored); } catch(e) {}
+    }
+    return DEFAULT_GALLERIES[key].slice();
+  }
+  function saveGalleryImages(key, arr) {
+    localStorage.setItem('gallery_' + key, JSON.stringify(arr));
+  }
+  function renderGallery(key) {
+    const grid = document.querySelector(`[data-gallery="${key}"]`);
+    if (!grid) return;
+    const images = getGalleryImages(key);
+    const isAdmin = document.body.classList.contains('admin-mode');
+
+    grid.innerHTML = '';
+    images.forEach((src, idx) => {
+      const tile = document.createElement('div');
+      tile.className = 'gallery-tile';
+      tile.innerHTML = `
+        <img src="${src}" alt="${key} ${idx+1}" loading="lazy" onerror="this.parentElement.style.display='none'" />
+        <div class="tile-delete" data-key="${key}" data-idx="${idx}" title="Remove"><i class="fa-solid fa-xmark"></i></div>
+      `;
+      tile.querySelector('img').addEventListener('click', () => openLightbox(src));
+      tile.querySelector('.tile-delete').addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        if (!confirm('Remove this image from the gallery?')) return;
+        const arr = getGalleryImages(key);
+        arr.splice(idx, 1);
+        saveGalleryImages(key, arr);
+        renderGallery(key);
+      });
+      grid.appendChild(tile);
+    });
+
+    if (isAdmin) {
+      const add = document.createElement('div');
+      add.className = 'gallery-add';
+      add.innerHTML = `<div class="text-center"><i class="fa-solid fa-plus text-2xl mb-1"></i><div class="text-xs uppercase tracking-wider">Add photo</div></div>`;
+      add.addEventListener('click', () => triggerUpload(key));
+      grid.appendChild(add);
+    }
+  }
+  ['umi','whisker'].forEach(renderGallery);
+
+  // ════════════ 🖼️ 이미지 업로드 (관리자) ════════════
+  function triggerUpload(key) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.multiple = true;
+    input.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files || []);
+      for (const f of files) {
+        const dataUrl = await resizeImage(f, 1400);
+        const arr = getGalleryImages(key);
+        arr.push(dataUrl);
+        try {
+          saveGalleryImages(key, arr);
+        } catch(err) {
+          alert('브라우저 저장 공간이 부족합니다. 사진 개수를 줄이거나 사이즈를 작게 해보세요.');
+          break;
+        }
+      }
+      renderGallery(key);
+    });
+    input.click();
+  }
+  function resizeImage(file, maxDim) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > height && width > maxDim) { height *= maxDim / width; width = maxDim; }
+          else if (height > maxDim) { width *= maxDim / height; height = maxDim; }
+          const canvas = document.createElement('canvas');
+          canvas.width = width; canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.85));
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ════════════ 💡 Lightbox ════════════
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  function openLightbox(src) {
+    lightboxImg.src = src;
+    lightbox.classList.add('open');
+  }
+  document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('open'));
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('open'); });
+
+  // ════════════ 🔒 로그인 처리 ════════════
+  const loginModal = document.getElementById('loginModal');
+  const loginForm  = document.getElementById('loginForm');
+  const loginError = document.getElementById('loginError');
+  function openLogin() {
+    loginError.classList.add('hidden');
+    loginForm.reset();
+    loginModal.classList.add('open');
+    setTimeout(() => document.getElementById('loginId').focus(), 100);
+  }
+  function closeLogin() { loginModal.classList.remove('open'); }
+  document.getElementById('loginBtn').addEventListener('click', openLogin);
+  document.getElementById('loginBtnMobile').addEventListener('click', openLogin);
+  document.getElementById('loginCancel').addEventListener('click', closeLogin);
+  loginModal.addEventListener('click', e => { if (e.target === loginModal) closeLogin(); });
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('loginId').value.trim();
+    const pw = document.getElementById('loginPw').value;
+    const [idH, pwH] = await Promise.all([sha256(id), sha256(pw)]);
+    if (idH === ID_HASH && pwH === PW_HASH) {
+      sessionStorage.setItem('admin', '1');
+      enterAdmin();
+      closeLogin();
+    } else {
+      loginError.classList.remove('hidden');
+    }
+  });
+
+  function enterAdmin() {
+    document.body.classList.add('admin-mode');
+    ['umi','whisker'].forEach(renderGallery);
+  }
+  function exitAdmin() {
+    sessionStorage.removeItem('admin');
+    document.body.classList.remove('admin-mode');
+    document.body.classList.remove('editing');
+    document.querySelectorAll('[data-editable]').forEach(el => el.removeAttribute('contenteditable'));
+    saveEdits();
+    ['umi','whisker'].forEach(renderGallery);
+  }
+  // 새로고침 후에도 관리자 모드 유지 (세션 단위)
+  if (sessionStorage.getItem('admin') === '1') enterAdmin();
+
+  // ════════════ 🛠️ 관리자 바 기능 ════════════
+  // 1) 텍스트 편집 토글
+  document.getElementById('abEditToggle').addEventListener('click', () => {
+    const editing = document.body.classList.toggle('editing');
+    document.querySelectorAll('[data-editable]').forEach(el => {
+      if (editing) el.setAttribute('contenteditable', 'true');
+      else el.removeAttribute('contenteditable');
+    });
+    if (!editing) saveEdits();
+    document.getElementById('abEditToggle').innerHTML = editing
+      ? '<i class="fa-solid fa-check"></i> Done editing'
+      : '<i class="fa-solid fa-pen"></i> Edit text';
+  });
+  function saveEdits() {
+    document.querySelectorAll('[data-editable]').forEach(el => {
+      localStorage.setItem('edit_' + el.dataset.editable, el.innerHTML);
+    });
+  }
+  // 페이지 로드 시 편집 내용 복원
+  document.querySelectorAll('[data-editable]').forEach(el => {
+    const saved = localStorage.getItem('edit_' + el.dataset.editable);
+    if (saved !== null) el.innerHTML = saved;
+  });
+
+  // 2) Google Analytics 대시보드 열기
+  document.getElementById('abGA').addEventListener('click', () => {
+    const note = `📊 Google Analytics
+
+방문자 수와 위치는 GA의 자체 대시보드에서 확인하는 것이 가장 정확합니다.
+
+1) https://analytics.google.com 으로 이동
+2) 좌측 메뉴 → "Reports" → "Realtime"
+3) "Users by Country" 카드에서 실시간 위치 확인
+
+GA 대시보드를 새 탭에서 열까요?`;
+    if (confirm(note)) window.open(GA_DASHBOARD_URL, '_blank');
+  });
+
+  // 3) 모든 변경사항 초기화
+  document.getElementById('abReset').addEventListener('click', () => {
+    if (!confirm('업로드한 사진과 편집한 텍스트를 모두 원래대로 되돌릴까요?')) return;
+    Object.keys(localStorage)
+      .filter(k => k.startsWith('gallery_') || k.startsWith('edit_'))
+      .forEach(k => localStorage.removeItem(k));
+    location.reload();
+  });
+
+  // 4) 로그아웃
+  document.getElementById('abLogout').addEventListener('click', exitAdmin);
+
+  /* ══════════════════════════════════════════════════════════════
+     🧱 LIFE 섹션: IndexedDB 미디어 저장소 + 커스텀 블록 시스템
+     ══════════════════════════════════════════════════════════════
+     - 영상/사진을 브라우저 IndexedDB에 Blob으로 저장 (대용량 가능)
+     - 블록 메타데이터는 localStorage에 JSON으로
+     - 4가지 블록 타입: text / image / gallery / video
+     ══════════════════════════════════════════════════════════════ */
+
+  const DB_NAME = 'juhyun-site';
+  const DB_VERSION = 1;
+  const STORE = 'media';
+
+  function openDB() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onupgradeneeded = e => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE);
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+  async function putMedia(id, blob) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).put(blob, id);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+  async function getMedia(id) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readonly');
+      const r = tx.objectStore(STORE).get(id);
+      r.onsuccess = () => resolve(r.result);
+      r.onerror = () => reject(r.error);
+    });
+  }
+  async function deleteMedia(id) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).delete(id);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+
+  function uid() { return 'b' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  // ════════════════════════════════════════════════════════════
+  // 🧱 블록 시스템 — 여러 섹션에서 재사용 (드래그 가능)
+  // ════════════════════════════════════════════════════════════
+  // 저장 위치:
+  //   - 메타데이터: localStorage['blocks_<section>']
+  //   - 미디어(사진/영상): IndexedDB 'media' 스토어
+  // 컨테이너는 HTML에서 data-blocks="<section>" 속성으로 표시
+  // ════════════════════════════════════════════════════════════
+
+  const BLOCK_SECTIONS = ['about', 'research', 'publications', 'projects', 'life'];
+
+  // 구버전 키 → 신버전 키 마이그레이션 (기존 Life 블록 보존)
+  (function migrateOldBlockKeys() {
+    const old = localStorage.getItem('life_blocks');
+    if (old !== null && localStorage.getItem('blocks_life') === null) {
+      localStorage.setItem('blocks_life', old);
+    }
+    if (old !== null) localStorage.removeItem('life_blocks');
+  })();
+
+  function getBlocks(section) {
+    try { return JSON.parse(localStorage.getItem('blocks_' + section) || '[]'); }
+    catch(e) { return []; }
+  }
+  function saveBlocks(section, arr) {
+    localStorage.setItem('blocks_' + section, JSON.stringify(arr));
+  }
+
+  // 이전 렌더의 object URL 정리 (메모리 누수 방지)
+  let activeObjectUrls = [];
+  function clearObjectUrls() {
+    activeObjectUrls.forEach(u => { try { URL.revokeObjectURL(u); } catch(e){} });
+    activeObjectUrls = [];
+  }
+  function trackUrl(u) { activeObjectUrls.push(u); return u; }
+
+  // ════════ 이미지 리사이즈 → Blob ════════
+  function resizeImageToBlob(file, maxDim) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = new Image();
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > height && width > maxDim) { height *= maxDim / width; width = maxDim; }
+          else if (height > maxDim) { width *= maxDim / height; height = maxDim; }
+          const canvas = document.createElement('canvas');
+          canvas.width = width; canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          canvas.toBlob(b => resolve(b), 'image/jpeg', 0.85);
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ════════════════════════════════════════════════════════════════════
+  // 🟦 GridStack.js — 12열 자유 드래그 그리드
+  // ────────────────────────────────────────────────────────────────────
+  // • 각 블록: { gridX, gridY, gridW, gridH }
+  // • 사용자가 드래그/리사이즈하면 그 위치/크기가 그대로 저장됨
+  // • float:true → 빈 셀이 자동 채워지지 않음 (의도된 공간 보존)
+  // • 모바일(768px 이하)에서는 자동 1열로 폴딩
+  // ════════════════════════════════════════════════════════════════════
+
+  // 섹션별 GridStack 인스턴스 보관
+  let gridInstances = {};
+
+  // 셀 단위 설정 (모든 섹션 공유)
+  const GRID_COLS = 12;
+  const GRID_CELL_HEIGHT = 60;  // 한 셀의 높이(px) — 작게 잡아 세밀한 리사이즈 가능
+  const GRID_MARGIN = 8;
+
+  // 블록 타입별 기본 (W, H) — 신규 블록 추가 시
+  const DEFAULT_BLOCK_SIZE = {
+    text:    { w: 6, h: 3 },
+    image:   { w: 4, h: 5 },
+    video:   { w: 6, h: 6 },
+    gallery: { w: 8, h: 6 },
+    slides:  { w: 12, h: 9 },   // 슬라이드는 큰 직사각형 (16:9 비슷)
+  };
+
+  // ════════════════════════════════════════════════════════════════════
+  // 📊 슬라이드 뷰어 (PDF.js 기반) — PowerPoint를 PDF로 export해서 업로드하면
+  // 페이지마다 슬라이드처럼 넘김. 애니메이션이 필요한 슬라이드는 그 슬라이드만
+  // 영상(MP4)으로 덮어쓰면, 해당 슬라이드에서 자동으로 영상이 재생됨.
+  // ════════════════════════════════════════════════════════════════════
+  const slideStates = {};   // blockId → { pdfDoc, currentPage, totalPages, mediaId, section }
+
+  // PDF 로드 (한 번만 파싱, 이후 재사용)
+  async function loadPdfDoc(blockId, mediaId, section) {
+    if (slideStates[blockId]?.mediaId === mediaId && slideStates[blockId]?.pdfDoc) {
+      slideStates[blockId].section = section;
+      return slideStates[blockId];
+    }
+    const blob = await getMedia(mediaId);
+    if (!blob || typeof pdfjsLib === 'undefined') return null;
+    const arrayBuffer = await blob.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    slideStates[blockId] = {
+      pdfDoc: pdf,
+      currentPage: slideStates[blockId]?.currentPage || 1,
+      totalPages: pdf.numPages,
+      mediaId,
+      section,
+    };
+    return slideStates[blockId];
+  }
+
+  // 현재 슬라이드를 캔버스에 렌더 (또는 영상 override가 있으면 영상 재생)
+  async function renderSlide(blockId) {
+    const state = slideStates[blockId];
+    if (!state) return;
+    const viewer = document.querySelector(`.slide-viewer[data-block-id="${blockId}"]`);
+    if (!viewer) return;
+    const canvas = viewer.querySelector('.slide-canvas');
+    const video = viewer.querySelector('.slide-video');
+    const counter = viewer.querySelector('.slide-counter');
+    const loading = viewer.querySelector('.slide-loading');
+    const prevBtn = viewer.querySelector('.slide-prev');
+    const nextBtn = viewer.querySelector('.slide-next');
+
+    if (counter) counter.textContent = `${state.currentPage} / ${state.totalPages}`;
+    if (prevBtn) prevBtn.disabled = state.currentPage <= 1;
+    if (nextBtn) nextBtn.disabled = state.currentPage >= state.totalPages;
+
+    // 영상 override 확인
+    const blocks = getBlocks(state.section);
+    const b = blocks.find(x => x.id === blockId);
+    const overrideMid = b?.slideOverrides?.[state.currentPage];
+
+    if (overrideMid) {
+      const vBlob = await getMedia(overrideMid);
+      if (vBlob) {
+        const url = trackUrl(URL.createObjectURL(vBlob));
+        video.src = url;
+        video.hidden = false;
+        canvas.hidden = true;
+        if (loading) loading.classList.add('hidden');
+        viewer.classList.add('video-mode');
+        try { await video.play(); } catch(e) { /* 자동재생 차단되면 사용자가 클릭 */ }
+        return;
+      }
+    }
+
+    // 일반 PDF 페이지 렌더링
+    viewer.classList.remove('video-mode');
+    canvas.hidden = false;
+    video.hidden = true;
+    video.pause();
+
+    if (loading) loading.classList.remove('hidden');
+    try {
+      const page = await state.pdfDoc.getPage(state.currentPage);
+      const stage = viewer.querySelector('.slide-stage');
+      const containerW = stage.offsetWidth || 800;
+      const containerH = stage.offsetHeight || 500;
+      const v1 = page.getViewport({ scale: 1 });
+      // 셀 크기에 맞춰 비율 유지하면서 fit
+      const scale = Math.min(containerW / v1.width, containerH / v1.height) * (window.devicePixelRatio || 1.5);
+      const viewport = page.getViewport({ scale });
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      canvas.style.width = `${viewport.width / (window.devicePixelRatio || 1.5)}px`;
+      canvas.style.height = `${viewport.height / (window.devicePixelRatio || 1.5)}px`;
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    } catch(e) {
+      console.error('Slide render error:', e);
+    } finally {
+      if (loading) loading.classList.add('hidden');
+    }
+  }
+
+  // 슬라이드 네비게이션
+  function nextSlide(blockId) {
+    const s = slideStates[blockId];
+    if (!s || s.currentPage >= s.totalPages) return;
+    s.currentPage++;
+    renderSlide(blockId);
+  }
+  function prevSlide(blockId) {
+    const s = slideStates[blockId];
+    if (!s || s.currentPage <= 1) return;
+    s.currentPage--;
+    renderSlide(blockId);
+  }
+  function fullscreenSlide(blockId) {
+    const el = document.querySelector(`.slide-viewer[data-block-id="${blockId}"]`);
+    if (!el) return;
+    if (document.fullscreenElement) document.exitFullscreen();
+    else el.requestFullscreen?.();
+  }
+
+  // 키보드 / 터치 입력 — 슬라이드 뷰어가 focus되었거나 hover 중일 때만 작동
+  document.addEventListener('keydown', (e) => {
+    const focused = document.activeElement?.closest?.('.slide-viewer');
+    const hovered = document.querySelector('.slide-viewer:hover');
+    const target = focused || hovered;
+    if (!target) return;
+    const blockId = target.dataset.blockId;
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(blockId); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(blockId); }
+    else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); fullscreenSlide(blockId); }
+  });
+
+  // 슬라이드 영역 클릭 — 좌측 1/3은 prev, 우측 2/3은 next
+  // (단, 영상 컨트롤 클릭은 무시 — 재생/일시정지를 방해하지 않도록)
+  function onSlideStageClick(e, blockId) {
+    if (e.target.closest('video')) return;
+    const stage = e.currentTarget;
+    const rect = stage.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    if (x < rect.width / 3) prevSlide(blockId);
+    else nextSlide(blockId);
+  }
+
+  // 슬라이드 로드 실패 시 에러 표시
+  function showSlideError(blockId, msg) {
+    const viewer = document.querySelector(`.slide-viewer[data-block-id="${blockId}"]`);
+    if (!viewer) return;
+    const loading = viewer.querySelector('.slide-loading');
+    if (loading) {
+      loading.classList.remove('hidden');
+      loading.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-2"></i> ${escapeHtml(msg || 'Could not load PDF')}`;
+    }
+  }
+
+  // 관리자 — PDF 업로드 (신규 또는 교체)
+  async function uploadSlidesPdf(section, blockId) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/pdf,.pdf';
+    input.onchange = async () => {
+      const f = input.files?.[0];
+      if (!f) return;
+      const sizeMB = (f.size / (1024 * 1024)).toFixed(1);
+      if (f.size > 200 * 1024 * 1024) {
+        if (!confirm(`이 PDF는 ${sizeMB}MB 입니다. 브라우저 저장소를 많이 차지할 수 있어요. 계속할까요?`)) return;
+      }
+      const mid = uid();
+      try { await putMedia(mid, f); }
+      catch(e) { alert('저장 실패: ' + e.message); return; }
+      const blocks = getBlocks(section);
+      const b = blocks.find(x => x.id === blockId);
+      if (!b) return;
+      // 기존 PDF가 있으면 삭제
+      if (b.pdfMediaId) await deleteMedia(b.pdfMediaId);
+      b.pdfMediaId = mid;
+      // 현재 페이지 리셋
+      if (slideStates[blockId]) slideStates[blockId].currentPage = 1;
+      saveBlocks(section, blocks);
+      renderBlocks(section);
+    };
+    input.click();
+  }
+
+  // 관리자 — 현재 슬라이드를 영상으로 교체 (애니메이션용)
+  async function overrideCurrentSlide(section, blockId) {
+    const state = slideStates[blockId];
+    if (!state) { alert('먼저 PDF를 업로드해주세요.'); return; }
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'video/*';
+    input.onchange = async () => {
+      const f = input.files?.[0];
+      if (!f) return;
+      const sizeMB = (f.size / (1024 * 1024)).toFixed(1);
+      if (f.size > 150 * 1024 * 1024) {
+        if (!confirm(`이 영상은 ${sizeMB}MB 입니다. 계속할까요?`)) return;
+      }
+      const mid = uid();
+      try { await putMedia(mid, f); }
+      catch(e) { alert('저장 실패: ' + e.message); return; }
+      const blocks = getBlocks(section);
+      const b = blocks.find(x => x.id === blockId);
+      if (!b) return;
+      if (!b.slideOverrides) b.slideOverrides = {};
+      const oldMid = b.slideOverrides[state.currentPage];
+      if (oldMid) await deleteMedia(oldMid);
+      b.slideOverrides[state.currentPage] = mid;
+      saveBlocks(section, blocks);
+      await renderSlide(blockId);
+    };
+    input.click();
+  }
+
+  // 관리자 — 현재 슬라이드의 영상 override 제거 (원래 PDF로 복귀)
+  async function clearSlideOverride(section, blockId) {
+    const state = slideStates[blockId];
+    if (!state) return;
+    const blocks = getBlocks(section);
+    const b = blocks.find(x => x.id === blockId);
+    if (!b || !b.slideOverrides) return;
+    const oldMid = b.slideOverrides[state.currentPage];
+    if (!oldMid) { alert('이 슬라이드에는 영상 override가 없어요.'); return; }
+    await deleteMedia(oldMid);
+    delete b.slideOverrides[state.currentPage];
+    saveBlocks(section, blocks);
+    await renderSlide(blockId);
+  }
+
+  // 관리자 — 새 슬라이드 블록 추가 (생성 직후 PDF 업로드 다이얼로그 자동 오픈)
+  async function addSlidesBlock(section) {
+    const blocks = getBlocks(section);
+    const newBlock = {
+      id: uid(),
+      type: 'slides',
+      pdfMediaId: null,
+      slideOverrides: {},
+      caption: '',
+      ..._placeNewBlock(blocks, 'slides'),
+    };
+    blocks.push(newBlock);
+    saveBlocks(section, blocks);
+    renderBlocks(section);
+    // 잠시 후 자동으로 PDF 업로드 안내
+    setTimeout(() => uploadSlidesPdf(section, newBlock.id), 250);
+  }
+
+  // ────────────────────────────────────────────────────────────────────
+  // 마이그레이션: 구버전 데이터(width%, breakAfter, rowAlign) → grid 좌표
+  // 반환: { blocks, changed } — changed=true면 saveBlocks 필요
+  // ────────────────────────────────────────────────────────────────────
+  function migrateToGrid(blocks) {
+    if (!blocks || blocks.length === 0) return { blocks, changed: false };
+    // 모든 블록이 이미 그리드 좌표를 가지고 있으면 통과
+    const needsMigration = blocks.some(b => typeof b.gridX !== 'number');
+    if (!needsMigration) return { blocks, changed: false };
+
+    let y = 0;
+    let x = 0;
+    for (const b of blocks) {
+      if (typeof b.gridX === 'number') {
+        // 이미 좌표가 있는 블록은 건드리지 않되, 다음 블록 배치 기준점 업데이트
+        x = b.gridX + (b.gridW || 4);
+        y = Math.max(y, b.gridY || 0);
+        continue;
+      }
+      // 너비 % → 그리드 칸 수 (12 기준)
+      const widthPct = typeof b.width === 'number' ? b.width
+                     : b.width === 'half' ? 50 : 100;
+      const w = Math.max(2, Math.min(GRID_COLS, Math.round(widthPct / 100 * GRID_COLS)));
+      const h = DEFAULT_BLOCK_SIZE[b.type]?.h || 4;
+      // 한 줄에 안 들어가면 다음 줄로
+      if (x + w > GRID_COLS) { x = 0; y += h; }
+      b.gridX = x;
+      b.gridY = y;
+      b.gridW = w;
+      b.gridH = h;
+      x += w;
+      if (b.breakAfter) { x = 0; y += h; }
+      // 구버전 필드 정리
+      delete b.width;
+      delete b.breakAfter;
+      delete b.rowAlign;
+    }
+    return { blocks, changed: true };
+  }
+
+  // ────────────────────────────────────────────────────────────────────
+  // 신규 블록 추가 시 빈 자리 자동 탐색 — 가장 아래쪽 빈 자리에 배치
+  // ────────────────────────────────────────────────────────────────────
+  function findNextSlot(blocks, w, h) {
+    // 가장 아래(가장 큰 y)에 위치한 블록을 찾아 그 아래로 배치
+    let maxBottom = 0;
+    for (const b of blocks) {
+      const bottom = (b.gridY || 0) + (b.gridH || 1);
+      if (bottom > maxBottom) maxBottom = bottom;
+    }
+    return { x: 0, y: maxBottom, w, h };
+  }
+
+  // ────────────────────────────────────────────────────────────────────
+  // GridStack 인스턴스 파괴 (전부 또는 특정 섹션)
+  // ────────────────────────────────────────────────────────────────────
+  function destroyGrid(section) {
+    if (gridInstances[section]) {
+      try { gridInstances[section].destroy(false); } catch(e) {}
+      gridInstances[section] = null;
+    }
+  }
+  function destroyAllGrids() {
+    Object.keys(gridInstances).forEach(destroyGrid);
+    gridInstances = {};
+  }
+  // 호환성: 기존 코드의 destroyAllSortables 호출도 지원
+  const destroyAllSortables = destroyAllGrids;
+
+  // ────────────────────────────────────────────────────────────────────
+  // 블록 1개의 내부 콘텐츠를 HTML 문자열로 생성 (미디어 비동기 로드)
+  // ────────────────────────────────────────────────────────────────────
+  async function buildBlockInner(b) {
+    let inner = '';
+    if (b.type === 'text') {
+      inner = `
+        ${b.heading ? `<h4 class="font-serif text-xl text-white mb-3">${escapeHtml(b.heading)}</h4>` : ''}
+        <p class="text-slate-300 leading-relaxed whitespace-pre-wrap">${escapeHtml(b.body || '')}</p>
+      `;
+    } else if (b.type === 'image') {
+      const blob = await getMedia(b.mediaId);
+      if (blob) {
+        const url = trackUrl(URL.createObjectURL(blob));
+        inner = `
+          <img src="${url}" alt="" class="w-full rounded-lg cursor-zoom-in" onclick="openLightbox('${url}')" />
+          ${b.caption ? `<p class="text-xs text-slate-400 mt-3 text-center italic">${escapeHtml(b.caption)}</p>` : ''}
+        `;
+      } else inner = '<p class="text-slate-500 text-sm">⚠ Image data missing</p>';
+    } else if (b.type === 'video') {
+      const blob = await getMedia(b.mediaId);
+      if (blob) {
+        const url = trackUrl(URL.createObjectURL(blob));
+        inner = `
+          <video src="${url}" controls playsinline preload="metadata" class="w-full rounded-lg bg-black no-drag"></video>
+          ${b.caption ? `<p class="text-xs text-slate-400 mt-3 text-center italic">${escapeHtml(b.caption)}</p>` : ''}
+        `;
+      } else inner = '<p class="text-slate-500 text-sm">⚠ Video data missing</p>';
+    } else if (b.type === 'gallery') {
+      const ids = b.mediaIds || [];
+      const blobs = await Promise.all(ids.map(id => getMedia(id)));
+      const tiles = blobs.map(blob => {
+        if (!blob) return '';
+        const url = trackUrl(URL.createObjectURL(blob));
+        return `<div class="gallery-tile" onclick="openLightbox('${url}')"><img src="${url}" alt="" /></div>`;
+      }).join('');
+      inner = `
+        <div class="gallery-grid">${tiles}</div>
+        ${b.caption ? `<p class="text-xs text-slate-400 mt-3 text-center italic">${escapeHtml(b.caption)}</p>` : ''}
+      `;
+    } else if (b.type === 'slides') {
+      // 📊 슬라이드 뷰어 — PDF가 아직 없으면 업로드 안내, 있으면 뷰어 렌더
+      const isAdmin = document.body.classList.contains('admin-mode');
+      const section = b._section || '';
+      if (!b.pdfMediaId) {
+        inner = `
+          <div class="slide-empty">
+            <div class="icon"><i class="fa-solid fa-file-pdf"></i></div>
+            <p>No slides uploaded yet.<br/><span class="text-slate-400 text-xs">PowerPoint에서 PDF로 export한 파일을 업로드하세요.</span></p>
+            ${isAdmin ? `<button onclick="uploadSlidesPdf('${section}', '${b.id}')"><i class="fa-solid fa-upload mr-2"></i>Upload PDF</button>` : ''}
+          </div>
+        `;
+      } else {
+        inner = `
+          <div class="slide-viewer no-drag" data-block-id="${b.id}" tabindex="0">
+            <div class="slide-stage" onclick="onSlideStageClick(event, '${b.id}')">
+              <canvas class="slide-canvas"></canvas>
+              <video class="slide-video no-drag" hidden controls muted playsinline loop></video>
+              <div class="slide-loading"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Loading…</div>
+            </div>
+            <div class="slide-controls">
+              <button class="slide-prev no-drag" onclick="prevSlide('${b.id}')" title="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+              <span class="slide-counter">— / —</span>
+              <button class="slide-next no-drag" onclick="nextSlide('${b.id}')" title="Next"><i class="fa-solid fa-chevron-right"></i></button>
+              <button class="no-drag" onclick="fullscreenSlide('${b.id}')" title="Fullscreen (F)"><i class="fa-solid fa-expand"></i></button>
+            </div>
+            ${isAdmin ? `
+              <div class="slide-admin-bar">
+                <button onclick="uploadSlidesPdf('${section}', '${b.id}')" title="Replace PDF"><i class="fa-solid fa-file-pdf"></i> New PDF</button>
+                <button onclick="overrideCurrentSlide('${section}', '${b.id}')" title="Add animation video"><i class="fa-solid fa-film"></i> Replace this slide with video</button>
+                <button class="danger" onclick="clearSlideOverride('${section}', '${b.id}')" title="Remove video"><i class="fa-solid fa-rotate-left"></i> Clear video</button>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+    }
+    return inner;
+  }
+
+  // ────────────────────────────────────────────────────────────────────
+  // 렌더링 — 섹션 컨테이너를 GridStack root로 만들고 블록을 grid item으로 추가
+  // ────────────────────────────────────────────────────────────────────
+  async function renderBlocks(section) {
+    const container = document.querySelector(`[data-blocks="${section}"]`);
+    if (!container) return;
+    // 이전 GridStack 인스턴스 정리
+    destroyGrid(section);
+    clearObjectUrls();
+
+    const blocks = getBlocks(section);
+    const { blocks: migrated, changed } = migrateToGrid(blocks);
+    if (changed) saveBlocks(section, migrated);
+    const isAdmin = document.body.classList.contains('admin-mode');
+
+    // 컨테이너를 비우고 GridStack 클래스 부여
+    container.innerHTML = '';
+    container.classList.add('grid-stack');
+
+    // 각 블록을 .grid-stack-item으로 미리 빌드 (콘텐츠는 비동기)
+    for (const b of migrated) {
+      const item = document.createElement('div');
+      item.className = 'grid-stack-item';
+      item.setAttribute('gs-x', b.gridX ?? 0);
+      item.setAttribute('gs-y', b.gridY ?? 0);
+      item.setAttribute('gs-w', b.gridW ?? 4);
+      item.setAttribute('gs-h', b.gridH ?? 3);
+      item.setAttribute('gs-id', b.id);
+      item.setAttribute('gs-min-w', 2);
+      item.setAttribute('gs-min-h', 2);
+
+      const content = document.createElement('div');
+      content.className = 'grid-stack-item-content';
+
+      const wrap = document.createElement('div');
+      wrap.className = 'life-block' + (b.type === 'slides' ? ' life-block-slides' : '');
+      wrap.dataset.id = b.id;
+      wrap.dataset.section = section;
+
+      // buildBlockInner가 b._section을 사용하므로 임시로 주입
+      b._section = section;
+      const innerHTML = await buildBlockInner(b);
+      delete b._section;
+
+      // 툴바 (관리자 모드 — drag-handle, 복제, 편집, 삭제만 남김)
+      // 위치/크기는 GridStack이 직접 처리 (셀 위로 드래그·모서리로 리사이즈)
+      const tools = isAdmin ? `
+        <div class="block-toolbar">
+          <button class="drag-handle" title="Drag to move"><i class="fa-solid fa-up-down-left-right"></i></button>
+          <button onclick="duplicateBlock('${section}', '${b.id}')" title="Duplicate"><i class="fa-solid fa-clone"></i></button>
+          <button onclick="editBlock('${section}', '${b.id}')" title="Edit"><i class="fa-solid fa-pen"></i></button>
+          <button onclick="deleteBlock('${section}', '${b.id}')" class="danger" title="Delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      ` : '';
+
+      wrap.innerHTML = tools + `<div class="block-body">${innerHTML}</div>`;
+      content.appendChild(wrap);
+      item.appendChild(content);
+      container.appendChild(item);
+    }
+
+    // GridStack 초기화
+    if (typeof GridStack === 'undefined') return;
+    const grid = GridStack.init({
+      column: GRID_COLS,
+      cellHeight: GRID_CELL_HEIGHT,
+      margin: GRID_MARGIN,
+      float: true,            // 빈 셀 유지 (자동 채우기 X)
+      animate: true,
+      handle: '.drag-handle', // .drag-handle을 잡았을 때만 드래그
+      // 비디오/버튼/링크 등은 드래그 대상에서 제외 (정상 클릭 보장)
+      disableDrag: !isAdmin,
+      disableResize: !isAdmin,
+      staticGrid: !isAdmin,
+      resizable: { handles: 'e, se, s, sw, w' },
+      // 모바일 768px 이하: 1열
+      columnOpts: {
+        breakpointForWindow: true,
+        breakpoints: [
+          { w: 768, c: 1 },
+        ],
+      },
+    }, container);
+    gridInstances[section] = grid;
+
+    // 변경 이벤트: 좌표/크기 변경 시 저장 + 슬라이드 뷰어 재렌더 (셀 크기 변경 대응)
+    grid.on('change', (event, items) => {
+      if (!items || !items.length) return;
+      const blocks = getBlocks(section);
+      const byId = Object.fromEntries(blocks.map(b => [b.id, b]));
+      items.forEach(item => {
+        const id = item.id || item.el?.getAttribute('gs-id');
+        const b = byId[id];
+        if (!b) return;
+        b.gridX = item.x;
+        b.gridY = item.y;
+        b.gridW = item.w;
+        b.gridH = item.h;
+        // 슬라이드 블록이면 새 크기로 다시 렌더
+        if (b.type === 'slides' && slideStates[id]) {
+          setTimeout(() => renderSlide(id), 50);
+        }
+      });
+      saveBlocks(section, blocks);
+    });
+
+    // DOM이 완성된 후 슬라이드 블록 초기화 (PDF 로드 + 첫 페이지 렌더)
+    for (const b of migrated) {
+      if (b.type === 'slides' && b.pdfMediaId) {
+        loadPdfDoc(b.id, b.pdfMediaId, section)
+          .then(state => {
+            if (state) renderSlide(b.id);
+            else showSlideError(b.id, 'PDF data missing or PDF.js not loaded');
+          })
+          .catch(e => showSlideError(b.id, e.message || 'Failed to load PDF'));
+      }
+    }
+  }
+
+  // 모든 섹션 한 번에 렌더
+  async function renderAllBlocks() {
+    for (const s of BLOCK_SECTIONS) await renderBlocks(s);
+  }
+
+  // ════════ 블록 조작 (모두 section + id 받음) ════════
+  // toggleBlockWidth / toggleBreakAfter / cycleRowAlign 모두 제거됨
+  // — GridStack에서 직접 드래그/리사이즈로 처리
+
+  // 📋 블록 복제 (미디어 포함)
+  async function duplicateBlock(section, id) {
+    const blocks = getBlocks(section);
+    const idx = blocks.findIndex(x => x.id === id);
+    if (idx < 0) return;
+    const original = blocks[idx];
+    const clone = JSON.parse(JSON.stringify(original));
+    clone.id = uid();
+    // 미디어가 있으면 IndexedDB에도 복제 (서로 다른 ID로)
+    if (clone.mediaId) {
+      const blob = await getMedia(clone.mediaId);
+      if (blob) {
+        const newMid = uid();
+        await putMedia(newMid, blob);
+        clone.mediaId = newMid;
+      }
+    }
+    if (clone.mediaIds && clone.mediaIds.length) {
+      const newMids = [];
+      for (const mid of clone.mediaIds) {
+        const blob = await getMedia(mid);
+        if (blob) {
+          const newMid = uid();
+          await putMedia(newMid, blob);
+          newMids.push(newMid);
+        }
+      }
+      clone.mediaIds = newMids;
+    }
+    // 슬라이드 블록 — PDF + 각 슬라이드 영상 override 모두 복제
+    if (clone.pdfMediaId) {
+      const blob = await getMedia(clone.pdfMediaId);
+      if (blob) {
+        const newMid = uid();
+        await putMedia(newMid, blob);
+        clone.pdfMediaId = newMid;
+      }
+    }
+    if (clone.slideOverrides && Object.keys(clone.slideOverrides).length) {
+      const newOverrides = {};
+      for (const [page, mid] of Object.entries(clone.slideOverrides)) {
+        const blob = await getMedia(mid);
+        if (blob) {
+          const newMid = uid();
+          await putMedia(newMid, blob);
+          newOverrides[page] = newMid;
+        }
+      }
+      clone.slideOverrides = newOverrides;
+    }
+    // 복제본은 원본 바로 아래로 (그리드 좌표 부여)
+    const sz = DEFAULT_BLOCK_SIZE[clone.type] || { w: 4, h: 3 };
+    const ow = clone.gridW || sz.w;
+    const oh = clone.gridH || sz.h;
+    clone.gridX = clone.gridX ?? 0;
+    clone.gridY = (clone.gridY ?? 0) + oh;
+    clone.gridW = ow;
+    clone.gridH = oh;
+    blocks.splice(idx + 1, 0, clone);
+    saveBlocks(section, blocks);
+    renderBlocks(section);
+  }
+
+  async function deleteBlock(section, id) {
+    if (!confirm('Delete this block?')) return;
+    const blocks = getBlocks(section);
+    const b = blocks.find(x => x.id === id);
+    if (b) {
+      if (b.mediaId) await deleteMedia(b.mediaId);
+      if (b.mediaIds) for (const mid of b.mediaIds) await deleteMedia(mid);
+      // 슬라이드 블록 — PDF + 모든 슬라이드 영상 override 정리
+      if (b.pdfMediaId) await deleteMedia(b.pdfMediaId);
+      if (b.slideOverrides) {
+        for (const mid of Object.values(b.slideOverrides)) {
+          await deleteMedia(mid);
+        }
+      }
+      delete slideStates[id];
+    }
+    saveBlocks(section, blocks.filter(x => x.id !== id));
+    renderBlocks(section);
+  }
+  async function editBlock(section, id) {
+    const blocks = getBlocks(section);
+    const b = blocks.find(x => x.id === id);
+    if (!b) return;
+    if (b.type === 'text') {
+      const h = prompt('Heading (optional):', b.heading || '');
+      if (h === null) return;
+      const body = prompt('Body text:', b.body || '');
+      if (body === null) return;
+      b.heading = h; b.body = body;
+    } else {
+      const cap = prompt('Caption:', b.caption || '');
+      if (cap === null) return;
+      b.caption = cap;
+    }
+    saveBlocks(section, blocks); renderBlocks(section);
+  }
+
+  // ════════ 블록 추가 — 신규 블록은 가장 아래 빈 자리에 그리드 좌표 부여 ════════
+  function _gridFieldsFor(type) {
+    const sz = DEFAULT_BLOCK_SIZE[type] || { w: 4, h: 3 };
+    return { gridW: sz.w, gridH: sz.h };
+  }
+  function _placeNewBlock(blocks, type) {
+    const sz = DEFAULT_BLOCK_SIZE[type] || { w: 4, h: 3 };
+    const slot = findNextSlot(blocks, sz.w, sz.h);
+    return { gridX: slot.x, gridY: slot.y, gridW: slot.w, gridH: slot.h };
+  }
+
+  async function addTextBlock(section) {
+    const h = prompt('Heading (선택, 비워둬도 됨):') || '';
+    const body = prompt('Text 내용:');
+    if (body === null) return;
+    const blocks = getBlocks(section);
+    blocks.push({ id: uid(), type: 'text', heading: h, body, ..._placeNewBlock(blocks, 'text') });
+    saveBlocks(section, blocks); renderBlocks(section);
+  }
+  async function addImageBlock(section) {
+    const input = document.createElement('input');
+    input.type = 'file'; input.accept = 'image/*';
+    input.onchange = async () => {
+      const f = input.files[0]; if (!f) return;
+      const blob = await resizeImageToBlob(f, 1600);
+      const mid = uid();
+      try { await putMedia(mid, blob); }
+      catch(e) { alert('저장 실패: ' + e.message); return; }
+      const cap = prompt('Caption (선택, 비워도 됨):') || '';
+      const blocks = getBlocks(section);
+      blocks.push({ id: uid(), type: 'image', mediaId: mid, caption: cap, ..._placeNewBlock(blocks, 'image') });
+      saveBlocks(section, blocks); renderBlocks(section);
+    };
+    input.click();
+  }
+  async function addGalleryBlock(section) {
+    const input = document.createElement('input');
+    input.type = 'file'; input.accept = 'image/*'; input.multiple = true;
+    input.onchange = async () => {
+      const files = Array.from(input.files);
+      if (!files.length) return;
+      const mediaIds = [];
+      for (const f of files) {
+        const blob = await resizeImageToBlob(f, 1400);
+        const mid = uid();
+        try { await putMedia(mid, blob); mediaIds.push(mid); }
+        catch(e) { alert('저장 실패 (사진 ' + (mediaIds.length+1) + '개째): ' + e.message); break; }
+      }
+      if (!mediaIds.length) return;
+      const cap = prompt('Caption (선택, 비워도 됨):') || '';
+      const blocks = getBlocks(section);
+      blocks.push({ id: uid(), type: 'gallery', mediaIds, caption: cap, ..._placeNewBlock(blocks, 'gallery') });
+      saveBlocks(section, blocks); renderBlocks(section);
+    };
+    input.click();
+  }
+  async function addVideoBlock(section) {
+    const input = document.createElement('input');
+    input.type = 'file'; input.accept = 'video/*';
+    input.onchange = async () => {
+      const f = input.files[0]; if (!f) return;
+      const sizeMB = (f.size / (1024 * 1024)).toFixed(1);
+      if (f.size > 300 * 1024 * 1024) {
+        if (!confirm(`이 영상은 ${sizeMB}MB 입니다. 브라우저 저장 공간을 많이 차지할 수 있어요. 계속할까요?`)) return;
+      }
+      const mid = uid();
+      try { await putMedia(mid, f); }
+      catch(e) { alert('저장 실패: ' + e.message + '\n(영상이 너무 클 수 있습니다)'); return; }
+      const cap = prompt('Caption (선택, 비워도 됨):') || '';
+      const blocks = getBlocks(section);
+      blocks.push({ id: uid(), type: 'video', mediaId: mid, caption: cap, ..._placeNewBlock(blocks, 'video') });
+      saveBlocks(section, blocks); renderBlocks(section);
+    };
+    input.click();
+  }
+
+  // ════════ 클라이밍 영상 교체 (관리자 모드) ════════
+  async function restoreClimbingVideo() {
+    try {
+      const blob = await getMedia('climbing_video');
+      if (!blob) return;
+      const video = document.getElementById('climbingVideo');
+      if (!video) return;
+      const url = trackUrl(URL.createObjectURL(blob));
+      video.innerHTML = '';
+      const src = document.createElement('source');
+      src.src = url; src.type = blob.type || 'video/mp4';
+      video.appendChild(src);
+      video.load();
+    } catch(e) { /* no custom video */ }
+  }
+  document.getElementById('climbingReplaceBtn').addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file'; input.accept = 'video/*';
+    input.onchange = async () => {
+      const f = input.files[0]; if (!f) return;
+      const sizeMB = (f.size / (1024 * 1024)).toFixed(1);
+      if (f.size > 300 * 1024 * 1024) {
+        if (!confirm(`이 영상은 ${sizeMB}MB 입니다. 브라우저 저장 공간을 많이 차지할 수 있어요. 계속할까요?`)) return;
+      }
+      try { await putMedia('climbing_video', f); }
+      catch(e) { alert('저장 실패: ' + e.message); return; }
+      await restoreClimbingVideo();
+      alert('영상이 교체됐어요!\n(이 브라우저에서만 보입니다. 모두에게 영구 적용하려면 climbing1.mp4 파일을 GitHub에 새로 업로드하세요.)');
+    };
+    input.click();
+  });
+
+  /* ══════════════════════════════════════════════════════════════
+     🎬 Whisker 논문 섹션: Movie_S1 영상 교체 + 추가 영상 관리
+     ══════════════════════════════════════════════════════════════ */
+
+  // ════════ Movie_S1 영상 교체 ════════
+  async function restoreWhiskerVideo() {
+    try {
+      const blob = await getMedia('whisker_video');
+      if (!blob) return;
+      const video = document.getElementById('whiskerVideo');
+      if (!video) return;
+      const url = trackUrl(URL.createObjectURL(blob));
+      video.innerHTML = '';
+      const src = document.createElement('source');
+      src.src = url; src.type = blob.type || 'video/mp4';
+      video.appendChild(src);
+      video.load();
+    } catch(e) { /* no custom video */ }
+  }
+  document.getElementById('whiskerReplaceBtn').addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file'; input.accept = 'video/*';
+    input.onchange = async () => {
+      const f = input.files[0]; if (!f) return;
+      const sizeMB = (f.size / (1024 * 1024)).toFixed(1);
+      if (f.size > 300 * 1024 * 1024) {
+        if (!confirm(`이 영상은 ${sizeMB}MB 입니다. 브라우저 저장 공간을 많이 차지할 수 있어요. 계속할까요?`)) return;
+      }
+      try { await putMedia('whisker_video', f); }
+      catch(e) { alert('저장 실패: ' + e.message); return; }
+      await restoreWhiskerVideo();
+      alert('Movie S1 영상이 교체됐어요!\n(이 브라우저에서만 보입니다. 영구 적용하려면 Paper/Movie_S1.mp4를 GitHub에 새로 업로드하세요.)');
+    };
+    input.click();
+  });
+
+  // ════════ Additional Videos (추가 영상 목록) ════════
+  function getWhiskerVideos() {
+    try { return JSON.parse(localStorage.getItem('whisker_videos') || '[]'); }
+    catch(e) { return []; }
+  }
+  function saveWhiskerVideos(arr) { localStorage.setItem('whisker_videos', JSON.stringify(arr)); }
+
+  async function renderWhiskerVideos() {
+    const container = document.getElementById('whisker-videos');
+    if (!container) return;
+    const list = getWhiskerVideos();
+    const isAdmin = document.body.classList.contains('admin-mode');
+    container.innerHTML = '';
+
+    for (let i = 0; i < list.length; i++) {
+      const v = list[i];
+      const blob = await getMedia(v.mediaId);
+      if (!blob) continue;
+      const url = trackUrl(URL.createObjectURL(blob));
+      const wrap = document.createElement('div');
+      wrap.className = 'extra-video';
+
+      const tools = isAdmin ? `
+        <div class="block-toolbar">
+          <button onclick="moveWhiskerVideo('${v.id}', -1)" ${i===0?'disabled':''} title="Move up"><i class="fa-solid fa-arrow-up"></i></button>
+          <button onclick="moveWhiskerVideo('${v.id}', 1)" ${i===list.length-1?'disabled':''} title="Move down"><i class="fa-solid fa-arrow-down"></i></button>
+          <button onclick="editWhiskerVideo('${v.id}')" title="Edit caption"><i class="fa-solid fa-pen"></i></button>
+          <button onclick="deleteWhiskerVideo('${v.id}')" class="danger" title="Delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      ` : '';
+
+      wrap.innerHTML = tools + `
+        <video src="${url}" controls playsinline preload="metadata" class="w-full rounded-lg bg-black"></video>
+        ${v.caption ? `<p class="text-xs text-slate-400 px-2 py-2">${escapeHtml(v.caption)}</p>` : ''}
+      `;
+      container.appendChild(wrap);
+    }
+  }
+
+  function moveWhiskerVideo(id, dir) {
+    const list = getWhiskerVideos();
+    const i = list.findIndex(v => v.id === id);
+    if (i < 0) return;
+    const j = i + dir;
+    if (j < 0 || j >= list.length) return;
+    [list[i], list[j]] = [list[j], list[i]];
+    saveWhiskerVideos(list); renderWhiskerVideos();
+  }
+
+  async function editWhiskerVideo(id) {
+    const list = getWhiskerVideos();
+    const v = list.find(x => x.id === id);
+    if (!v) return;
+    const cap = prompt('Caption:', v.caption || '');
+    if (cap === null) return;
+    v.caption = cap;
+    saveWhiskerVideos(list); renderWhiskerVideos();
+  }
+
+  async function deleteWhiskerVideo(id) {
+    if (!confirm('Delete this video?')) return;
+    const list = getWhiskerVideos();
+    const v = list.find(x => x.id === id);
+    if (v && v.mediaId) await deleteMedia(v.mediaId);
+    saveWhiskerVideos(list.filter(x => x.id !== id));
+    renderWhiskerVideos();
+  }
+
+  document.getElementById('addWhiskerVideoBtn').addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file'; input.accept = 'video/*';
+    input.onchange = async () => {
+      const f = input.files[0]; if (!f) return;
+      const sizeMB = (f.size / (1024 * 1024)).toFixed(1);
+      if (f.size > 300 * 1024 * 1024) {
+        if (!confirm(`이 영상은 ${sizeMB}MB 입니다. 브라우저 저장 공간을 많이 차지할 수 있어요. 계속할까요?`)) return;
+      }
+      const mediaId = uid();
+      try { await putMedia(mediaId, f); }
+      catch(e) { alert('저장 실패: ' + e.message); return; }
+      const cap = prompt('Caption (선택, 비워도 됨):') || '';
+      const list = getWhiskerVideos();
+      list.push({ id: uid(), mediaId, caption: cap });
+      saveWhiskerVideos(list);
+      renderWhiskerVideos();
+    };
+    input.click();
+  });
+
+  // 페이지 로드 시 — 사용자 정의 영상이 있으면 복원 + 모든 섹션 블록 렌더
+  restoreClimbingVideo();
+  restoreWhiskerVideo();
+  renderAllBlocks();
+  renderWhiskerVideos();
+
+  // 관리자 모드 진입/이탈 시 모든 섹션 블록 + 추가 영상 다시 렌더 (툴바/Sortable 갱신)
+  const _origEnter = enterAdmin;
+  const _origExit = exitAdmin;
+  enterAdmin = function(){ _origEnter(); renderAllBlocks(); renderWhiskerVideos(); };
+  exitAdmin = function(){ _origExit(); destroyAllSortables(); renderAllBlocks(); renderWhiskerVideos(); };
+  // 위 재정의가 기존 핸들러를 깨지 않도록, 재바인딩
+  document.getElementById('abLogout').onclick = exitAdmin;
+  // Reset 기능도 IndexedDB까지 청소하도록 확장
+  document.getElementById('abReset').onclick = async () => {
+    if (!confirm('업로드한 사진/영상, 편집한 텍스트, 추가한 블록을 모두 원래대로 되돌릴까요?')) return;
+    Object.keys(localStorage)
+      .filter(k => k.startsWith('gallery_') || k.startsWith('edit_') || k.startsWith('life_blocks') || k.startsWith('blocks_') || k.startsWith('whisker_videos'))
+      .forEach(k => localStorage.removeItem(k));
+    try {
+      const db = await openDB();
+      await new Promise(r => { const tx = db.transaction(STORE,'readwrite'); tx.objectStore(STORE).clear(); tx.oncomplete = r; });
+    } catch(e) {}
+    location.reload();
+  };
+  </script>
+</body>
+</html>
