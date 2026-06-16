@@ -17,7 +17,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
@@ -43,8 +43,8 @@
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            serif: ['"Playfair Display"', 'Georgia', 'serif'],
+            sans: ['Montserrat', 'system-ui', 'sans-serif'],
+            serif: ['Montserrat', 'system-ui', 'sans-serif'],
           },
           colors: {
             ink: { 950:'#070b18', 900:'#0b1226', 800:'#111a35', 700:'#1a2547', 600:'#243160' },
@@ -58,8 +58,8 @@
 
   <style>
     html { scroll-behavior: smooth; }
-    body { font-family:'Inter',sans-serif; background:#070b18; color:#e6e9f5; }
-    h1,h2,h3,.font-serif { font-family:'Playfair Display',serif; letter-spacing:-0.01em; }
+    body { font-family:'Montserrat',sans-serif; background:#070b18; color:#e6e9f5; }
+    h1,h2,h3,.font-serif { font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:-0.02em; }
 
     .bg-hero{
       background:
@@ -520,10 +520,168 @@
     .grid-stack-item.gs-w-1 .life-block,
     .grid-stack-item.gs-w-2 .life-block { padding: 0.75rem; }
     .grid-stack-item.gs-w-3 .life-block { padding: 1rem; }
+
+    /* ════════════════════════════════════════════════════════════
+       🔒 PERSONAL STUDY 섹션 (비공개 — 관리자 전용 영어 학습)
+       ════════════════════════════════════════════════════════════
+       기본은 숨김 상태이고, 로그인(admin-mode) 했을 때만 nav 링크와
+       #study 섹션이 나타납니다. 학습 내용은 HTML 소스에 전혀 없고,
+       전부 localStorage['study_<subject>_entries']에서 JS로 렌더됩니다.
+
+       ▶ 나중에 "전체 공개"로 바꾸려면: <body> 태그에서 'study-private'
+         클래스 하나만 지우면 됩니다. (그러면 항상 보임)
+       ════════════════════════════════════════════════════════════ */
+    .study-private .study-nav-item,
+    .study-private #study { display: none; }
+    .study-private.admin-mode .study-nav-item { display: block; }
+    .study-private.admin-mode #study { display: block; }
+
+    /* 📚 과목 탭 바 (English · + Add subject) */
+    .study-tabs { display:flex; flex-wrap:wrap; gap:0.5rem; }
+    .study-tab {
+      display:inline-flex; align-items:center; gap:0.4rem;
+      padding:0.5rem 1.1rem; border-radius:9999px;
+      background:rgba(26,37,71,0.6); border:1px solid rgba(124,147,255,0.25);
+      color:#cbd5ff; font-size:13px; font-weight:500; cursor:pointer;
+      transition:all .2s ease;
+    }
+    .study-tab:hover { border-color:rgba(124,147,255,0.6); color:#fff; }
+    .study-tab.active { background:rgba(91,117,246,0.25); border-color:#7c93ff; color:#fff; }
+    .study-tab-add { border-style:dashed; color:#7c93ff; }
+    .study-tab:focus-visible { outline:2px solid #7c93ff; outline-offset:2px; }
+
+    /* 📊 상단 stat 카드 4종 (Today · Overdue · Active · Mastered) */
+    .study-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:0.75rem; }
+    /* 좁은 화면에서는 2열로 쌓이고 폰트도 살짝 축소 */
+    @media (max-width: 640px){ .study-stats { grid-template-columns:repeat(2,1fr); } }
+    .study-stat {
+      text-align:left; padding:1rem 1.1rem; border-radius:0.9rem;
+      background:rgba(11,18,38,0.6); border:1px solid rgba(255,255,255,0.08);
+      cursor:pointer; transition:border-color .2s ease, transform .2s ease;
+    }
+    .study-stat:hover { border-color:rgba(124,147,255,0.5); transform:translateY(-2px); }
+    .study-stat:focus-visible { outline:2px solid #7c93ff; outline-offset:2px; }
+    .study-stat-num { font-size:1.6rem; font-weight:700; color:#fff; line-height:1; }
+    .study-stat-label { font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#94a3c8; margin-top:0.35rem; }
+    .study-stat.overdue  .study-stat-num { color:#f87171; }
+    .study-stat.today    .study-stat-num { color:#7c93ff; }
+    .study-stat.mastered .study-stat-num { color:#34d399; }
+    @media (max-width: 640px){ .study-stat-num { font-size:1.35rem; } }
+
+    /* ▾ 접이식 그룹 헤더 (Today / Overdue / All sentences) */
+    .study-group-head {
+      display:flex; align-items:center; gap:0.5rem; cursor:pointer;
+      font-weight:600; color:#e6e9f5; padding:0.5rem 0; user-select:none;
+    }
+    .study-group-head .fa-chevron-down { transition:transform .25s ease; font-size:0.8rem; color:#7c93ff; }
+    .study-group.collapsed .fa-chevron-down { transform:rotate(-90deg); }
+    .study-group.collapsed .study-group-body { display:none; }
+    .study-group-count { font-size:12px; color:#94a3c8; font-weight:400; }
+
+    /* ✍️ 입력 폼 (접이식) */
+    .study-form-wrap { max-height:0; overflow:hidden; opacity:0; transition:max-height .35s ease, opacity .25s ease; }
+    .study-form-wrap.open { max-height:1400px; opacity:1; }
+    .study-input, .study-textarea {
+      width:100%; background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1); border-radius:0.6rem;
+      padding:0.7rem 0.9rem; color:#fff; font-size:14px; resize:none;
+      font-family:'Montserrat',sans-serif;
+    }
+    .study-textarea { min-height:3rem; line-height:1.5; overflow:hidden; }
+    .study-input:focus, .study-textarea:focus { outline:none; border-color:#7c93ff; }
+    .study-input::placeholder, .study-textarea::placeholder { color:#5b667f; }
+    .study-label { font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#94a3c8; margin-bottom:0.3rem; display:block; }
+
+    /* "+ Add new sentence" 큰 토글 버튼 */
+    .study-add-toggle {
+      width:100%; padding:0.9rem; border-radius:0.9rem;
+      border:2px dashed rgba(124,147,255,0.35); background:rgba(91,117,246,0.05);
+      color:#7c93ff; font-size:14px; font-weight:600; cursor:pointer;
+      transition:all .2s ease;
+    }
+    .study-add-toggle:hover { background:rgba(91,117,246,0.12); border-color:#7c93ff; color:#fff; }
+
+    /* 🔍 검색 / 필터 / 정렬 툴바 */
+    .study-toolbar { display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; }
+    .study-search {
+      flex:1; min-width:180px; background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1); border-radius:0.6rem;
+      padding:0.55rem 0.9rem; color:#fff; font-size:13px;
+    }
+    .study-search:focus { outline:none; border-color:#7c93ff; }
+    .study-select {
+      background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+      border-radius:0.6rem; padding:0.55rem 0.8rem; color:#cbd5ff; font-size:13px; cursor:pointer;
+    }
+    .study-select:focus { outline:none; border-color:#7c93ff; }
+
+    /* 🗂️ 항목 카드 */
+    .study-card {
+      background:rgba(11,18,38,0.55); border:1px solid rgba(255,255,255,0.08);
+      border-radius:1rem; padding:1.25rem 1.35rem; margin-bottom:0.85rem;
+      transition:border-color .25s ease, box-shadow .25s ease;
+    }
+    .study-card:hover { border-color:rgba(124,147,255,0.4); }
+    .study-card.is-overdue { border-color:rgba(248,113,113,0.45); }
+    .study-card.is-mastered { opacity:0.82; }
+    .study-card:focus-visible { outline:2px solid #7c93ff; outline-offset:2px; }
+    .study-sentence { font-size:1.18rem; line-height:1.55; color:#f1f3fb; }
+    @media (max-width: 640px){
+      .study-sentence { font-size:1.04rem; }
+      .study-card { padding:1rem 1.05rem; }
+    }
+
+    /* 👁️ 해석 토글 + 블러 (기본 가려짐) */
+    .study-reveal-btn {
+      display:inline-flex; align-items:center; gap:0.4rem;
+      margin-top:0.9rem; font-size:12px; color:#94a3c8; cursor:pointer;
+      background:none; border:none; padding:0;
+    }
+    .study-reveal-btn:hover { color:#7c93ff; }
+    .study-translation {
+      margin-top:0.5rem; padding:0.75rem 0.9rem;
+      background:rgba(255,255,255,0.04); border-radius:0.6rem;
+      color:#cbd5ff; font-size:0.97rem; line-height:1.5;
+      filter:blur(8px); user-select:none; transition:filter .35s ease;
+    }
+    .study-card.revealed .study-translation { filter:blur(0); user-select:text; }
+
+    /* 🔗 출처 */
+    .study-source { margin-top:0.85rem; font-size:12px; color:#94a3c8; }
+    .study-source-link { color:#7c93ff; }
+    .study-source-link:hover { text-decoration:underline; }
+
+    /* 카드 하단: 진행 표시 + 액션 버튼 */
+    .study-card-foot {
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      gap:0.75rem; margin-top:1rem; padding-top:0.85rem;
+      border-top:1px solid rgba(255,255,255,0.07);
+    }
+    .study-progress { display:flex; align-items:center; gap:0.6rem; font-size:12px; color:#94a3c8; }
+    .study-dots { letter-spacing:0.12em; font-size:0.72rem; }
+    .study-dot { color:#374151; }          /* ○ 대기 중인 복습 (어둡게) */
+    .study-dot.done { color:#7c93ff; }     /* ● 완료된 복습 (액센트) */
+    .study-card-actions { display:flex; align-items:center; gap:0.4rem; }
+    .study-btn {
+      display:inline-flex; align-items:center; gap:0.4rem;
+      padding:0.45rem 0.85rem; border-radius:9999px;
+      font-size:12px; font-weight:500; cursor:pointer;
+      border:1px solid transparent; transition:all .2s ease;
+      background:rgba(255,255,255,0.05); color:#cbd5ff;
+    }
+    .study-btn:hover { background:rgba(91,117,246,0.2); color:#fff; border-color:rgba(124,147,255,0.3); }
+    .study-btn:focus-visible { outline:2px solid #7c93ff; outline-offset:2px; }
+    .study-btn.icon { padding:0.45rem 0.6rem; }
+    .study-btn.primary { background:rgba(52,211,153,0.15); color:#34d399; border-color:rgba(52,211,153,0.3); }
+    .study-btn.primary:hover { background:rgba(52,211,153,0.28); color:#fff; border-color:rgba(52,211,153,0.5); }
+    .study-btn.danger:hover { background:rgba(239,68,68,0.2); border-color:rgba(239,68,68,0.4); color:#fff; }
+
+    /* 빈 상태 안내 */
+    .study-empty { text-align:center; padding:2.25rem 1rem; color:#64748b; font-size:14px; }
   </style>
 </head>
 
-<body class="bg-ink-950 text-slate-200 antialiased">
+<body class="bg-ink-950 text-slate-200 antialiased study-private">
 
   <!-- ═══════════════════════════════════════════════════════════
        🧭 NAVIGATION BAR — 우측 끝에 🔒 로그인 버튼 추가
@@ -541,6 +699,8 @@
         <li><a href="#publications" class="hover:text-accent-400 transition">Publications</a></li>
         <li><a href="#projects" class="hover:text-accent-400 transition">Projects</a></li>
         <li><a href="#life" class="hover:text-accent-400 transition">Life</a></li>
+        <!-- 🔒 비공개 Study 링크 — 평소엔 숨김, 로그인(admin-mode)일 때만 노출 -->
+        <li class="study-nav-item"><a href="#study" class="hover:text-accent-400 transition">Study</a></li>
         <li>
           <a href="CV.pdf" target="_blank"
              class="ml-2 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-600 hover:bg-accent-500 text-white transition shadow-glow">
@@ -568,6 +728,8 @@
         <li><a href="#publications" class="block py-1">Publications</a></li>
         <li><a href="#projects" class="block py-1">Projects</a></li>
         <li><a href="#life" class="block py-1">Life</a></li>
+        <!-- 🔒 비공개 Study 링크 (모바일) — 로그인(admin-mode)일 때만 노출 -->
+        <li class="study-nav-item"><a href="#study" class="block py-1">Study</a></li>
         <li><a href="CV.pdf" target="_blank" class="block py-1 text-accent-400"><i class="fa-solid fa-file-arrow-down"></i> Download CV</a></li>
         <li><button id="loginBtnMobile" class="block py-1 text-slate-400"><i class="fa-solid fa-lock"></i> Admin</button></li>
       </ul>
@@ -1046,6 +1208,123 @@
           ⚠️ 업로드한 사진·영상은 <b>현재 브라우저에만</b> 저장됩니다. 다른 사람한테는 안 보여요.
         </p>
       </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       🔒 PERSONAL STUDY → ENGLISH (비공개 — 관리자 전용)
+       ───────────────────────────────────────────────────────────
+       ⚠️ 이 섹션은 로그인(admin-mode) 했을 때만 보입니다.
+       ⚠️ 학습 내용은 이 HTML 안에 전혀 없습니다 — 빈 컨테이너만 있고,
+          실제 문장/해석은 JS가 localStorage['study_english_entries']에서
+          읽어와 렌더합니다. (소스 보기로도 학습 내용이 노출되지 않음)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="study" class="py-24 md:py-32">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10">
+
+      <!-- 헤더 -->
+      <div class="text-center mb-10">
+        <p class="text-accent-400 text-sm tracking-widest uppercase mb-3">
+          <i class="fa-solid fa-lock text-xs mr-1"></i> Private · Personal Study
+        </p>
+        <h2 class="font-serif text-4xl md:text-5xl text-white font-semibold">Spaced Repetition</h2>
+        <p class="mt-4 text-slate-400 max-w-2xl mx-auto">
+          하루에 한 문장씩. [1 · 2 · 3 · 7 · 15 · 30]일 간격으로 복습하며 오래 기억에 남기기.
+        </p>
+      </div>
+
+      <!-- 과목 탭 (English · + Add subject) — JS가 채움 -->
+      <div class="study-tabs mb-7" id="studyTabs"></div>
+
+      <!-- 상단 stat 카드 4종 — JS가 채움 -->
+      <div class="study-stats mb-9" id="studyStats"></div>
+
+      <!-- 📅 Today's Reviews -->
+      <div class="study-group mb-6" id="studyGroupToday">
+        <div class="study-group-head" data-group-toggle="studyGroupToday">
+          <i class="fa-solid fa-chevron-down"></i>
+          <span>📅 Today's Reviews</span>
+          <span class="study-group-count" data-count="today">(0)</span>
+        </div>
+        <div class="study-group-body" id="studyTodayList"></div>
+      </div>
+
+      <!-- ⏰ Overdue -->
+      <div class="study-group mb-6" id="studyGroupOverdue">
+        <div class="study-group-head" data-group-toggle="studyGroupOverdue">
+          <i class="fa-solid fa-chevron-down"></i>
+          <span class="text-red-300">⏰ Overdue</span>
+          <span class="study-group-count" data-count="overdue">(0)</span>
+        </div>
+        <div class="study-group-body" id="studyOverdueList"></div>
+      </div>
+
+      <!-- ➕ 새 문장 추가 (토글) -->
+      <button class="study-add-toggle mb-4" id="studyAddToggle" aria-expanded="false" aria-controls="studyFormWrap">
+        <i class="fa-solid fa-plus mr-1"></i> Add new sentence
+      </button>
+
+      <!-- 입력 폼 (처음엔 접혀 있음) — 학습 내용 없음, 빈 입력칸만 -->
+      <div class="study-form-wrap mb-8" id="studyFormWrap">
+        <div class="p-5 rounded-2xl bg-ink-900/60 border border-white/10">
+          <input type="hidden" id="studyEditId" value="" />
+
+          <label class="study-label" for="studySentence">English sentence <span class="text-accent-400">*</span></label>
+          <textarea id="studySentence" class="study-textarea mb-4" rows="2"
+                    placeholder="e.g. It was pure serendipity that we met." aria-label="English sentence"></textarea>
+
+          <label class="study-label" for="studyTranslation">Translation / 해석 (선택)</label>
+          <textarea id="studyTranslation" class="study-textarea mb-4" rows="2"
+                    placeholder="예: 우리가 만난 건 순전히 우연이었다." aria-label="Translation"></textarea>
+
+          <label class="study-label" for="studySource">Source — URL 또는 자유 텍스트 (선택)</label>
+          <input type="text" id="studySource" class="study-input mb-4"
+                 placeholder="https://nytimes.com/... 또는 책 제목" aria-label="Source" />
+
+          <div class="flex gap-2">
+            <button class="study-btn primary" id="studySubmit">
+              <i class="fa-solid fa-plus"></i> <span id="studySubmitLabel">Add</span>
+            </button>
+            <button class="study-btn" id="studyCancelEdit" style="display:none;">
+              <i class="fa-solid fa-xmark"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 📚 All sentences (검색 / 필터 / 정렬) -->
+      <div class="study-group mb-6" id="studyGroupAll">
+        <div class="study-group-head" data-group-toggle="studyGroupAll">
+          <i class="fa-solid fa-chevron-down"></i>
+          <span>📚 All sentences</span>
+          <span class="study-group-count" data-count="all">(0)</span>
+        </div>
+        <div class="study-group-body">
+          <div class="study-toolbar mb-4">
+            <input type="text" id="studySearch" class="study-search"
+                   placeholder="🔍 Search sentence · 해석 · source…" aria-label="Search sentences" />
+            <select id="studyFilter" class="study-select" aria-label="Filter by status">
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="mastered">Mastered</option>
+            </select>
+            <select id="studySort" class="study-select" aria-label="Sort order">
+              <option value="newest">Newest</option>
+              <option value="next">Next review</option>
+              <option value="created">Created</option>
+            </select>
+          </div>
+          <div id="studyAllList"></div>
+        </div>
+      </div>
+
+      <!-- ⚙️ 백업 (Export / Import JSON) -->
+      <div class="flex flex-wrap items-center gap-3 mt-8 pt-6 border-t border-white/5">
+        <span class="text-xs uppercase tracking-wider text-slate-500"><i class="fa-solid fa-gear mr-1"></i> Backup</span>
+        <button class="study-btn" id="studyExport"><i class="fa-solid fa-download"></i> Export JSON</button>
+        <button class="study-btn" id="studyImport"><i class="fa-solid fa-upload"></i> Import JSON</button>
+      </div>
+
     </div>
   </section>
 
@@ -2423,6 +2702,524 @@ GA 대시보드를 새 탭에서 열까요?`;
     } catch(e) {}
     location.reload();
   };
+
+  /* ══════════════════════════════════════════════════════════════
+     🔒 PERSONAL STUDY → ENGLISH (비공개 간격 반복 학습)
+     ══════════════════════════════════════════════════════════════
+     - 모든 데이터는 localStorage['study_<subject>_entries']에만 저장
+       (HTML 소스에는 학습 내용이 전혀 없음)
+     - 간격 반복(spaced repetition): [1, 2, 3, 7, 15, 30]일
+     - 처음부터 multi-subject 구조로 작성 (지금은 'english'만 활성)
+     - 핵심 시그니처: getEntries(subject) / saveEntries(subject, list)
+                      addEntry(subject, data) / renderStudy(subject)
+     ══════════════════════════════════════════════════════════════ */
+
+  // 활성 과목 목록 — 새 과목을 여기 추가하고 탭 라벨만 등록하면 확장됨
+  const STUDY_SUBJECTS = ['english'];
+  const STUDY_SUBJECT_LABELS = { english: 'English' };
+  // 간격 반복 일정 (createdAt 기준 D+N)
+  const STUDY_INTERVALS = [1, 2, 3, 7, 15, 30];
+
+  let studyActiveSubject = 'english';
+  // All sentences 목록의 검색/필터/정렬 상태
+  let studyState = { search: '', filter: 'all', sort: 'newest' };
+
+  // ════════════ 날짜 유틸 (타임존 안전 · 날짜만 YYYY-MM-DD) ════════════
+  function studyFormatISO(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+  function studyTodayISO() { return studyFormatISO(new Date()); }
+  // YYYY-MM-DD → 로컬 자정 Date (UTC 변환으로 인한 하루 밀림 방지)
+  function studyParseISO(iso) {
+    const [y, m, d] = iso.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }
+  function studyAddDays(iso, n) {
+    const d = studyParseISO(iso);
+    d.setDate(d.getDate() + n);
+    return studyFormatISO(d);
+  }
+
+  // ════════════ 저장소 (multi-subject) ════════════
+  function studyStorageKey(subject) { return `study_${subject}_entries`; }
+  function getEntries(subject) {
+    try { return JSON.parse(localStorage.getItem(studyStorageKey(subject)) || '[]'); }
+    catch (e) { return []; }
+  }
+  function saveEntries(subject, list) {
+    try {
+      localStorage.setItem(studyStorageKey(subject), JSON.stringify(list));
+    } catch (e) {
+      alert('브라우저 저장 공간이 부족합니다. 일부 항목을 정리하거나 Export로 백업해주세요.');
+    }
+  }
+
+  // ════════════ 고유 id ════════════
+  function studyUid() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
+  }
+
+  // ════════════ 간격 반복 review 6개 생성 ════════════
+  function studyMakeReviews(createdAt) {
+    return STUDY_INTERVALS.map(day => ({
+      day,
+      dueDate: studyAddDays(createdAt, day),
+      done: false,
+      doneAt: null
+    }));
+  }
+
+  // ════════════ 계산 속성 ════════════
+  // reviews 배열은 항상 day 오름차순 → find(!done)이 "가장 빠른 미완료"
+  function studyNextReview(e) { return e.reviews.find(r => !r.done) || null; }
+  function studyIsMastered(e) { return e.reviews.every(r => r.done); }
+  // 상태: mastered / overdue / today / upcoming — '다음 복습'을 기준으로 판정
+  function studyStatusOf(e, today) {
+    if (studyIsMastered(e)) return 'mastered';
+    const n = studyNextReview(e);
+    if (n.dueDate < today) return 'overdue';
+    if (n.dueDate === today) return 'today';
+    return 'upcoming';
+  }
+
+  // ════════════ CRUD ════════════
+  function addEntry(subject, data) {
+    const createdAt = data.createdAt || studyTodayISO();
+    const entry = {
+      id: studyUid(),
+      createdAt,
+      sentence: (data.sentence || '').trim(),
+      translation: (data.translation || '').trim(),
+      source: (data.source || '').trim(),
+      reviews: studyMakeReviews(createdAt)   // 6개 dueDate 자동 계산
+    };
+    const list = getEntries(subject);
+    list.push(entry);
+    saveEntries(subject, list);
+    return entry;
+  }
+  function studyUpdateEntry(subject, id, data) {
+    const list = getEntries(subject);
+    const e = list.find(x => x.id === id);
+    if (!e) return;
+    // 문장/해석/출처만 수정 — createdAt과 복습 일정(reviews)은 그대로 보존
+    e.sentence = (data.sentence || '').trim();
+    e.translation = (data.translation || '').trim();
+    e.source = (data.source || '').trim();
+    saveEntries(subject, list);
+  }
+  function studyDeleteEntry(subject, id) {
+    saveEntries(subject, getEntries(subject).filter(x => x.id !== id));
+  }
+  // ✓ Mark reviewed — 가장 빠른 미완료 review를 오늘 날짜로 done 처리
+  function studyMarkReviewed(subject, id) {
+    const list = getEntries(subject);
+    const e = list.find(x => x.id === id);
+    if (!e) return;
+    const next = studyNextReview(e);
+    if (!next) return;            // 이미 mastered
+    next.done = true;
+    next.doneAt = studyTodayISO();  // overdue를 처리해도 "오늘 한 것"으로 인정
+    saveEntries(subject, list);
+  }
+
+  // ════════════ 출처 렌더 (http로 시작하면 새 탭 링크) ════════════
+  function studySourceValue(source) {
+    if (/^https?:\/\//i.test(source)) {
+      let label = source;
+      try { label = new URL(source).hostname.replace(/^www\./, ''); } catch (e) {}
+      return `<a href="${escapeHtml(source)}" target="_blank" rel="noopener" class="study-source-link">`
+           + `${escapeHtml(label)} <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>`;
+    }
+    return escapeHtml(source);
+  }
+
+  // ════════════ 카드 HTML 한 장 ════════════
+  function studyCardHTML(e, today) {
+    const status = studyStatusOf(e, today);
+    const n = studyNextReview(e);
+    const dots = e.reviews
+      .map(r => `<span class="study-dot${r.done ? ' done' : ''}">${r.done ? '●' : '○'}</span>`)
+      .join('');
+
+    // 진행/다음 복습 라벨
+    let progressLabel;
+    if (status === 'mastered') {
+      progressLabel = '<span class="text-emerald-400">✓ Mastered</span>';
+    } else {
+      const overdueTag = (n.dueDate < today) ? ' <span class="text-red-400">(overdue)</span>' : '';
+      progressLabel = `Next: D+${n.day} · due ${n.dueDate}${overdueTag}`;
+    }
+
+    // 해석 (기본 블러)
+    const transHtml = e.translation ? `
+        <button class="study-reveal-btn" data-action="reveal" aria-label="해석 보기 / 숨기기">
+          <i class="fa-solid fa-eye"></i> <span class="study-reveal-label">해석 보기</span>
+        </button>
+        <div class="study-translation">${escapeHtml(e.translation)}</div>` : '';
+
+    const sourceHtml = e.source
+      ? `<div class="study-source"><i class="fa-solid fa-link"></i> Source: ${studySourceValue(e.source)}</div>`
+      : '';
+
+    // mastered면 Mark reviewed 버튼 숨김
+    const reviewBtn = (status === 'mastered') ? '' :
+      `<button class="study-btn primary" data-action="review" aria-label="Mark reviewed — 가장 빠른 미완료 복습 완료">
+          <i class="fa-solid fa-check"></i> Mark reviewed</button>`;
+
+    const cardClass = 'study-card'
+      + (status === 'overdue' ? ' is-overdue' : '')
+      + (status === 'mastered' ? ' is-mastered' : '');
+
+    return `
+      <div class="${cardClass}" data-id="${e.id}" tabindex="0">
+        <p class="study-sentence font-serif">${escapeHtml(e.sentence)}</p>
+        ${transHtml}
+        ${sourceHtml}
+        <div class="study-card-foot">
+          <div class="study-progress">
+            <span class="study-dots" aria-hidden="true">${dots}</span>
+            <span>${progressLabel}</span>
+          </div>
+          <div class="study-card-actions">
+            ${reviewBtn}
+            <button class="study-btn icon" data-action="edit" aria-label="Edit sentence" title="수정"><i class="fa-solid fa-pen"></i></button>
+            <button class="study-btn icon danger" data-action="delete" aria-label="Delete sentence" title="삭제"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  // ════════════ 리스트 채우기 (성능 위해 한 번에 innerHTML) ════════════
+  function studyFillList(containerId, list, today, emptyMsg) {
+    const c = document.getElementById(containerId);
+    if (!c) return;
+    if (!list.length) { c.innerHTML = `<div class="study-empty">${escapeHtml(emptyMsg)}</div>`; return; }
+    c.innerHTML = list.map(e => studyCardHTML(e, today)).join('');
+  }
+
+  // 정렬기
+  const studySorters = {
+    newest:  (a, b) => b.createdAt.localeCompare(a.createdAt),
+    created: (a, b) => a.createdAt.localeCompare(b.createdAt),
+    next:    (a, b) => {
+      const ad = studyNextReview(a) ? studyNextReview(a).dueDate : '9999-99-99';
+      const bd = studyNextReview(b) ? studyNextReview(b).dueDate : '9999-99-99';
+      return ad.localeCompare(bd);
+    }
+  };
+
+  // ════════════ stat 카드 렌더 ════════════
+  function studyRenderStats(entries, today) {
+    let nToday = 0, nOver = 0, nActive = 0, nMaster = 0;
+    entries.forEach(e => {
+      const s = studyStatusOf(e, today);
+      if (s === 'mastered') nMaster++; else nActive++;
+      if (s === 'today') nToday++;
+      if (s === 'overdue') nOver++;
+    });
+    const stats = [
+      { key: 'today',    icon: '📅', label: 'Today',    num: nToday,  target: 'studyGroupToday' },
+      { key: 'overdue',  icon: '⏰', label: 'Overdue',  num: nOver,   target: 'studyGroupOverdue' },
+      { key: 'active',   icon: '📚', label: 'Active',   num: nActive, target: 'studyGroupAll' },
+      { key: 'mastered', icon: '✓',  label: 'Mastered', num: nMaster, target: 'studyGroupAll' }
+    ];
+    document.getElementById('studyStats').innerHTML = stats.map(s => `
+        <div class="study-stat ${s.key}" data-scroll-to="${s.target}" role="button" tabindex="0" aria-label="${s.label}: ${s.num}. 클릭하면 해당 목록으로 이동">
+          <div class="study-stat-num">${s.num}</div>
+          <div class="study-stat-label">${s.icon} ${s.label}</div>
+        </div>`).join('');
+    // 그룹 헤더의 개수 표기 갱신
+    document.querySelector('[data-count="today"]').textContent = `(${nToday})`;
+    document.querySelector('[data-count="overdue"]').textContent = `(${nOver})`;
+  }
+
+  // ════════════ 메인 렌더 ════════════
+  function renderStudy(subject) {
+    const today = studyTodayISO();
+    const entries = getEntries(subject);
+
+    studyRenderStats(entries, today);
+
+    // 📅 Today — due 날짜순(같은 날이므로 생성순)
+    const todayList = entries
+      .filter(e => studyStatusOf(e, today) === 'today')
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+    studyFillList('studyTodayList', todayList, today, '오늘 복습할 문장이 없어요. 잘 따라가고 있네요! 🎉');
+
+    // ⏰ Overdue — 가장 오래된 미완료부터
+    const overdueList = entries
+      .filter(e => studyStatusOf(e, today) === 'overdue')
+      .sort((a, b) => studyNextReview(a).dueDate.localeCompare(studyNextReview(b).dueDate));
+    studyFillList('studyOverdueList', overdueList, today, '놓친 복습이 없어요. 👏');
+
+    // 📚 All — 검색 + 필터 + 정렬
+    let all = entries.slice();
+    const q = studyState.search.trim().toLowerCase();
+    if (q) {
+      all = all.filter(e =>
+        (e.sentence + ' ' + e.translation + ' ' + e.source).toLowerCase().includes(q));
+    }
+    if (studyState.filter === 'active') all = all.filter(e => !studyIsMastered(e));
+    else if (studyState.filter === 'mastered') all = all.filter(e => studyIsMastered(e));
+    all.sort(studySorters[studyState.sort] || studySorters.newest);
+
+    studyFillList('studyAllList', all, today,
+      entries.length === 0 ? '첫 영어 문장을 추가해보세요! ✍️' : '조건에 맞는 문장이 없어요.');
+    document.querySelector('[data-count="all"]').textContent = `(${all.length})`;
+  }
+
+  // ════════════ 과목 탭 ════════════
+  function studyRenderTabs() {
+    const tabs = STUDY_SUBJECTS.map(s =>
+      `<button class="study-tab${s === studyActiveSubject ? ' active' : ''}" data-subject="${s}">
+          <i class="fa-solid fa-language"></i> ${escapeHtml(STUDY_SUBJECT_LABELS[s] || s)}</button>`).join('');
+    document.getElementById('studyTabs').innerHTML = tabs +
+      `<button class="study-tab study-tab-add" id="studyAddSubject" title="곧 추가됩니다">
+          <i class="fa-solid fa-plus"></i> Add subject</button>`;
+  }
+  function studyOnTabClick(ev) {
+    if (ev.target.closest('#studyAddSubject')) {
+      alert('다른 과목(수학 등)은 곧 추가됩니다. 지금은 English만 사용할 수 있어요. 🙂');
+      return;
+    }
+    const tab = ev.target.closest('[data-subject]');
+    if (!tab) return;
+    studyActiveSubject = tab.dataset.subject;
+    studyState = { search: '', filter: 'all', sort: 'newest' };
+    const search = document.getElementById('studySearch');
+    if (search) search.value = '';
+    studyRenderTabs();
+    renderStudy(studyActiveSubject);
+  }
+
+  // ════════════ 입력 폼 토글 / 수정 ════════════
+  function studyAutoGrow(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+  function studyAutoGrowAll() { ['studySentence', 'studyTranslation'].forEach(id => studyAutoGrow(document.getElementById(id))); }
+
+  function studyOpenForm(open) {
+    const wrap = document.getElementById('studyFormWrap');
+    const toggle = document.getElementById('studyAddToggle');
+    if (open) {
+      wrap.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.innerHTML = '<i class="fa-solid fa-xmark mr-1"></i> Close';
+    } else {
+      wrap.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.innerHTML = '<i class="fa-solid fa-plus mr-1"></i> Add new sentence';
+    }
+  }
+  function studyResetForm() {
+    document.getElementById('studyEditId').value = '';
+    document.getElementById('studySentence').value = '';
+    document.getElementById('studyTranslation').value = '';
+    document.getElementById('studySource').value = '';
+    document.getElementById('studySubmitLabel').textContent = 'Add';
+    document.getElementById('studyCancelEdit').style.display = 'none';
+    studyAutoGrowAll();
+    studyOpenForm(false);
+  }
+  function studyOpenEdit(id) {
+    const e = getEntries(studyActiveSubject).find(x => x.id === id);
+    if (!e) return;
+    document.getElementById('studyEditId').value = id;
+    document.getElementById('studySentence').value = e.sentence;
+    document.getElementById('studyTranslation').value = e.translation;
+    document.getElementById('studySource').value = e.source;
+    document.getElementById('studySubmitLabel').textContent = 'Save changes';
+    document.getElementById('studyCancelEdit').style.display = '';
+    studyOpenForm(true);
+    studyAutoGrowAll();
+    document.getElementById('studySentence').focus();
+    document.getElementById('studyFormWrap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function studySubmitHandler() {
+    const sentence = document.getElementById('studySentence').value.trim();
+    if (!sentence) { alert('영어 문장을 입력해주세요.'); document.getElementById('studySentence').focus(); return; }
+    const translation = document.getElementById('studyTranslation').value;
+    const source = document.getElementById('studySource').value;
+    const editId = document.getElementById('studyEditId').value;
+    if (editId) studyUpdateEntry(studyActiveSubject, editId, { sentence, translation, source });
+    else addEntry(studyActiveSubject, { sentence, translation, source });
+    studyResetForm();
+    renderStudy(studyActiveSubject);
+  }
+
+  // ════════════ 카드 클릭 위임 (해석 토글 / 복습 / 수정 / 삭제 / 그룹 접기) ════════════
+  function studyOnClick(ev) {
+    // 그룹 헤더 접기/펴기
+    const groupToggle = ev.target.closest('[data-group-toggle]');
+    if (groupToggle) {
+      document.getElementById(groupToggle.dataset.groupToggle).classList.toggle('collapsed');
+      return;
+    }
+    const actionEl = ev.target.closest('[data-action]');
+    const card = ev.target.closest('.study-card');
+    if (!actionEl || !card) return;
+    const id = card.dataset.id;
+    switch (actionEl.dataset.action) {
+      case 'reveal': {
+        card.classList.toggle('revealed');
+        const lbl = card.querySelector('.study-reveal-label');
+        if (lbl) lbl.textContent = card.classList.contains('revealed') ? '해석 숨기기' : '해석 보기';
+        break;
+      }
+      case 'review':
+        studyMarkReviewed(studyActiveSubject, id);
+        renderStudy(studyActiveSubject);
+        break;
+      case 'edit':
+        studyOpenEdit(id);
+        break;
+      case 'delete':
+        if (confirm('이 문장을 삭제할까요?')) {
+          studyDeleteEntry(studyActiveSubject, id);
+          renderStudy(studyActiveSubject);
+        }
+        break;
+    }
+  }
+
+  // ════════════ stat 카드 클릭/키보드 → 해당 목록으로 스크롤 ════════════
+  function studyOnStatActivate(ev) {
+    const card = ev.target.closest('[data-scroll-to]');
+    if (!card) return;
+    const t = document.getElementById(card.dataset.scrollTo);
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ════════════ 백업: Export / Import JSON ════════════
+  function studyExport() {
+    const subject = studyActiveSubject;
+    const entries = getEntries(subject);
+    const blob = new Blob([JSON.stringify(entries, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `study_${subject}_export_${studyTodayISO()}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  }
+  function studyIsValidEntry(e) {
+    return e && typeof e === 'object' && typeof e.sentence === 'string' && e.sentence.trim();
+  }
+  // 가져온 항목을 데이터 모델에 맞게 보정 (누락 필드/잘못된 reviews 복구)
+  function studyNormalizeEntry(e) {
+    const createdAt = (typeof e.createdAt === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e.createdAt))
+      ? e.createdAt : studyTodayISO();
+    let reviews = Array.isArray(e.reviews) ? e.reviews : null;
+    if (!reviews || reviews.length !== STUDY_INTERVALS.length) {
+      reviews = studyMakeReviews(createdAt);
+    } else {
+      reviews = reviews.map((r, i) => ({
+        day: typeof r.day === 'number' ? r.day : STUDY_INTERVALS[i],
+        dueDate: (typeof r.dueDate === 'string' && r.dueDate) ? r.dueDate : studyAddDays(createdAt, STUDY_INTERVALS[i]),
+        done: !!r.done,
+        doneAt: r.doneAt || null
+      }));
+    }
+    return {
+      id: e.id || studyUid(),
+      createdAt,
+      sentence: String(e.sentence).trim(),
+      translation: typeof e.translation === 'string' ? e.translation.trim() : '',
+      source: typeof e.source === 'string' ? e.source.trim() : '',
+      reviews
+    };
+  }
+  function studyImport() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json,.json';
+    input.onchange = () => {
+      const f = input.files[0];
+      if (!f) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        let data;
+        try { data = JSON.parse(reader.result); }
+        catch (e) { alert('JSON 파일을 읽을 수 없습니다.'); return; }
+        // 데이터 모델 배열 그대로 또는 { entries: [...] } 형태 모두 허용
+        const incoming = Array.isArray(data) ? data : (Array.isArray(data.entries) ? data.entries : null);
+        if (!incoming) { alert('올바른 형식이 아닙니다. (문장 배열이 필요합니다)'); return; }
+        const valid = incoming.filter(studyIsValidEntry).map(studyNormalizeEntry);
+        if (!valid.length) { alert('가져올 유효한 항목이 없습니다.'); return; }
+        const overwrite = confirm(
+          `${valid.length}개 항목을 가져옵니다.\n\n` +
+          `[확인] = 덮어쓰기 (기존 항목 전체 삭제 후 가져온 것으로 교체)\n` +
+          `[취소] = 병합 (기존 유지 + 같은 id는 가져온 것 우선)`);
+        let merged;
+        if (overwrite) {
+          merged = valid;
+        } else {
+          const map = new Map();
+          getEntries(studyActiveSubject).forEach(e => map.set(e.id, e));
+          valid.forEach(e => map.set(e.id, e));   // id 중복은 가져온 것 우선
+          merged = Array.from(map.values());
+        }
+        saveEntries(studyActiveSubject, merged);
+        renderStudy(studyActiveSubject);
+        alert('가져오기 완료! ✅');
+      };
+      reader.readAsText(f);
+    };
+    input.click();
+  }
+
+  // ════════════ 초기화 ════════════
+  function studyInit() {
+    const section = document.getElementById('study');
+    if (!section) return;   // 안전장치
+
+    studyRenderTabs();
+
+    // 폼 토글 / 제출 / 취소
+    document.getElementById('studyAddToggle').addEventListener('click', () => {
+      const wrap = document.getElementById('studyFormWrap');
+      if (wrap.classList.contains('open')) studyResetForm();
+      else { studyOpenForm(true); studyAutoGrowAll(); document.getElementById('studySentence').focus(); }
+    });
+    document.getElementById('studySubmit').addEventListener('click', studySubmitHandler);
+    document.getElementById('studyCancelEdit').addEventListener('click', studyResetForm);
+
+    // textarea 자동 높이
+    ['studySentence', 'studyTranslation'].forEach(id =>
+      document.getElementById(id).addEventListener('input', e => studyAutoGrow(e.target)));
+
+    // 검색 / 필터 / 정렬
+    document.getElementById('studySearch').addEventListener('input', e => { studyState.search = e.target.value; renderStudy(studyActiveSubject); });
+    document.getElementById('studyFilter').addEventListener('change', e => { studyState.filter = e.target.value; renderStudy(studyActiveSubject); });
+    document.getElementById('studySort').addEventListener('change', e => { studyState.sort = e.target.value; renderStudy(studyActiveSubject); });
+
+    // 백업
+    document.getElementById('studyExport').addEventListener('click', studyExport);
+    document.getElementById('studyImport').addEventListener('click', studyImport);
+
+    // 카드 클릭(이벤트 위임) + 더블클릭 수정
+    section.addEventListener('click', studyOnClick);
+    section.addEventListener('dblclick', ev => {
+      const card = ev.target.closest('.study-card');
+      if (card) studyOpenEdit(card.dataset.id);
+    });
+
+    // 과목 탭
+    document.getElementById('studyTabs').addEventListener('click', studyOnTabClick);
+
+    // stat 카드 클릭/키보드(Enter·Space) → 스크롤
+    const stats = document.getElementById('studyStats');
+    stats.addEventListener('click', studyOnStatActivate);
+    stats.addEventListener('keydown', ev => {
+      if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); studyOnStatActivate(ev); }
+    });
+
+    renderStudy(studyActiveSubject);
+  }
+  studyInit();
   </script>
 </body>
 </html>
