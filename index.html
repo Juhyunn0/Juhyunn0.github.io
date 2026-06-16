@@ -678,6 +678,42 @@
 
     /* 빈 상태 안내 */
     .study-empty { text-align:center; padding:2.25rem 1rem; color:#64748b; font-size:14px; }
+
+    /* 📌 복습(Review) 전용 큰 카드 — Today / Overdue 영역에서 사용 */
+    .study-group.review-group .study-group-head { font-size:1.1rem; }
+    .study-card.review-card {
+      padding:1.6rem 1.7rem;
+      border-color:rgba(124,147,255,0.3);
+      background:rgba(17,26,53,0.7);
+    }
+    .study-card.review-card.is-overdue { border-color:rgba(248,113,113,0.5); }
+    .study-card.review-card .study-sentence { font-size:1.42rem; line-height:1.5; }
+    .review-card .study-card-actions .study-btn.primary { padding:0.6rem 1.15rem; font-size:13px; }
+    @media (max-width: 640px){
+      .study-card.review-card { padding:1.15rem 1.2rem; }
+      .study-card.review-card .study-sentence { font-size:1.18rem; }
+    }
+
+    /* "Day N Review" 큰 배지 */
+    .study-day-badge {
+      display:flex; flex-wrap:wrap; align-items:baseline; gap:0.5rem;
+      margin-bottom:0.95rem; padding:0.5rem 0.95rem;
+      border-radius:0.7rem; font-size:1.05rem; font-weight:700; color:#fff;
+      background:rgba(91,117,246,0.22); border:1px solid rgba(124,147,255,0.45);
+    }
+    .study-day-badge i { color:#7c93ff; }
+    .study-day-badge.overdue { background:rgba(239,68,68,0.18); border-color:rgba(248,113,113,0.5); }
+    .study-day-badge.overdue i { color:#f87171; }
+    .study-day-sub { font-size:11px; font-weight:500; color:#94a3c8; letter-spacing:0.02em; }
+
+    /* 📖 단어 뜻 (작게 표시) */
+    .study-vocab { display:flex; flex-wrap:wrap; gap:0.4rem 0.55rem; margin-top:0.75rem; }
+    .study-vocab-item {
+      font-size:12px; color:#94a3c8; line-height:1.4;
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);
+      border-radius:0.5rem; padding:0.2rem 0.55rem;
+    }
+    .study-vocab-item b { color:#a9b8ff; font-weight:600; margin-right:0.25rem; }
   </style>
 </head>
 
@@ -1240,7 +1276,7 @@
       <div class="study-stats mb-9" id="studyStats"></div>
 
       <!-- 📅 Today's Reviews -->
-      <div class="study-group mb-6" id="studyGroupToday">
+      <div class="study-group review-group mb-6" id="studyGroupToday">
         <div class="study-group-head" data-group-toggle="studyGroupToday">
           <i class="fa-solid fa-chevron-down"></i>
           <span>📅 Today's Reviews</span>
@@ -1250,7 +1286,7 @@
       </div>
 
       <!-- ⏰ Overdue -->
-      <div class="study-group mb-6" id="studyGroupOverdue">
+      <div class="study-group review-group mb-6" id="studyGroupOverdue">
         <div class="study-group-head" data-group-toggle="studyGroupOverdue">
           <i class="fa-solid fa-chevron-down"></i>
           <span class="text-red-300">⏰ Overdue</span>
@@ -1277,17 +1313,25 @@
           <textarea id="studyTranslation" class="study-textarea mb-4" rows="2"
                     placeholder="예: 우리가 만난 건 순전히 우연이었다." aria-label="Translation"></textarea>
 
-          <label class="study-label" for="studySource">Source — URL 또는 자유 텍스트 (선택)</label>
-          <input type="text" id="studySource" class="study-input mb-4"
-                 placeholder="https://nytimes.com/... 또는 책 제목" aria-label="Source" />
+          <!-- 📖 모르는 단어 뜻 (선택) — 하고 싶을 때만 한 줄에 "단어 = 뜻" -->
+          <label class="study-label" for="studyVocab">Words / 모르는 단어 <span class="text-slate-500 normal-case">(선택 · 한 줄에 <span class="text-accent-400">단어 = 뜻</span>)</span></label>
+          <textarea id="studyVocab" class="study-textarea mb-4" rows="2"
+                    placeholder="serendipity = 우연한 발견&#10;hold still = 가만히 있다" aria-label="Unknown words and meanings"></textarea>
 
-          <div class="flex gap-2">
+          <!-- Source — 한 번 적으면 다음 문장에도 유지(sticky)되어 연속 입력이 편함 -->
+          <label class="study-label" for="studySource">Source — URL 또는 자유 텍스트 (선택)</label>
+          <input type="text" id="studySource" class="study-input mb-1"
+                 placeholder="https://nytimes.com/... 또는 책 제목" aria-label="Source" />
+          <p class="text-[11px] text-slate-500 mb-4"><i class="fa-solid fa-thumbtack mr-1"></i> 한 번 적으면 다음 문장에도 그대로 유지돼요. 비우려면 직접 지우면 됩니다.</p>
+
+          <div class="flex flex-wrap items-center gap-2">
             <button class="study-btn primary" id="studySubmit">
               <i class="fa-solid fa-plus"></i> <span id="studySubmitLabel">Add</span>
             </button>
             <button class="study-btn" id="studyCancelEdit" style="display:none;">
               <i class="fa-solid fa-xmark"></i> Cancel
             </button>
+            <span class="text-[11px] text-slate-500" id="studyAddHint"><i class="fa-solid fa-bolt mr-1"></i> 추가해도 폼이 닫히지 않아요 — 계속 입력하세요.</span>
           </div>
         </div>
       </div>
@@ -2787,6 +2831,27 @@ GA 대시보드를 새 탭에서 열까요?`;
   }
 
   // ════════════ CRUD ════════════
+  // 단어장 텍스트("단어 = 뜻", 한 줄에 하나) ↔ 배열 변환 + 정제
+  function studyParseVocab(text) {
+    return String(text || '').split('\n').map(line => {
+      const t = line.trim();
+      if (!t) return null;
+      // 첫 구분자(= : → 탭 ' - ')에서 단어/뜻 분리, 없으면 단어만
+      const m = t.match(/^(.*?)\s*(?:=|:|→|\t|\s-\s)\s*(.*)$/);
+      return m ? { term: m[1].trim(), meaning: m[2].trim() } : { term: t, meaning: '' };
+    }).filter(v => v && v.term);
+  }
+  function studyVocabToText(vocab) {
+    return (vocab || []).map(v => v.meaning ? `${v.term} = ${v.meaning}` : v.term).join('\n');
+  }
+  function studySanitizeVocab(v) {
+    if (!Array.isArray(v)) return [];
+    return v.filter(x => x && typeof x.term === 'string' && x.term.trim())
+            .map(x => ({ term: x.term.trim(), meaning: typeof x.meaning === 'string' ? x.meaning.trim() : '' }));
+  }
+  // sticky source — 마지막으로 입력한 출처를 과목별로 기억해 다음 입력에 재사용
+  function studyLastSourceKey(subject) { return `study_${subject}_lastsource`; }
+
   function addEntry(subject, data) {
     const createdAt = data.createdAt || studyTodayISO();
     const entry = {
@@ -2795,7 +2860,8 @@ GA 대시보드를 새 탭에서 열까요?`;
       sentence: (data.sentence || '').trim(),
       translation: (data.translation || '').trim(),
       source: (data.source || '').trim(),
-      reviews: studyMakeReviews(createdAt)   // 6개 dueDate 자동 계산
+      vocab: studySanitizeVocab(data.vocab),  // 모르는 단어 뜻 (선택)
+      reviews: studyMakeReviews(createdAt)     // 6개 dueDate 자동 계산
     };
     const list = getEntries(subject);
     list.push(entry);
@@ -2806,10 +2872,11 @@ GA 대시보드를 새 탭에서 열까요?`;
     const list = getEntries(subject);
     const e = list.find(x => x.id === id);
     if (!e) return;
-    // 문장/해석/출처만 수정 — createdAt과 복습 일정(reviews)은 그대로 보존
+    // 문장/해석/출처/단어만 수정 — createdAt과 복습 일정(reviews)은 그대로 보존
     e.sentence = (data.sentence || '').trim();
     e.translation = (data.translation || '').trim();
     e.source = (data.source || '').trim();
+    e.vocab = studySanitizeVocab(data.vocab);
     saveEntries(subject, list);
   }
   function studyDeleteEntry(subject, id) {
@@ -2839,21 +2906,43 @@ GA 대시보드를 새 탭에서 열까요?`;
   }
 
   // ════════════ 카드 HTML 한 장 ════════════
-  function studyCardHTML(e, today) {
+  // variant: 'review' (Today/Overdue — 큰 카드 + "Day N Review" 배지) | 'list' (All — 일반)
+  function studyCardHTML(e, today, variant) {
+    const isReview = variant === 'review';
     const status = studyStatusOf(e, today);
     const n = studyNextReview(e);
+    const doneCount = e.reviews.filter(r => r.done).length;
     const dots = e.reviews
       .map(r => `<span class="study-dot${r.done ? ' done' : ''}">${r.done ? '●' : '○'}</span>`)
       .join('');
 
-    // 진행/다음 복습 라벨
+    // 📌 "Day N Review" 큰 배지 — 복습 영역(review variant)에서만, 다음 복습 기준
+    let badgeHtml = '';
+    if (isReview && n) {
+      const od = n.dueDate < today;
+      badgeHtml = `
+        <div class="study-day-badge${od ? ' overdue' : ''}">
+          <span><i class="fa-solid fa-${od ? 'bell' : 'calendar-day'}"></i> Day ${n.day} Review${od ? ' · 밀림' : ''}</span>
+          <span class="study-day-sub">${doneCount}/6 완료 · due ${n.dueDate}</span>
+        </div>`;
+    }
+
+    // 진행/다음 복습 라벨 (카드 하단)
     let progressLabel;
     if (status === 'mastered') {
       progressLabel = '<span class="text-emerald-400">✓ Mastered</span>';
+    } else if (isReview) {
+      progressLabel = `${doneCount}/6 reviews done`;
     } else {
       const overdueTag = (n.dueDate < today) ? ' <span class="text-red-400">(overdue)</span>' : '';
       progressLabel = `Next: D+${n.day} · due ${n.dueDate}${overdueTag}`;
     }
+
+    // 📖 모르는 단어 뜻 (작게)
+    const vocabHtml = (e.vocab && e.vocab.length)
+      ? `<div class="study-vocab">${e.vocab.map(v =>
+          `<span class="study-vocab-item"><b>${escapeHtml(v.term)}</b>${v.meaning ? escapeHtml(v.meaning) : ''}</span>`).join('')}</div>`
+      : '';
 
     // 해석 (기본 블러)
     const transHtml = e.translation ? `
@@ -2872,12 +2961,15 @@ GA 대시보드를 새 탭에서 열까요?`;
           <i class="fa-solid fa-check"></i> Mark reviewed</button>`;
 
     const cardClass = 'study-card'
+      + (isReview ? ' review-card' : '')
       + (status === 'overdue' ? ' is-overdue' : '')
       + (status === 'mastered' ? ' is-mastered' : '');
 
     return `
       <div class="${cardClass}" data-id="${e.id}" tabindex="0">
+        ${badgeHtml}
         <p class="study-sentence font-serif">${escapeHtml(e.sentence)}</p>
+        ${vocabHtml}
         ${transHtml}
         ${sourceHtml}
         <div class="study-card-foot">
@@ -2895,11 +2987,11 @@ GA 대시보드를 새 탭에서 열까요?`;
   }
 
   // ════════════ 리스트 채우기 (성능 위해 한 번에 innerHTML) ════════════
-  function studyFillList(containerId, list, today, emptyMsg) {
+  function studyFillList(containerId, list, today, emptyMsg, variant) {
     const c = document.getElementById(containerId);
     if (!c) return;
     if (!list.length) { c.innerHTML = `<div class="study-empty">${escapeHtml(emptyMsg)}</div>`; return; }
-    c.innerHTML = list.map(e => studyCardHTML(e, today)).join('');
+    c.innerHTML = list.map(e => studyCardHTML(e, today, variant)).join('');
   }
 
   // 정렬기
@@ -2949,13 +3041,13 @@ GA 대시보드를 새 탭에서 열까요?`;
     const todayList = entries
       .filter(e => studyStatusOf(e, today) === 'today')
       .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
-    studyFillList('studyTodayList', todayList, today, '오늘 복습할 문장이 없어요. 잘 따라가고 있네요! 🎉');
+    studyFillList('studyTodayList', todayList, today, '오늘 복습할 문장이 없어요. 잘 따라가고 있네요! 🎉', 'review');
 
     // ⏰ Overdue — 가장 오래된 미완료부터
     const overdueList = entries
       .filter(e => studyStatusOf(e, today) === 'overdue')
       .sort((a, b) => studyNextReview(a).dueDate.localeCompare(studyNextReview(b).dueDate));
-    studyFillList('studyOverdueList', overdueList, today, '놓친 복습이 없어요. 👏');
+    studyFillList('studyOverdueList', overdueList, today, '놓친 복습이 없어요. 👏', 'review');
 
     // 📚 All — 검색 + 필터 + 정렬
     let all = entries.slice();
@@ -2999,7 +3091,12 @@ GA 대시보드를 새 탭에서 열까요?`;
 
   // ════════════ 입력 폼 토글 / 수정 ════════════
   function studyAutoGrow(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
-  function studyAutoGrowAll() { ['studySentence', 'studyTranslation'].forEach(id => studyAutoGrow(document.getElementById(id))); }
+  function studyAutoGrowAll() { ['studySentence', 'studyTranslation', 'studyVocab'].forEach(id => studyAutoGrow(document.getElementById(id))); }
+  // sticky source — 폼을 새로(추가 모드) 열 때 마지막 출처를 자동 채움
+  function studyPrefillSource() {
+    const src = document.getElementById('studySource');
+    if (!src.value) src.value = localStorage.getItem(studyLastSourceKey(studyActiveSubject)) || '';
+  }
 
   function studyOpenForm(open) {
     const wrap = document.getElementById('studyFormWrap');
@@ -3018,9 +3115,11 @@ GA 대시보드를 새 탭에서 열까요?`;
     document.getElementById('studyEditId').value = '';
     document.getElementById('studySentence').value = '';
     document.getElementById('studyTranslation').value = '';
+    document.getElementById('studyVocab').value = '';
     document.getElementById('studySource').value = '';
     document.getElementById('studySubmitLabel').textContent = 'Add';
     document.getElementById('studyCancelEdit').style.display = 'none';
+    document.getElementById('studyAddHint').style.display = '';
     studyAutoGrowAll();
     studyOpenForm(false);
   }
@@ -3030,9 +3129,11 @@ GA 대시보드를 새 탭에서 열까요?`;
     document.getElementById('studyEditId').value = id;
     document.getElementById('studySentence').value = e.sentence;
     document.getElementById('studyTranslation').value = e.translation;
+    document.getElementById('studyVocab').value = studyVocabToText(e.vocab);
     document.getElementById('studySource').value = e.source;
     document.getElementById('studySubmitLabel').textContent = 'Save changes';
     document.getElementById('studyCancelEdit').style.display = '';
+    document.getElementById('studyAddHint').style.display = 'none';  // 수정 모드엔 "계속 입력" 안내 숨김
     studyOpenForm(true);
     studyAutoGrowAll();
     document.getElementById('studySentence').focus();
@@ -3043,10 +3144,21 @@ GA 대시보드를 새 탭에서 열까요?`;
     if (!sentence) { alert('영어 문장을 입력해주세요.'); document.getElementById('studySentence').focus(); return; }
     const translation = document.getElementById('studyTranslation').value;
     const source = document.getElementById('studySource').value;
+    const vocab = studyParseVocab(document.getElementById('studyVocab').value);
     const editId = document.getElementById('studyEditId').value;
-    if (editId) studyUpdateEntry(studyActiveSubject, editId, { sentence, translation, source });
-    else addEntry(studyActiveSubject, { sentence, translation, source });
-    studyResetForm();
+    if (editId) {
+      studyUpdateEntry(studyActiveSubject, editId, { sentence, translation, source, vocab });
+      studyResetForm();   // 수정은 끝나면 폼 닫기
+    } else {
+      addEntry(studyActiveSubject, { sentence, translation, source, vocab });
+      // sticky source 저장 + 폼은 열어둔 채로 문장/해석/단어만 비워 연속 입력
+      localStorage.setItem(studyLastSourceKey(studyActiveSubject), source.trim());
+      document.getElementById('studySentence').value = '';
+      document.getElementById('studyTranslation').value = '';
+      document.getElementById('studyVocab').value = '';
+      studyAutoGrowAll();
+      document.getElementById('studySentence').focus();
+    }
     renderStudy(studyActiveSubject);
   }
 
@@ -3129,6 +3241,7 @@ GA 대시보드를 새 탭에서 열까요?`;
       sentence: String(e.sentence).trim(),
       translation: typeof e.translation === 'string' ? e.translation.trim() : '',
       source: typeof e.source === 'string' ? e.source.trim() : '',
+      vocab: studySanitizeVocab(e.vocab),
       reviews
     };
   }
@@ -3182,13 +3295,13 @@ GA 대시보드를 새 탭에서 열까요?`;
     document.getElementById('studyAddToggle').addEventListener('click', () => {
       const wrap = document.getElementById('studyFormWrap');
       if (wrap.classList.contains('open')) studyResetForm();
-      else { studyOpenForm(true); studyAutoGrowAll(); document.getElementById('studySentence').focus(); }
+      else { studyOpenForm(true); studyPrefillSource(); studyAutoGrowAll(); document.getElementById('studySentence').focus(); }
     });
     document.getElementById('studySubmit').addEventListener('click', studySubmitHandler);
     document.getElementById('studyCancelEdit').addEventListener('click', studyResetForm);
 
     // textarea 자동 높이
-    ['studySentence', 'studyTranslation'].forEach(id =>
+    ['studySentence', 'studyTranslation', 'studyVocab'].forEach(id =>
       document.getElementById(id).addEventListener('input', e => studyAutoGrow(e.target)));
 
     // 검색 / 필터 / 정렬
