@@ -43,7 +43,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <a class="m-cta" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">View the CV →</a>
 <div class="m-meta">Stanford BDML · Underwater robotics</div>
 </nav>
-<main data-build="2026-09-07a" id="main" tabindex="-1">
+<main data-build="2026-09-07b" id="main" tabindex="-1">
 <section class="fh-hero">
 <div class="wrap fh-hero-wrap" data-wrap="w1">
 <div class="fh-top" data-blk="b1">
@@ -53,7 +53,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <div class="fh-mid" data-blk="b2">
 <div class="fh-copy">
 <h1 data-d="80" data-ed="t1" data-reveal="">Hi, I&#8217;m <span class="acc-word">JJ</span></h1>
-<p data-d="160" data-ed="t2" data-reveal="">I work on <strong>manipulation and control</strong> for underwater and bio-inspired robots at Stanford, advised by <a href="https://scholar.google.com/citations?user=qIg8KFYAAAAJ&amp;hl=en" rel="noopener" target="_blank">Prof. Mark Cutkosky</a> and <a href="https://scholar.google.com/citations?user=5031vK4AAAAJ&amp;hl=en" rel="noopener" target="_blank">Prof. Shuran Song</a>.</p>
+<p data-d="160" data-ed="t2" data-reveal="">I work on <strong>manipulation and control</strong> for underwater and bio-inspired robots at Stanford, advised by <span class="fh-adv"><a class="nb" href="https://scholar.google.com/citations?user=qIg8KFYAAAAJ&amp;hl=en" rel="noopener" target="_blank">Prof. Mark Cutkosky</a> and <a class="nb" href="https://scholar.google.com/citations?user=5031vK4AAAAJ&amp;hl=en" rel="noopener" target="_blank">Prof. Shuran Song</a>.</span></p>
 </div>
 <div class="fh-mark" data-d="220" data-reveal="">
 <figure class="portrait">
@@ -68,93 +68,36 @@ gtag('config', 'G-YJNN4WK6NG');
 </div>
 </div>
 </section>
-<section class="section bg-ink" id="project">
+<section class="section bg-paper" id="projects">
 <div class="wrap" data-wrap="w2">
-<div class="section-head measure" data-blk="b5">
-<div class="eyebrow acc" data-ed="t4" data-reveal="">The main project</div>
-<h2 class="h2" data-d="60" data-ed="t5" data-reveal="">It grasps 85% in the pool. In the ocean, under 5%.</h2>
-<p class="lead" data-d="140" data-ed="t6" data-reveal="">A grasping policy trained entirely on land, with no underwater teleoperation. It plans from depth instead of color, so crossing the water surface barely changes what it sees.</p>
+<div class="projcards" data-blk="b5">
+<a class="projcard" data-blk="b6" data-magnetic="" data-reveal="" href="underwater-manipulation.html">
+<div class="pc-media"><video aria-label="Underwater at Hopkins Marine Station: the ROV approaches a white pitcher resting on the sand." data-inline="always" height="562" loop="" muted="" playsinline="" poster="assets/media/img/poster-field-hopkins.jpg" preload="none" width="1000"><source src="assets/media/vid/field-hopkins.mp4" type="video/mp4"/></video></div>
+<div class="pc-body">
+<div class="pc-top"><span>01 / 03</span><span class="st" data-ed="t4">Project lead</span></div>
+<h2 data-ed="t5">Robust underwater manipulation</h2>
+<p data-ed="t6">A grasping policy trained on land, reading depth instead of RGB. 85% in the pool, under 5% in the ocean at Hopkins. The rebuild adds stereo depth, a state estimator, and MPC with a disturbance observer.</p>
+<span class="pc-more">Read the project <span class="arr">&#8594;</span></span>
 </div>
-<div class="metrics" data-blk="b6" data-d="80" data-reveal="">
-<div class="metric" data-blk="b15">
-<div class="mv" data-ed="t7">85%</div>
-<div class="mk" data-ed="t8">Grasp success in the pool</div>
-</div>
-<div class="metric" data-blk="b16">
-<div class="mv" data-ed="t9">0.003</div>
-<div class="mk" data-ed="t10">Air-to-water feature shift in depth, against 0.166 in RGB</div>
-</div>
-<div class="metric" data-blk="b17">
-<div class="mv" data-ed="t11">&lt;5%</div>
-<div class="mk" data-ed="t12">The same policy at Hopkins Marine Station</div>
-</div>
-</div>
-<div class="revealpair" data-blk="b7" data-d="140" data-reveal="">
-<figure class="fig">
-<span class="rp-tag">In the pool</span>
-<video autoplay="" data-inline="always" height="788" loop="" muted="" playsinline="" poster="assets/media/img/poster-pool-aquabot.jpg" preload="auto" width="1000">
-<source src="assets/media/vid/pool-aquabot.mp4" type="video/mp4"/>
-</video>
-<figcaption data-ed="t13">Clear, still water. The policy reaches, closes, and lifts. This is the result the method was validated on.</figcaption>
-</figure>
-<figure class="fig rp-hold" data-reveal-cover="So what happens in the ocean?" data-reveal-label="Find out">
-<span class="rp-tag warn">In the ocean</span>
-<div class="rp-media">
-<video data-inline="always" height="450" loop="" muted="" playsinline="" poster="assets/media/img/poster-ocean-reality.jpg" preload="none" width="800">
-<source src="assets/media/vid/ocean-reality.mp4" type="video/mp4"/>
-</video>
-</div>
-<figcaption data-ed="t14">Monterey Bay. The same policy, pushed off target between one plan and the next. Success fell below 5%.</figcaption>
-</figure>
-</div>
-<div class="callout" data-blk="b8" data-reveal="">
-<span class="cl" data-ed="t15">Why it broke</span>
-<p data-ed="t16">Nothing the robot measures tells it the water is pushing. It replans once a second, and every plan inherits the same offset, so the gap never closes. That is the blind spot the rebuild is aimed at.</p>
-</div>
-<div class="cta-strip" data-blk="b9" data-d="200" data-reveal="">
-<div>
-<div class="big" data-ed="t17">Robust underwater manipulation</div>
-<div class="sub" data-ed="t18">The perception choice, the three fixes, and what is still open.</div>
-</div>
-<div style="display:flex;gap:12px;flex-wrap:wrap">
-<a class="btn accent" data-magnetic="" href="underwater-manipulation.html">Read the project <span class="arr">→</span></a>
-</div>
-</div>
-</div>
-</section>
-<section class="section bg-paper" id="focus">
-<div class="wrap" data-wrap="w3">
-<div class="section-head measure" data-blk="b10">
-<div class="eyebrow gold" data-ed="t19" data-reveal="">What I work on</div>
-<h2 class="h2" data-d="60" data-ed="t20" data-reveal="">Manipulation and control in moving water, and the sensing underneath it.</h2>
-</div>
-<div class="projlist" data-blk="b11" data-d="160" data-reveal="">
-<a class="pl-item" data-blk="b18" data-magnetic="" href="underwater-manipulation.html">
-<span class="pl-num" data-ed="t21">01</span>
-<span class="pl-title" data-ed="t22">Underwater manipulation</span>
-<span aria-hidden="true" class="pl-go">&#8594;</span>
 </a>
-<a class="pl-item" data-blk="b19" data-magnetic="" href="whisker.html">
-<span class="pl-num" data-ed="t23">02</span>
-<span class="pl-title" data-ed="t24">Bio-inspired sensing</span>
-<span aria-hidden="true" class="pl-go">&#8594;</span>
-</a>
-<a class="pl-item" data-blk="b20" data-magnetic="" href="powerbuoy.html">
-<span class="pl-num" data-ed="t25">03</span>
-<span class="pl-title" data-ed="t26">NPS buoy project</span>
-<span aria-hidden="true" class="pl-go">&#8594;</span>
-</a>
+<a class="projcard" data-blk="b7" data-d="80" data-magnetic="" data-reveal="" href="whisker.html">
+<div class="pc-media"><video aria-label="Movie S9: three whisker geometries towed through the same water, with the wavelength traces they produce. The cylindrical shaft shakes itself; the tapered, undulating one stays quiet." data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-movie-s9.jpg" preload="none" width="1280"><source src="assets/media/vid/whisker-movie-s9.mp4" type="video/mp4"/></video></div>
+<div class="pc-body">
+<div class="pc-top"><span>02 / 03</span><span class="st" data-ed="t7">Contributor &#183; submitted to T-RO</span></div>
+<h2 data-ed="t8">Whisker hydrodynamic sensing</h2>
+<p data-ed="t9">A whisker shaped like a harbor seal's vibrissa, reading the wake a fish leaves behind. I built the platform, the signal processing and the field tests; I contribute to it rather than lead it.</p>
+<span class="pc-more">Read the project <span class="arr">&#8594;</span></span>
 </div>
+</a>
+<a class="projcard" data-blk="b8" data-d="160" data-magnetic="" data-reveal="" href="powerbuoy.html">
+<div class="pc-media"><img alt="A diver in open water attaching an instrument to a mooring cable by hand." decoding="async" loading="lazy" src="assets/media/img/mooring-diver.jpg"/></div>
+<div class="pc-body">
+<div class="pc-top"><span>03 / 03</span><span class="st" data-ed="t10">Side project</span></div>
+<h2 data-ed="t11">PowerBuoy sensor deployment</h2>
+<p data-ed="t12">Oceanographic sensors reach a moored buoy only by hand &#8212; winched to the surface, or clamped on by a diver. The question is whether a robot can take that over.</p>
+<span class="pc-more">Read the project <span class="arr">&#8594;</span></span>
 </div>
-</section>
-<!-- CTA -->
-<section class="section bg-accent" style="text-align:center">
-<div class="wrap" data-wrap="w4">
-<h2 data-blk="b12" data-ed="t39" data-reveal="" style="margin:0 auto;max-width:1000px;font-weight:800;font-size:clamp(34px,6vw,84px);line-height:.96;letter-spacing:-.04em;text-wrap:balance">The ocean does not wait for the plan to finish.</h2>
-<p data-blk="b13" data-d="140" data-ed="t40" data-reveal="" style="margin:24px auto 0;max-width:560px;font-size:clamp(16px,1.4vw,20px);line-height:1.5;color:rgba(23,24,26,.7)">Next: cable routing and underwater connector mating, with the field testing back at Hopkins.</p>
-<div data-blk="b14" data-d="200" data-reveal="" style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-<a class="btn" data-magnetic="" href="research.html">The research argument <span class="arr">→</span></a>
-<a class="btn" data-magnetic="" href="research.html">See the projects <span class="arr">→</span></a>
+</a>
 </div>
 </div>
 </section>

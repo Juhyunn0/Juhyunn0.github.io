@@ -43,7 +43,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <a class="m-cta" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">View the CV →</a>
 <div class="m-meta">Stanford BDML · Underwater robotics</div>
 </nav>
-<main data-build="2026-09-02d" id="main" tabindex="-1">
+<main data-build="2026-09-07c" id="main" tabindex="-1">
 <section class="phero">
 <div class="wrap" data-wrap="w1">
 <div class="kicker" data-blk="b1" data-reveal="">
@@ -55,9 +55,8 @@ gtag('config', 'G-YJNN4WK6NG');
 <p class="dek" data-blk="b3" data-d="140" data-ed="t3" data-reveal="">A grasping policy trained with no underwater teleoperation data at all. 85% in the lab pool. Below 5% in Monterey Bay, because nothing in its state told it the water was pushing. This page is the argument in the order I worked through it.</p>
 <div class="credits" data-blk="b4" data-d="200" data-reveal="">
 <div><span>Role</span>Project lead</div>
-<div><span>Advisors</span>Mark Cutkosky, Shuran Song</div>
-<div><span>Where</span>Stanford BDML, and Hopkins Marine Station for field work</div>
-<div><span>Platform</span>BlueROV2, stereo camera, Newton subsea gripper</div>
+<div><span>Advisors</span><span class="nb"><a href="https://scholar.google.com/citations?user=qIg8KFYAAAAJ&amp;hl=en" rel="noopener" target="_blank">Prof. Mark Cutkosky</a></span>, <span class="nb"><a href="https://scholar.google.com/citations?user=5031vK4AAAAJ&amp;hl=en" rel="noopener" target="_blank">Prof. Shuran Song</a></span></div>
+<div><span>Where</span>Stanford Robotics Center</div>
 </div>
 </div>
 </section>
@@ -109,16 +108,16 @@ gtag('config', 'G-YJNN4WK6NG');
 <h2 class="h2" data-d="60" data-ed="t5" data-reveal="">Underwater data is the bottleneck, not underwater learning.</h2>
 <p class="lead" data-d="140" data-ed="t6" data-reveal="">Prof. Song's group had already shown that an end-to-end visuomotor policy can work under water when it is trained on human teleoperation data. The result held, but only inside tightly controlled experimental conditions.</p>
 </div>
-<div class="figgrid two" data-blk="b6" data-d="80" data-reveal="">
+<div class="figgrid two even" data-blk="b6" data-d="80" data-reveal="">
+<figure class="fig" data-blk="b57">
+<img alt="A dim photograph of an operator seated at an underwater teleoperation station." decoding="async" loading="lazy" src="assets/media/img/teleop-cost.jpg"/>
+<figcaption data-ed="t8">This is the cost the first project set out to remove.</figcaption>
+</figure>
 <figure class="fig" data-blk="b56">
 <video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-prior-work.jpg" preload="none" width="1280">
 <source src="assets/media/vid/prior-work.mp4" type="video/mp4"/>
 </video>
 <figcaption data-ed="t7">The prior teleoperation-trained result: an ROV with a gripper descending on a target in clear, controlled water.</figcaption>
-</figure>
-<figure class="fig" data-blk="b57">
-<img alt="A dim photograph of an operator seated at an underwater teleoperation station." decoding="async" loading="lazy" src="assets/media/img/teleop-cost.jpg"/>
-<figcaption data-ed="t8">This is the cost the first project set out to remove.</figcaption>
 </figure>
 </div>
 <div class="prose" data-blk="b7" data-reveal="">
@@ -369,18 +368,6 @@ gtag('config', 'G-YJNN4WK6NG');
 <span class="cl" data-ed="t102">Why the gap never closes</span>
 <p data-ed="t103">Every 1 Hz update is computed as though the vehicle were still and the water were still, so the bias is identical each time. The robot corrects toward the target, the water carries it back by about as much, and the next update starts from the same error. Replanning faster would not help: the missing quantity is not in the loop at all.</p>
 </div>
-<div class="figgrid two" data-blk="b34" data-d="60" data-reveal="">
-<figure class="fig tall" data-blk="b78">
-<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-disturbance-pool.jpg" preload="none" width="1280">
-<source src="assets/media/vid/disturbance-pool.mp4" type="video/mp4"/>
-</video>
-<figcaption data-ed="t104">Top-down view of the tent pool with the surface churning, the vehicle trying to hold position under wave disturbance.</figcaption>
-</figure>
-<figure class="fig" data-blk="b79">
-<img alt="Underwater view at Hopkins Marine Station: a white pitcher resting on the sand with the ROV hovering nearby." decoding="async" loading="lazy" src="assets/media/img/hopkins-scene.jpg"/>
-<figcaption data-ed="t105">The target on the sand at Hopkins. The task is not the hard part.</figcaption>
-</figure>
-</div>
 </div>
 </section>
 <!-- PULL QUOTE (carried over from the old research page) -->
@@ -420,26 +407,6 @@ gtag('config', 'G-YJNN4WK6NG');
 <p data-ed="t118">The rebuilt loop runs in order: stereo depth, the SAM2-Tiny mask and the IMU give the state; the policy turns state into a relative end-effector trajectory; an MPC turns that into thrust. The disturbance observer sits alongside the MPC.</p>
 <p data-ed="t119">The bet is that ocean disturbance is not noise. Waves and currents are <strong>quasi-periodic</strong>, so an observed disturbance should be predictable, and a predicted one lets the controller correct before the displacement rather than after. Whether that holds in real water is untested.</p>
 <p data-ed="t120">I am still working out how the disturbance observer should actually be used: what to estimate, how far ahead to trust the estimate, and where in the MPC it belongs. None of the rebuilt pipeline has been validated in the field yet.</p>
-</div>
-<div class="figgrid two" data-blk="b38" data-d="60" data-reveal="">
-<figure class="fig plain" data-blk="b83">
-<img alt="Block diagram of the state estimator: an RGB image enters SAM2-Tiny, and its output is combined with depth and IMU to produce the vehicle's state as a pose relative to the object." decoding="async" loading="lazy" src="assets/media/img/state-estimator.png"/>
-<figcaption data-ed="t121">Pose is expressed relative to the object, not to a world frame the vehicle has already drifted out of.</figcaption>
-</figure>
-<figure class="fig plain" data-blk="b84">
-<img alt="The five-element action vector written as a column: dx, dy, dz, dyaw and gripper." decoding="async" loading="lazy" src="assets/media/img/action-vector.png"/>
-<figcaption data-ed="t122">The new action: five numbers that mean the same thing on any vehicle.</figcaption>
-</figure>
-</div>
-<div class="figgrid two" data-blk="b39" data-d="60" data-reveal="">
-<figure class="fig plain" data-blk="b85">
-<img alt="Product render of the QYSEA FIFISH ROV, the earlier platform used for this work." decoding="async" loading="lazy" src="assets/media/img/hw-fifish.png"/>
-<figcaption data-ed="t123">Before: the QYSEA FIFISH, the platform the thruster-level actions were valid for.</figcaption>
-</figure>
-<figure class="fig plain" data-blk="b86">
-<img alt="Product render of the BlueROV2, the current platform." decoding="async" loading="lazy" src="assets/media/img/hw-bluerov2.png"/>
-<figcaption data-ed="t124">After: a BlueROV2, which I assembled from scratch with SRC support, carrying a MarineSitu C3 stereo camera and a Newton subsea gripper.</figcaption>
-</figure>
 </div>
 </div>
 </section>

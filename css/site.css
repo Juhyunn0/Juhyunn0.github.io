@@ -125,6 +125,7 @@ main{display:block;background:var(--paper)}
 .bg-accent{background:var(--paper-3);color:var(--ink);border-top:1px solid var(--accent)}
 
 .section-head .eyebrow{margin-bottom:26px}
+h1.eyebrow,h2.eyebrow{margin-top:0;font-weight:400}
 .section-head .eyebrow.gold{color:var(--accent-deep)}
 .section-head .eyebrow.acc{color:var(--accent-deep)}
 .h2{margin:0;font-weight:800;font-size:clamp(30px,4.6vw,64px);line-height:1.02;letter-spacing:-.035em;text-wrap:balance}
@@ -442,6 +443,12 @@ main{display:block;background:var(--paper)}
 .fh-copy p strong{color:#17181A;font-weight:700}
 .fh-copy p a{color:var(--accent-deep);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(0,88,45,.35);transition:color .18s,text-decoration-color .18s}
 .fh-copy p a:hover,.fh-copy p a:focus-visible{color:var(--accent);text-decoration-color:currentColor}
+/* advisor names: never split a name, and keep both advisors on one line.
+   The phrase needs ~314px at 15px, which is exactly the content width at a
+   320px viewport -- so drop a point of body copy below 380px for headroom. */
+.fh-copy p .nb{white-space:nowrap}
+.fh-copy p .fh-adv{white-space:nowrap}
+@media (max-width:380px){.fh-copy p{font-size:14px}}
 .fh-mark{display:flex;align-items:center;justify-content:center}
 .fh-mark img{width:clamp(160px,min(27vw,43svh),380px);height:auto}
 
@@ -862,6 +869,17 @@ body.editing [data-editable]{outline:1px dashed var(--accent);outline-offset:3px
 /* in a grid the column sets the width, so cap the height instead — otherwise a
    portrait clip runs twice as tall as the landscape figure beside it */
 .figgrid .fig.tall video,.figgrid .fig.tall img{max-height:min(520px,68vh);width:auto;margin-inline:auto}
+/* a figure that reads better below full measure -- capped and centred */
+.fig.narrow{max-width:min(100%,640px);margin-inline:auto}
+
+/* .even -- two figures side by side at identical size: same width from the
+   grid, a shared aspect ratio so the media boxes match, and captions pinned
+   to the bottom so the cards line up however long the text runs. */
+.figgrid.even{align-items:stretch}
+.figgrid.even .fig{display:flex;flex-direction:column}
+.figgrid.even .fig img,.figgrid.even .fig video{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block}
+.figgrid.even .fig.plain img{object-fit:contain}
+.figgrid.even .fig figcaption{margin-top:auto}
 
 /* ---- A/B comparison with a metric verdict ---- */
 .cmp{margin-top:clamp(30px,4.5vh,52px);border:1px solid rgba(0,0,0,.16);border-radius:8px;overflow:hidden;background:rgba(0,0,0,.03)}
@@ -969,7 +987,7 @@ body.editing [data-editable]{outline:1px dashed var(--accent);outline-offset:3px
 .projcard:hover .pc-more .arr{transform:translateX(5px)}
 @media (max-width:820px){
   .projcard{grid-template-columns:1fr}
-  .projcard .pc-media{order:1;min-height:200px;aspect-ratio:16/9}
+  .projcard .pc-media{order:1;min-height:0;aspect-ratio:16/9}
   .projcard .pc-body{order:2}
 }
 
