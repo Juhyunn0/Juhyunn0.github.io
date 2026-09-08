@@ -14,8 +14,8 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/site.css?v=2026-09-02d" rel="stylesheet"/>
-<link href="css/admin.css?v=2026-09-02d" rel="stylesheet"/>
+<link href="css/site.css?v=2026-09-08a" rel="stylesheet"/>
+<link href="css/admin.css?v=2026-09-08a" rel="stylesheet"/>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YJNN4WK6NG"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -43,7 +43,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <a class="m-cta" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">View the CV →</a>
 <div class="m-meta">Stanford BDML · Underwater robotics</div>
 </nav>
-<main data-build="2026-09-07d" id="main" tabindex="-1">
+<main data-build="2026-09-08a" id="main" tabindex="-1">
 <section class="section section-pad-top bg-paper">
 <div class="wrap" data-wrap="w1">
 <div class="section-head measure" data-blk="b1">
@@ -51,7 +51,7 @@ gtag('config', 'G-YJNN4WK6NG');
 </div>
 <div class="projcards" data-blk="b2">
 <a class="projcard" data-blk="b13" data-magnetic="" data-reveal="" href="underwater-manipulation.html">
-<div class="pc-media"><video aria-label="Underwater at Hopkins Marine Station: the ROV approaches a white pitcher resting on the sand." data-inline="always" height="562" loop="" muted="" playsinline="" poster="assets/media/img/poster-field-hopkins.jpg" preload="none" width="1000"><source src="assets/media/vid/field-hopkins.mp4" type="video/mp4"/></video></div>
+<div class="pc-media"><video autoplay="" aria-label="Underwater at Hopkins Marine Station: the ROV approaches a white pitcher resting on the sand." data-inline="always" height="562" loop="" muted="" playsinline="" poster="assets/media/img/poster-field-hopkins.jpg" preload="metadata" width="1000"><source src="assets/media/vid/field-hopkins.mp4" type="video/mp4"/></video></div>
 <div class="pc-body">
 <div class="pc-top"><span>01 / 03</span><span class="st" data-ed="t4">Project lead</span></div>
 <h2 data-ed="t5">Robust underwater manipulation</h2>
@@ -60,7 +60,7 @@ gtag('config', 'G-YJNN4WK6NG');
 </div>
 </a>
 <a class="projcard" data-blk="b14" data-d="80" data-magnetic="" data-reveal="" href="whisker.html">
-<div class="pc-media"><video aria-label="Movie S9: three whisker geometries towed through the same water, with the wavelength traces they produce. The cylindrical shaft shakes itself; the tapered, undulating one stays quiet." data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-movie-s9.jpg" preload="none" width="1280"><source src="assets/media/vid/whisker-movie-s9.mp4" type="video/mp4"/></video></div>
+<div class="pc-media"><video autoplay="" aria-label="Movie S9: three whisker geometries towed through the same water, with the wavelength traces they produce. The cylindrical shaft shakes itself; the tapered, undulating one stays quiet." data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-movie-s9.jpg" preload="metadata" width="1280"><source src="assets/media/vid/whisker-movie-s9.mp4" type="video/mp4"/></video></div>
 <div class="pc-body">
 <div class="pc-top"><span>02 / 03</span><span class="st" data-ed="t7">Contributor · submitted to T-RO</span></div>
 <h2 data-ed="t8">Whisker hydrodynamic sensing</h2>
@@ -88,25 +88,21 @@ gtag('config', 'G-YJNN4WK6NG');
 </div>
 <figure class="fig plain mid" data-blk="b5" data-d="40" data-reveal="">
 <img alt="Hardware layout: a BlueROV2 carrying a MarineSitu C3 stereo camera and a Newton subsea gripper, a lithium-ion battery, a GigaBlox SFP switch, and a 50 m optical fibre tether running through a USB-C to SFP adapter to the topside computer." decoding="async" loading="lazy" src="assets/media/img/setup-hardware.png" width="1272" height="588"/>
-<figcaption data-ed="t17">The hardware: a BlueROV2 with a MarineSitu C3 stereo camera and a Newton subsea gripper, tied to the topside computer through 50 m of optical fibre.</figcaption>
 </figure>
 <div class="figgrid two even" data-blk="b4" data-d="60" data-reveal="">
 <figure class="fig" data-blk="b16">
 <video data-inline="" height="619" loop="" muted="" playsinline="" poster="assets/media/img/poster-rov-assembly-1.jpg" preload="none" width="1100">
 <source src="assets/media/vid/rov-assembly-1.mp4" type="video/mp4"/>
 </video>
-<figcaption data-ed="t15">Assembling the vehicle on the lab bench.</figcaption>
 </figure>
 <figure class="fig" data-blk="b17">
 <video data-inline="" height="619" loop="" muted="" playsinline="" poster="assets/media/img/poster-rov-assembly-2.jpg" preload="none" width="1100">
 <source src="assets/media/vid/rov-assembly-2.mp4" type="video/mp4"/>
 </video>
-<figcaption data-ed="t16">Frame, thrusters and enclosure going together.</figcaption>
 </figure>
 </div>
 <figure class="fig plain mid" data-blk="b6" data-d="80" data-reveal="">
 <img alt="Block diagram: on the vehicle, the IMU, pressure and temperature sensor, compass and RGB camera feed a Raspberry Pi 4 running Navigator FC and BlueOS, which drives eight T200 thrusters, four lights and the Newton gripper; the stereo camera reaches the topside computer through media converters over the fibre tether." decoding="async" loading="lazy" src="assets/media/img/setup-architecture.png" width="1056" height="428"/>
-<figcaption data-ed="t18">What runs where. A Raspberry Pi 4 on the vehicle takes the sensors and drives the thrusters, lights and gripper; the stereo camera gets its own path to the topside over the same fibre.</figcaption>
 </figure>
 </div>
 </section>
@@ -237,7 +233,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <button id="abLogout" type="button">Log out</button>
 </span>
 </div>
-<script src="js/admin.js?v=2026-09-02d"></script>
-<script src="js/site.js?v=2026-09-02d"></script>
+<script src="js/admin.js?v=2026-09-08a"></script>
+<script src="js/site.js?v=2026-09-08a"></script>
 </body>
 </html>

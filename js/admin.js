@@ -91,8 +91,12 @@
     // would silently hide the new content -- which looks exactly like the edit
     // never landed -- so the source wins. The edits are set aside under their
     // own key and offered back through a banner instead of being dropped.
+    //
+    // A saved copy with no build recorded against it is treated the same way:
+    // it predates this check, so there is nothing to compare it against and no
+    // reason to trust it over a page that does declare a build.
     var cur = m.getAttribute('data-build');
-    if (cur && build && cur !== build) {
+    if (cur && cur !== build) {
       try {
         localStorage.setItem(LS_STASH, saved);
         localStorage.removeItem(LS_HTML);
