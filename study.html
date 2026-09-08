@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Study — Juhyun Jung</title>
+<meta name="description" content="A private spaced-repetition notebook. Sign-in required — nothing is stored on the server.">
+<meta property="og:title" content="Study — Juhyun Jung">
+<meta property="og:description" content="A private spaced-repetition notebook. Sign-in required — nothing is stored on the server.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#F6F4EE">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23008442'/%3E%3Crect x='9' y='9' width='14' height='14' fill='%23000'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css?v=2026-09-02d">
+<link rel="stylesheet" href="css/admin.css?v=2026-09-02d">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YJNN4WK6NG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YJNN4WK6NG');
+</script>
+</head>
+<body class="study-private">
+<a href="#main" class="skip-link">Skip to content</a>
+<div id="mcursor"></div>
+
+<header class="site-header">
+  <a href="index.html" class="brand" data-magnetic aria-label="Juhyun Jung — home"><span class="brand-word">Juhyun Jung</span></a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="research.html">Research</a>
+        <a href="publications.html">Publications</a>
+  </nav>
+  <a href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank" class="nav-cta" data-magnetic>CV <span>→</span></a>
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
+</header>
+<nav id="mobileNav" class="mobile-nav" aria-label="Mobile">
+  <a href="research.html">Research <span class="num">01</span></a>
+  <a href="publications.html">Publications <span class="num">02</span></a>
+  <a href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">CV <span class="num">03</span></a>
+  <a href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank" class="m-cta">View the CV →</a>
+  <div class="m-meta">Stanford BDML · Underwater robotics</div>
+</nav>
+
+<main data-build="2026-09-02d" id="main" tabindex="-1">
+  <section class="section section-pad-top bg-ink" id="study">
+    <div class="wrap">
+
+      <div class="section-head measure">
+        <div class="eyebrow acc" data-reveal>Private · Personal study</div>
+        <h1 class="h2" data-reveal data-d="60">Spaced repetition</h1>
+        <p class="lead" data-reveal data-d="140">One English sentence a day. Each sentence comes back six times, at 1, 2, 3, 7, 15, and 30 days after it was added, and leaves the rotation once all six reviews are done. Translations stay blurred until you ask to see them.</p>
+      </div>
+
+      <div class="tags" data-reveal data-d="200">
+        <span class="tag">D+1</span>
+        <span class="tag">D+2</span>
+        <span class="tag">D+3</span>
+        <span class="tag">D+7</span>
+        <span class="tag">D+15</span>
+        <span class="tag">D+30</span>
+      </div>
+
+      <!-- Signed out: the only thing a visitor sees. The tool below stays display:none. -->
+      <div class="study-locked" data-reveal data-d="260">
+        <h2 class="h2" style="font-size:clamp(24px,3vw,40px)">Sign-in required</h2>
+        <p>This is a personal notebook. Nothing readable exists in the page source. Every sentence lives in one browser's local storage, on one machine, and never reaches a server.</p>
+        <p><button class="btn accent" type="button" data-login data-magnetic>Sign in <span class="arr">→</span></button></p>
+        <div><a href="index.html" class="text-link" data-magnetic>Back to the site <span class="arr">→</span></a></div>
+      </div>
+
+      <!-- Signed in (body.admin-mode): everything below becomes visible. -->
+      <div class="study-gate">
+
+        <!-- Subject tabs — filled by js/study.js -->
+        <div class="study-tabs" id="studyTabs" data-reveal></div>
+
+        <!-- Counters — filled by js/study.js; each card scrolls to its group -->
+        <div class="study-stats" id="studyStats" data-reveal data-d="60"></div>
+
+        <button class="study-add-toggle" id="studyAddToggle" type="button" aria-expanded="false" aria-controls="studyFormWrap" data-reveal data-d="120">Add new sentence</button>
+
+        <div class="study-form-wrap" id="studyFormWrap">
+          <div style="display:grid;gap:18px;padding-top:20px">
+            <input type="hidden" id="studyEditId" value="">
+
+            <div>
+              <label class="study-label" for="studySentence">English sentence (required)</label>
+              <textarea class="study-textarea" id="studySentence" rows="2" placeholder="It was pure serendipity that we met."></textarea>
+            </div>
+
+            <div>
+              <label class="study-label" for="studyTranslation">Translation (optional, hidden behind a blur)</label>
+              <textarea class="study-textarea" id="studyTranslation" rows="2" placeholder="The same line in your own words."></textarea>
+            </div>
+
+            <div>
+              <label class="study-label" for="studyVocab">Words (optional), one per line as term = meaning</label>
+              <textarea class="study-textarea" id="studyVocab" rows="2" placeholder="serendipity = a fortunate accident&#10;hold still = stay motionless"></textarea>
+            </div>
+
+            <div>
+              <label class="study-label" for="studySource">Source (URL or free text), remembered for the next entry</label>
+              <input class="study-input" type="text" id="studySource" placeholder="https://example.com/article  ·  or a book title">
+            </div>
+
+            <div class="study-toolbar">
+              <button class="study-btn primary" id="studySubmit" type="button"><span id="studySubmitLabel">Add</span></button>
+              <button class="study-btn" id="studyCancelEdit" type="button" style="display:none">Cancel</button>
+              <span class="study-label" id="studyAddHint" style="margin:0">Adding keeps the form open for the next entry</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="study-toolbar" data-reveal>
+          <input class="study-search" type="text" id="studySearch" placeholder="Search sentence, translation, source" aria-label="Search sentences">
+          <select class="study-select" id="studyFilter" aria-label="Filter by status">
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="mastered">Mastered</option>
+          </select>
+          <select class="study-select" id="studySort" aria-label="Sort order">
+            <option value="newest">Newest first</option>
+            <option value="next">Next review</option>
+            <option value="created">Oldest first</option>
+          </select>
+          <button class="study-btn" id="studyExport" type="button">Export JSON</button>
+          <button class="study-btn" id="studyImport" type="button">Import JSON</button>
+        </div>
+
+        <div class="study-group" id="studyGroupToday" data-reveal data-d="60">
+          <div class="study-group-head" data-group-toggle="studyGroupToday">
+            <span class="chev" aria-hidden="true">▾</span>
+            <span>Today</span>
+            <span class="study-group-count" data-count="today">(0)</span>
+          </div>
+          <div class="study-group-body" id="studyTodayList"></div>
+        </div>
+
+        <div class="study-group" id="studyGroupOverdue" data-reveal data-d="120">
+          <div class="study-group-head" data-group-toggle="studyGroupOverdue">
+            <span class="chev" aria-hidden="true">▾</span>
+            <span>Overdue</span>
+            <span class="study-group-count" data-count="overdue">(0)</span>
+          </div>
+          <div class="study-group-body" id="studyOverdueList"></div>
+        </div>
+
+        <div class="study-group" id="studyGroupAll" data-reveal data-d="180">
+          <div class="study-group-head" data-group-toggle="studyGroupAll">
+            <span class="chev" aria-hidden="true">▾</span>
+            <span>All sentences</span>
+            <span class="study-group-count" data-count="all">(0)</span>
+          </div>
+          <div class="study-group-body" id="studyAllList"></div>
+        </div>
+
+        <div class="study-note" data-reveal data-d="240">Everything on this page is written to this browser's localStorage and never leaves it. There is no server, no account, and no sync. Clearing site data for juhyunn0.github.io deletes the whole log.<br>Export JSON before switching browsers or wiping the cache. Import JSON restores a file, either replacing the log or merging it by entry id.</div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="fbrand">
+        <a href="index.html" data-magnetic class="fbrand-word">Juhyun Jung</a>
+        <p>Bio-inspired underwater robotics, tactile sensing, and robust manipulation. M.S. Mechanical Engineering, Stanford University.</p>
+      </div>
+      <div class="fcol">
+        <div class="ftitle">Navigate</div>
+        <div class="flist">
+          <a href="index.html">Home</a>
+          <a href="research.html">Research</a>
+                    <a href="publications.html">Publications</a>
+          <a href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">CV</a>
+        </div>
+      </div>
+      <div class="fcol">
+        <div class="ftitle">Elsewhere</div>
+        <div class="flist">
+          <a href="mailto:jj0523@stanford.edu">jj0523@stanford.edu</a>
+          <a href="https://github.com/Juhyunn0" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.instagram.com/juhyunn0" target="_blank" rel="noopener">Instagram</a>
+          <a href="Juhyun_Jung_CV.pdf" target="_blank" rel="noopener">Curriculum Vitae</a>
+        </div>
+      </div>
+      <div class="fcol">
+        <div class="ftitle">Lab</div>
+        <div class="offices">
+          <div><span class="city">Stanford BDML</span>Biomimetics &amp; Dexterous Manipulation Lab</div>
+          <div><span class="city">Advisor</span>Prof. Mark Cutkosky</div>
+          <div><span class="city">Location</span>Stanford, CA</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Juhyun Jung</span>
+      <span>Built to sense, plan, and move</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Login sheet — bound by js/admin.js, opened by any [data-login] control -->
+<div id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <form class="login-box" id="loginForm" novalidate>
+    <h2 id="loginTitle">Sign in</h2>
+    <p class="sub">Private study</p>
+    <div class="fld">
+      <label class="study-label" for="loginId">ID</label>
+      <input class="study-input" type="text" id="loginId" name="id" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+    </div>
+    <div class="fld">
+      <label class="study-label" for="loginPw">Password</label>
+      <input class="study-input" type="password" id="loginPw" name="password" autocomplete="current-password" required>
+    </div>
+    <div class="err" id="loginError" role="status" aria-live="polite"></div>
+    <div class="acts">
+      <button class="btn accent" type="submit" data-magnetic>Enter</button>
+      <button class="btn ghost" type="button" id="loginCancel" data-magnetic>Cancel</button>
+    </div>
+    <div class="fine">A convenience lock on a static site, checked in the browser against a stored hash. It hides the notebook from casual visitors. Nothing sensitive is kept behind it.</div>
+  </form>
+</div>
+
+<!-- Admin bar — visible only in admin mode -->
+<div id="adminBar" role="region" aria-label="Admin controls">
+  <span class="who">Admin mode</span>
+  <div class="acts">
+    <button type="button" id="abEditToggle">Edit text</button>
+    <button type="button" id="abGA">Analytics</button>
+    <button type="button" id="abReset">Reset edits</button>
+    <button type="button" id="abLogout">Log out</button>
+  </div>
+</div>
+
+<script src="js/admin.js?v=2026-09-02d"></script>
+<script src="js/site.js?v=2026-09-02d"></script>
+<script src="js/study.js?v=2026-09-02d"></script>
+</body>
+</html>

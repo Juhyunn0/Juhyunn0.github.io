@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Whisker hydrodynamic sensing — Juhyun Jung</title>
+<meta content="Fiber Bragg grating whiskers modelled on harbor seal vibrissae: a passive perception channel that reads flow and wake where vision and acoustics degrade. Field results on vortex-induced vibration and fin-generated wake detection." name="description"/>
+<meta content="Whisker hydrodynamic sensing — Juhyun Jung" property="og:title"/>
+<meta content="Fiber Bragg grating whiskers modelled on harbor seal vibrissae: a passive perception channel that reads flow and wake where vision and acoustics degrade. Field results on vortex-induced vibration and fin-generated wake detection." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="#F6F4EE" name="theme-color"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23008442'/%3E%3Crect x='9' y='9' width='14' height='14' fill='%23000'/%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="css/site.css?v=2026-09-02d" rel="stylesheet"/>
+<link href="css/admin.css?v=2026-09-02d" rel="stylesheet"/>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YJNN4WK6NG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YJNN4WK6NG');
+</script>
+</head>
+<body class="" data-nav="research.html">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="mcursor"></div>
+<header class="site-header">
+<a aria-label="Juhyun Jung — home" class="brand" data-magnetic="" href="index.html"><span class="brand-word">Juhyun Jung</span></a>
+<nav aria-label="Primary" class="nav-links">
+<a href="research.html">Research</a>
+<a href="publications.html">Publications</a>
+</nav>
+<a class="nav-cta" data-magnetic="" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">CV <span>→</span></a>
+<button aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu" class="nav-toggle"><span></span><span></span><span></span></button>
+</header>
+<nav aria-label="Mobile" class="mobile-nav" id="mobileNav">
+<a href="research.html">Research <span class="num">01</span></a>
+<a href="publications.html">Publications <span class="num">02</span></a>
+<a href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">CV <span class="num">03</span></a>
+<a class="m-cta" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">View the CV →</a>
+<div class="m-meta">Stanford BDML · Underwater robotics</div>
+</nav>
+<main data-build="2026-09-02d" id="main" tabindex="-1">
+<section class="phero">
+<div class="wrap" data-wrap="w1">
+<div class="kicker" data-blk="b1" data-reveal="">
+<span class="st" data-ed="t1">Contributor</span>
+<span>Submitted to T-RO · awaiting a decision</span>
+<span>arXiv:2608.24724</span>
+</div>
+<h1 data-blk="b2" data-d="60" data-ed="t2" data-reveal="">A whisker that reads the wake a fish leaves behind.</h1>
+<p class="dek" data-blk="b3" data-d="140" data-ed="t3" data-reveal="">Not my project to lead. A Stanford BDML project with Shanghai Jiao Tong and Tsinghua; I am one of ten authors. My part was the experimental platform, the signal-processing pipeline and the underwater field testing.</p>
+<div class="credits" data-blk="b4" data-d="200" data-reveal="">
+<div><span>Role</span>Contributor</div>
+<div><span>My part</span>Platform, signal processing, field testing</div>
+<div><span>Sensing element</span>Two fiber Bragg gratings</div>
+<div><span>Institutions</span>Stanford · Shanghai Jiao Tong · Tsinghua</div>
+</div>
+</div>
+</section>
+<nav aria-label="On this page" class="pnav">
+<div class="pnav-inner">
+<a href="#biology">Biology</a>
+<a href="#sensor">Sensor</a>
+<a href="#wake">Wake</a>
+<a href="#field">Robot</a>
+<a href="#array">Open</a>
+</div>
+</nav>
+<section class="section bg-paper" id="biology">
+<div class="wrap" data-wrap="w2">
+<div class="section-head measure" data-blk="b5">
+<div class="eyebrow gold" data-ed="t4" data-reveal="">01 · Biology</div>
+<h2 class="h2" data-d="60" data-ed="t5" data-reveal="">What the harbor seal already does.</h2>
+</div>
+<div class="prose" data-blk="b6" data-d="120" data-reveal="">
+<p data-ed="t6">A harbor seal finds moving prey in water it cannot see through. It reads the trail of disturbed water the prey left behind — and that trail stays legible for ten seconds or more after the animal has gone.</p>
+<p data-ed="t7">The morphology is why it works. A plain cylinder in a flow sheds its own vortices and shakes itself. The seal’s vibrissa is tapered, elliptical and undulating, which shifts the shedding out of phase along the shaft and kills that self-noise.</p>
+</div>
+<div class="figgrid two" data-blk="b7">
+<figure class="fig" data-blk="b24" data-d="60" data-reveal="">
+<img alt="A harbor seal at the surface of dark water, its vibrissae lit from the side and fanned forward from the muzzle." decoding="async" loading="lazy" src="assets/media/img/harbor-seal.jpg"/>
+<figcaption data-ed="t8">The original sensor: a harbor seal vibrissa, tapered and elliptical in cross-section.</figcaption>
+</figure>
+<figure class="fig" data-blk="b25" data-d="120" data-reveal="">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-seal-trail.jpg" preload="none" width="1280">
+<source src="assets/media/vid/seal-trail-following.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t9">Biology reference: a blindfolded harbor seal follows a dye-visualized hydrodynamic trail across a pool.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section class="section bg-ink" id="sensor">
+<div class="wrap" data-wrap="w3">
+<div class="section-head measure" data-blk="b8">
+<div class="eyebrow acc" data-ed="t10" data-reveal="">02 · The sensor</div>
+<h2 class="h2" data-d="60" data-ed="t11" data-reveal="">Two fiber Bragg gratings inside a cast whisker.</h2>
+<p class="lead" data-d="140" data-ed="t12" data-reveal="">The shaft copies the vibrissa geometry. The readout is optical, so nothing electrical meets seawater and several whiskers can share one fiber.</p>
+</div>
+<div class="prose" data-blk="b9" data-d="80" data-reveal="">
+<p data-ed="t13">The 100 mm shaft is a superelastic NiTi wire, 0.4 mm across, overmolded in urethane. That pairing is what makes it survive a robot: 500 indentation cycles left the response unchanged, and after being bent past 90° underwater it returned to within 5% of baseline in under a second.</p>
+</div>
+<figure class="fig plain" data-blk="b10" data-d="60" data-reveal="">
+<img alt="Three whisker geometries towed through water, each with a close-up of the shaft and its wavelength trace below. The wavy shaft traces almost flat, the non-tapered one a little rougher, and the cylindrical one swings wildly." decoding="async" loading="lazy" src="assets/media/img/whisker-viv-comparison.png"/>
+<figcaption data-ed="t14">Three geometries, same tow. The cylindrical shaft (right) oscillates roughly ten times harder than the seal-shaped one (left).</figcaption>
+</figure>
+<div class="prose" data-blk="b11" data-reveal="">
+<h3 data-ed="t15">The shape earns its keep</h3>
+<p data-ed="t16">Tow a plain cylinder through water and it sheds vortices off alternating sides, so it shakes itself. Whatever it reports is mostly its own vibration. Tow the seal-shaped shaft — tapered, elliptical, undulating — and that shedding is thrown out of phase along its length, so the shaking largely cancels.</p>
+<p data-ed="t17">Same water, same speed; the trace simply goes quiet. That quiet is the whole point. A whisker that is not drowning in its own noise has room left to report the water around it.</p>
+</div>
+</div>
+</section>
+<section class="section bg-paper" id="wake">
+<div class="wrap" data-wrap="w4">
+<div class="section-head measure" data-blk="b12">
+<div class="eyebrow gold" data-ed="t18" data-reveal="">03 · Wake</div>
+<h2 class="h2" data-d="60" data-ed="t19" data-reveal="">A trail that is still there after the source has gone.</h2>
+<p class="lead" data-d="140" data-ed="t20" data-reveal="">Most whisker studies wave a cylinder in front of the sensor. That proves it responds to unsteady flow, but it is not the same problem as reading what a moving animal left behind.</p>
+</div>
+<figure class="fig" data-blk="b13" data-d="60" data-reveal="">
+<video controls="" height="720" poster="assets/media/img/poster-whisker-wake.jpg" preload="metadata" width="1280">
+<source src="assets/media/vid/whisker-wake-tracking.mp4" type="video/mp4"/>
+          Your browser does not support embedded video. <a href="assets/media/vid/whisker-wake-tracking.mp4">Download the clip (MP4)</a> to watch it.
+        </video>
+<figcaption data-ed="t21">Tow-tank wake tracking, 21 s. The flow field is visualized in red and blue, so the shed vortices and the vehicle’s response to them are visible in the same frame.</figcaption>
+</figure>
+<div class="prose" data-blk="b14" data-reveal="">
+</div>
+</div>
+</section>
+<section class="section bg-ink" id="field">
+<div class="wrap" data-wrap="w5">
+<div class="section-head measure" data-blk="b15">
+<div class="eyebrow acc" data-ed="t22" data-reveal="">04 · On a robot</div>
+<h2 class="h2" data-d="60" data-ed="t23" data-reveal="">Straight, or turn? Decided from the water alone.</h2>
+<p class="lead" data-d="140" data-ed="t24" data-reveal="">A whisker on the nose of a small ROV, nothing else pointed at the flow. The foil goes ahead and takes one of two paths; seconds later the robot reaches the fork and has to pick the same one.</p>
+</div>
+<div class="metrics" data-blk="b16" data-d="80" data-reveal="">
+<div class="metric" data-blk="b26">
+<div class="mv" data-ed="t25">17/20</div>
+<div class="mk" data-ed="t26">Correct branch online, 85.0%</div>
+</div>
+<div class="metric" data-blk="b27">
+<div class="mv" data-ed="t27">2 s</div>
+<div class="mk" data-ed="t28">Of whisker history behind each decision</div>
+</div>
+<div class="metric" data-blk="b28">
+<div class="mv" data-ed="t29">0.863</div>
+<div class="mk" data-ed="t30">AUROC on held-out windows, 77.4% accuracy</div>
+</div>
+</div>
+<div class="prose" data-blk="b17" data-reveal="">
+<p data-ed="t31">A logistic-regression classifier reads the two FBG channels and nothing else. The vehicle is tracked optically, but that drives the motion controller only; it never reaches the decision. Turning runs build a stronger oscillation late in the window, and that is what the classifier keys on.</p>
+</div>
+<div class="figgrid two" data-blk="b18">
+<figure class="fig" data-blk="b29" data-d="60" data-reveal="">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-whisker-viv.jpg" preload="none" width="1280">
+<source src="assets/media/vid/whisker-viv.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t32">Open water, two live FBG traces overlaid. The traces stay quiet while the vehicle swims — the field counterpart of the bench result against a cylindrical baseline.</figcaption>
+</figure>
+<figure class="fig" data-blk="b30" data-d="120" data-reveal="">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-whisker-fin-wake.jpg" preload="none" width="1280">
+<source src="assets/media/vid/whisker-fin-wake.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t33">A diver kicks past at about 0.6 m from the vehicle, fins beating near 1.35 Hz. A distinct two-channel event follows roughly 1.2 s later.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section class="section bg-paper" id="array">
+<div class="wrap" data-wrap="w6">
+<div class="section-head measure" data-blk="b19">
+<div class="eyebrow gold" data-ed="t34" data-reveal="">05 · Open question</div>
+<h2 class="h2" data-d="60" data-ed="t35" data-reveal="">One whisker is not enough.</h2>
+</div>
+<div class="prose" data-blk="b20" data-d="120" data-reveal="">
+<p data-ed="t36">One whisker returns one channel about a flow that has direction, structure and a source upstream. Enough for a two-way choice. Not enough to say where the flow came from, or whether a signal was water or contact.</p>
+<p data-ed="t37">Because the readout is optical, several whiskers can share one fiber, so added sensing points cost almost nothing in wiring or hull penetrations. Several reading the same water at known positions <em>should</em> recover flow direction, vortex location and wake geometry.</p>
+<p data-ed="t38"><strong>Should</strong> is the honest word. The paper’s own next steps are multi-whisker arrays, more realistic source kinematics, background currents, and motion that is not confined to a plane.</p>
+</div>
+<div class="tags" data-blk="b21" data-d="80" data-reveal="">
+<span class="tag">Multiplexed FBG array</span>
+<span class="tag">Flow direction</span>
+<span class="tag">Vortex location</span>
+<span class="tag">Wake geometry</span>
+<span class="tag">Contact discrimination</span>
+</div>
+<div class="refs" data-blk="b22" data-reveal="">
+<div class="rl" data-ed="t39">Reference</div>
+<ol>
+<li data-ed="t40">H. Li, T. Tu, S. Yao, Z. Chang, J. Jung, X. Xie, L. Y. Chung, T.-A. Ren, G. Chen, and M. Cutkosky, “Fiber Bragg Grating Whiskers for Bioinspired Hydrodynamic Perception on Underwater Robots,” <a href="https://arxiv.org/abs/2608.24724" rel="noopener" target="_blank">arXiv:2608.24724</a>, 2026. Submitted to IEEE Transactions on Robotics.</li>
+</ol>
+</div>
+<div class="cta-strip" data-blk="b23" data-reveal="">
+<div>
+<div class="big" data-ed="t41">The paper, the supplement, and Movie S1.</div>
+<div class="sub" data-ed="t42">Full author list and five manuscript pages are on the publications page.</div>
+</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<a class="btn accent" data-magnetic="" href="publications.html">Read the paper <span class="arr">→</span></a>
+<a class="btn" data-magnetic="" href="underwater-manipulation.html">The main project <span class="arr">→</span></a>
+<a class="btn" data-magnetic="" href="research.html">Back to the research <span class="arr">→</span></a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div class="footer-grid">
+<div class="fbrand">
+<a class="fbrand-word" data-magnetic="" href="index.html">Juhyun Jung</a>
+<p>Underwater manipulation and control in moving water, and bio-inspired hydrodynamic sensing. M.S. Mechanical Engineering, Stanford University.</p>
+</div>
+<div class="fcol">
+<div class="ftitle">Navigate</div>
+<div class="flist">
+<a href="index.html">Home</a>
+<a href="research.html">Research</a>
+<a href="underwater-manipulation.html">Underwater manipulation</a>
+<a href="whisker.html">Whisker sensing</a>
+<a href="powerbuoy.html">PowerBuoy</a>
+<a href="publications.html">Publications</a>
+<a href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">CV</a>
+</div>
+</div>
+<div class="fcol">
+<div class="ftitle">Elsewhere</div>
+<div class="flist">
+<a href="mailto:jj0523@stanford.edu">jj0523@stanford.edu</a>
+<a href="https://github.com/Juhyunn0" rel="noopener" target="_blank">GitHub</a>
+<a href="https://www.instagram.com/juhyunn0" rel="noopener" target="_blank">Instagram</a>
+<a href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">Curriculum Vitae</a>
+</div>
+</div>
+<div class="fcol">
+<div class="ftitle">Lab</div>
+<div class="offices">
+<div><span class="city">Stanford BDML</span>Biomimetics &amp; Dexterous Manipulation Lab</div>
+<div><span class="city">Advisors</span>Prof. Mark Cutkosky &amp; Prof. Shuran Song</div>
+<div><span class="city">Location</span>Stanford Robotics Center, Stanford, CA</div>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Juhyun Jung</span>
+<button class="admin-link" data-login="" type="button">Admin</button>
+<span>Built to sense, plan, and move</span>
+</div>
+</div>
+</footer>
+<!-- shared admin surface: inert until authenticated (js/admin.js) -->
+<div aria-labelledby="loginTitle" aria-modal="true" id="loginModal" role="dialog">
+<form class="login-box" id="loginForm" novalidate="">
+<h2 id="loginTitle">Admin</h2>
+<div class="sub">Sign in to edit this site</div>
+<div class="fld">
+<label class="study-label" for="loginId">ID</label>
+<input autocomplete="username" class="study-input" id="loginId" name="username" required="" type="text"/>
+</div>
+<div class="fld">
+<label class="study-label" for="loginPw">Password</label>
+<input autocomplete="current-password" class="study-input" id="loginPw" name="password" required="" type="password"/>
+</div>
+<div aria-live="polite" class="err" id="loginError" role="alert"></div>
+<div class="acts">
+<button class="btn ghost" id="loginCancel" type="button">Cancel</button>
+<button class="btn accent" type="submit">Sign in</button>
+</div>
+<p class="fine">This is a convenience lock on a static site, not real security. Nothing sensitive is stored behind it.</p>
+</form>
+</div>
+<div id="adminBar">
+<span class="who">Admin mode</span>
+<span class="acts">
+<button id="abEditToggle" type="button">Edit text</button>
+<button id="abGA" type="button">Analytics</button>
+<button id="abReset" type="button">Reset</button>
+<button id="abLogout" type="button">Log out</button>
+</span>
+</div>
+<script src="js/admin.js?v=2026-09-02d"></script>
+<script src="js/site.js?v=2026-09-02d"></script>
+</body>
+</html>

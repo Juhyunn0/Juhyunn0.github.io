@@ -1,0 +1,183 @@
+/* ============================================================
+   ADMIN EDITOR — only loaded chrome; everything here is inert
+   until <body> gets .admin-mode, and the exporter strips every
+   node carrying [data-admin-ui] before serialising a page.
+   ============================================================ */
+
+/* ---- login sheet ------------------------------------------------------- */
+#loginModal{
+  position:fixed;inset:0;z-index:4100;background:rgba(23,24,26,.86);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s;
+}
+#loginModal.open{opacity:1;visibility:visible}
+.login-box{
+  width:100%;max-width:400px;background:#fff;border:1px solid rgba(23,24,26,.18);
+  border-radius:12px;padding:clamp(26px,4vw,38px);color:var(--ink);
+  box-shadow:0 24px 60px rgba(0,0,0,.28);
+}
+.login-box h2{margin:0;font-weight:800;font-size:26px;letter-spacing:-.03em}
+.login-box .sub{margin:10px 0 0;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(23,24,26,.5)}
+.login-box .fld{margin-top:20px}
+.login-box .study-label{color:rgba(23,24,26,.55)}
+.login-box .study-input{background:rgba(23,24,26,.04);border-color:rgba(23,24,26,.2);color:var(--ink)}
+.login-box .study-input:focus{border-color:var(--accent);background:#fff}
+.login-box .err{margin-top:14px;min-height:16px;font-family:var(--mono);font-size:11px;color:#c0392b}
+.login-box .acts{display:flex;gap:10px;margin-top:20px}
+.login-box .acts .btn{flex:1;justify-content:center;padding:14px 20px;font-size:11px}
+.login-box .ghost{background:transparent;color:var(--ink);border:1px solid rgba(23,24,26,.25)}
+.login-box .ghost:hover{background:rgba(23,24,26,.06);color:var(--ink)}
+.login-box .fine{margin-top:18px;font-family:var(--mono);font-size:10px;line-height:1.6;color:rgba(23,24,26,.45)}
+
+/* ---- discreet login entry in the footer -------------------------------- */
+.admin-link{
+  background:none;border:0;padding:0;cursor:pointer;color:inherit;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  opacity:.55;transition:opacity .18s;
+}
+.admin-link:hover{opacity:1;text-decoration:underline;text-underline-offset:3px}
+
+/* ---- the bar ------------------------------------------------------------ */
+#adminBar{
+  position:fixed;left:0;right:0;bottom:0;z-index:2600;background:#17181A;color:#fff;
+  border-top:2px solid var(--accent);display:none;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:10px clamp(12px,3vw,24px);font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+}
+body.admin-mode #adminBar{display:flex}
+body.admin-mode{padding-bottom:64px}
+#adminBar .who{text-transform:uppercase;color:var(--accent);font-weight:700;margin-right:4px}
+#adminBar .sep{width:1px;height:22px;background:rgba(255,255,255,.18);margin:0 4px}
+#adminBar .grow{flex:1}
+#adminBar button{
+  background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);
+  border-radius:100px;padding:8px 14px;cursor:pointer;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;transition:background .15s,border-color .15s;white-space:nowrap;
+}
+#adminBar button:hover{background:rgba(255,255,255,.18)}
+#adminBar button.on{background:var(--accent);border-color:var(--accent);color:#000;font-weight:700}
+#adminBar button.warn:hover{background:#c0392b;border-color:#c0392b}
+#adminBar .status{color:rgba(255,255,255,.55);white-space:nowrap}
+#adminBar .status.saved{color:var(--accent)}
+@media (max-width:760px){
+  #adminBar{font-size:10px;padding:8px 10px;max-height:40vh;overflow-y:auto}
+  #adminBar button{padding:7px 10px;font-size:10px}
+  body.admin-mode{padding-bottom:120px}
+}
+
+/* ---- block affordances (only while editing) ---------------------------- */
+body.editing [data-blk]{position:relative}
+body.editing [data-blk]:not(.ed-sel):hover{outline:1px dashed rgba(0,132,66,.55);outline-offset:4px}
+body.editing [data-blk].ed-sel{outline:2px solid var(--accent);outline-offset:4px}
+body.editing [data-ed]:hover{background:rgba(0,132,66,.07);border-radius:3px}
+body.editing [data-ed][contenteditable="true"]:focus{
+  outline:2px solid var(--accent);outline-offset:3px;background:rgba(0,132,66,.05);border-radius:3px;
+}
+/* an empty text node still needs a click target */
+body.editing [data-ed]:empty::before{content:'\00a0Empty \2014 click to write';opacity:.45;font-style:italic}
+
+/* ---- floating per-block toolbar ---------------------------------------- */
+.ed-tools{
+  position:absolute;z-index:2400;display:flex;gap:4px;background:#17181A;border:1px solid var(--accent);
+  border-radius:100px;padding:4px;box-shadow:0 6px 20px rgba(0,0,0,.3);
+}
+.ed-tools button{
+  background:transparent;border:0;color:#fff;cursor:pointer;border-radius:100px;padding:6px 10px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.05em;white-space:nowrap;
+}
+.ed-tools button:hover{background:rgba(255,255,255,.16)}
+.ed-tools button.danger:hover{background:#c0392b}
+.ed-tools .drag{cursor:grab}
+.ed-tools .drag:active{cursor:grabbing}
+
+/* ---- resize handle ------------------------------------------------------
+   Sits on the bottom-right corner of the selection. Dragging sideways sets
+   the width, dragging down sets the media's aspect ratio. Text blocks only
+   take a width, so they get the horizontal cursor. */
+.ed-resize{
+  position:absolute;right:-11px;bottom:-11px;width:22px;height:22px;z-index:2400;
+  background:var(--accent);border:2px solid #fff;border-radius:50%;cursor:nwse-resize;
+  box-shadow:0 2px 10px rgba(0,0,0,.35);touch-action:none;
+}
+.ed-resize::after{content:'';position:absolute;inset:-12px}  /* bigger touch target */
+.ed-resize.w-only{cursor:ew-resize}
+
+/* live size read-out while dragging */
+#edSize{
+  position:absolute;z-index:2500;background:#17181A;color:#fff;border:1px solid var(--accent);
+  border-radius:6px;padding:5px 10px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+  pointer-events:none;opacity:0;transition:opacity .12s;white-space:nowrap;
+}
+#edSize.show{opacity:1}
+
+/* ---- free-layout canvas -------------------------------------------------- */
+[data-free="1"]{position:relative;width:100%}
+[data-free="1"] > [data-blk]{position:absolute;margin:0!important;box-sizing:border-box}
+body.editing [data-free="1"]{
+  outline:1px dashed rgba(0,132,66,.35);outline-offset:10px;
+  background-image:linear-gradient(rgba(0,132,66,.07) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(0,132,66,.07) 1px,transparent 1px);
+  background-size:5% 40px;
+}
+.ed-canvas-h{
+  position:absolute;left:0;right:0;bottom:-11px;height:22px;z-index:2400;cursor:ns-resize;
+  display:flex;align-items:center;justify-content:center;
+}
+.ed-canvas-h::before{content:'';width:88px;height:6px;border-radius:100px;background:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.25)}
+
+/* ---- media placeholder for newly inserted blocks ------------------------ */
+.ed-ph{
+  display:flex;align-items:center;justify-content:center;min-height:180px;width:100%;
+  border:2px dashed rgba(23,24,26,.28);border-radius:8px;background:rgba(23,24,26,.03);
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(23,24,26,.5);cursor:pointer;text-align:center;padding:20px;
+}
+.ed-ph:hover{border-color:var(--accent);color:var(--accent-deep)}
+
+/* ---- toast --------------------------------------------------------------- */
+#edToast{
+  position:fixed;left:50%;bottom:78px;transform:translateX(-50%) translateY(12px);z-index:2700;
+  background:#17181A;color:#fff;border:1px solid var(--accent);border-radius:100px;
+  padding:11px 20px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:88vw;text-align:center;
+}
+#edToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---- help sheet ---------------------------------------------------------- */
+#edHelp{
+  position:fixed;inset:0;z-index:4050;background:rgba(23,24,26,.86);display:none;
+  align-items:center;justify-content:center;padding:20px;
+}
+#edHelp.open{display:flex}
+#edHelp .box{
+  background:#fff;border-radius:12px;max-width:560px;width:100%;padding:clamp(24px,4vw,36px);
+  max-height:82vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.3);
+}
+#edHelp h2{margin:0 0 6px;font-size:24px;font-weight:800;letter-spacing:-.03em}
+#edHelp p{margin:14px 0 0;font-size:15px;line-height:1.6;color:rgba(23,24,26,.7)}
+#edHelp dl{margin:20px 0 0;display:grid;grid-template-columns:auto 1fr;gap:10px 18px;align-items:baseline}
+#edHelp dt{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--accent-deep);font-weight:700;white-space:nowrap}
+#edHelp dd{margin:0;font-size:14px;line-height:1.55;color:rgba(23,24,26,.72)}
+#edHelp .close{margin-top:24px;width:100%;justify-content:center}
+
+/* ---- set-aside-edits banner ---------------------------------------------
+   Shown when the published page has been rebuilt under a saved copy. Visible
+   without signing in, because that is the state you land in after a rebuild. */
+#edStale{
+  position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:2750;
+  width:min(560px,92vw);background:#17181A;color:#fff;
+  border:1px solid var(--accent);border-radius:14px;padding:16px 18px;
+  box-shadow:0 18px 44px rgba(0,0,0,.32);
+}
+body.admin-mode #edStale{bottom:84px}
+#edStale p{margin:0;font-size:14px;line-height:1.55;color:rgba(255,255,255,.86)}
+#edStale .acts{display:flex;gap:10px;margin-top:14px}
+#edStale button{
+  flex:1;padding:11px 14px;border-radius:100px;cursor:pointer;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--accent);border:1px solid var(--accent);color:#000;font-weight:700;
+}
+#edStale button:hover{background:var(--accent-deep);border-color:var(--accent-deep);color:#fff}
+#edStale button.ghost{background:transparent;color:rgba(255,255,255,.75);border-color:rgba(255,255,255,.28);font-weight:400}
+#edStale button.ghost:hover{background:rgba(255,255,255,.12);color:#fff}
+
+@media print{#adminBar,.ed-tools,.ed-resize,.ed-canvas-h,#edToast,#edHelp,#loginModal,#edStale{display:none!important}}

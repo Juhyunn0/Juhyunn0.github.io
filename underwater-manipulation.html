@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Robust underwater manipulation — Juhyun Jung</title>
+<meta content="Taking a diffusion-policy manipulation framework out of a static pool and into real ocean dynamics: depth-based domain transfer, self-supervised affordance learning, why it fell below 5% at Hopkins Marine Station, and the disturbance-aware control stack being built in response." name="description"/>
+<meta content="Robust underwater manipulation — Juhyun Jung" property="og:title"/>
+<meta content="Taking a diffusion-policy manipulation framework out of a static pool and into real ocean dynamics: depth-based domain transfer, self-supervised affordance learning, why it fell below 5% at Hopkins Marine Station, and the disturbance-aware control stack being built in response." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="#F6F4EE" name="theme-color"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23008442'/%3E%3Crect x='9' y='9' width='14' height='14' fill='%23000'/%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="css/site.css?v=2026-09-02d" rel="stylesheet"/>
+<link href="css/admin.css?v=2026-09-02d" rel="stylesheet"/>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YJNN4WK6NG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-YJNN4WK6NG');
+</script>
+</head>
+<body class="" data-nav="research.html">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="mcursor"></div>
+<header class="site-header">
+<a aria-label="Juhyun Jung — home" class="brand" data-magnetic="" href="index.html"><span class="brand-word">Juhyun Jung</span></a>
+<nav aria-label="Primary" class="nav-links">
+<a href="research.html">Research</a>
+<a href="publications.html">Publications</a>
+</nav>
+<a class="nav-cta" data-magnetic="" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">CV <span>→</span></a>
+<button aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu" class="nav-toggle"><span></span><span></span><span></span></button>
+</header>
+<nav aria-label="Mobile" class="mobile-nav" id="mobileNav">
+<a href="research.html">Research <span class="num">01</span></a>
+<a href="publications.html">Publications <span class="num">02</span></a>
+<a href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">CV <span class="num">03</span></a>
+<a class="m-cta" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">View the CV →</a>
+<div class="m-meta">Stanford BDML · Underwater robotics</div>
+</nav>
+<main data-build="2026-09-02d" id="main" tabindex="-1">
+<section class="phero">
+<div class="wrap" data-wrap="w1">
+<div class="kicker" data-blk="b1" data-reveal="">
+<span class="st" data-ed="t1">In progress</span>
+<span>Robust underwater manipulation</span>
+<span>2025-26</span>
+</div>
+<h1 data-blk="b2" data-d="60" data-ed="t2" data-reveal="">Manipulation that keeps working when the ocean moves.</h1>
+<p class="dek" data-blk="b3" data-d="140" data-ed="t3" data-reveal="">A grasping policy trained with no underwater teleoperation data at all. 85% in the lab pool. Below 5% in Monterey Bay, because nothing in its state told it the water was pushing. This page is the argument in the order I worked through it.</p>
+<div class="credits" data-blk="b4" data-d="200" data-reveal="">
+<div><span>Role</span>Project lead</div>
+<div><span>Advisors</span>Mark Cutkosky, Shuran Song</div>
+<div><span>Where</span>Stanford BDML, and Hopkins Marine Station for field work</div>
+<div><span>Platform</span>BlueROV2, stereo camera, Newton subsea gripper</div>
+</div>
+</div>
+</section>
+<nav aria-label="On this page" class="pnav">
+<div class="pnav-inner">
+<a href="#questions">Questions</a>
+<a href="#motivation">Motivation</a>
+<a href="#depth">Depth</a>
+<a href="#pipeline">Pipeline</a>
+<a href="#results">Results</a>
+<a href="#field">Field</a>
+<a href="#reality">Reality</a>
+<a href="#rebuild">Rebuild</a>
+<a href="#control">Control</a>
+<a href="#simulation">Simulation</a>
+<a href="#transfer">Transfer</a>
+</div>
+</nav>
+<!-- THE QUESTIONS (carried over from the old research page) -->
+<section class="section bg-paper" id="questions">
+<div class="wrap" data-wrap="w15">
+<div class="section-head measure" data-blk="b104">
+<div class="eyebrow gold" data-ed="t176" data-reveal="">The questions</div>
+<h2 class="h2" data-d="60" data-ed="t177" data-reveal="">Two questions this project exists to answer.</h2>
+</div>
+<div class="thesis-grid" data-blk="b105">
+<div class="thesis-card" data-blk="b106" data-d="160" data-reveal="">
+<canvas data-motif="flow" data-tone="ink"></canvas>
+<div class="num" data-ed="t178">01</div>
+<h3 data-ed="t179">Control that knows it is being pushed</h3>
+<p class="q" data-ed="t180">How does a plan stay valid once a current has moved the robot?</p>
+<p data-ed="t181">The grasp is not what broke at Hopkins. Nothing in the robot&#8217;s state says the water is pushing, so each new plan inherits the offset the last one had. SAM2 on the camera image, with depth and IMU, supplies the missing state. The plan from there is an MPC fed a disturbance estimate &#8212; still being worked out.</p>
+</div>
+<div class="thesis-card" data-blk="b107" data-d="220" data-reveal="">
+<canvas data-motif="gather" data-tone="ink"></canvas>
+<div class="num" data-ed="t182">02</div>
+<h3 data-ed="t183">Manipulation without underwater demonstrations</h3>
+<p class="q" data-ed="t184">Where does the training data come from?</p>
+<p data-ed="t185">Teleoperating an ROV is slow and expensive, so demonstrations are recorded on land. Depth maps supply the grasp affordance, the affordance drives a self-supervised loop, and the human drops out. The action is now a relative end-effector trajectory &#8212; the same form UMI uses, and tied to no particular vehicle.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 01 MOTIVATION -->
+<section class="section bg-paper" id="motivation">
+<div class="wrap" data-wrap="w2">
+<div class="section-head measure" data-blk="b5">
+<div class="eyebrow gold" data-ed="t4" data-reveal="">01 · Motivation</div>
+<h2 class="h2" data-d="60" data-ed="t5" data-reveal="">Underwater data is the bottleneck, not underwater learning.</h2>
+<p class="lead" data-d="140" data-ed="t6" data-reveal="">Prof. Song's group had already shown that an end-to-end visuomotor policy can work under water when it is trained on human teleoperation data. The result held, but only inside tightly controlled experimental conditions.</p>
+</div>
+<div class="figgrid two" data-blk="b6" data-d="80" data-reveal="">
+<figure class="fig" data-blk="b56">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-prior-work.jpg" preload="none" width="1280">
+<source src="assets/media/vid/prior-work.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t7">The prior teleoperation-trained result: an ROV with a gripper descending on a target in clear, controlled water.</figcaption>
+</figure>
+<figure class="fig" data-blk="b57">
+<img alt="A dim photograph of an operator seated at an underwater teleoperation station." decoding="async" loading="lazy" src="assets/media/img/teleop-cost.jpg"/>
+<figcaption data-ed="t8">This is the cost the first project set out to remove.</figcaption>
+</figure>
+</div>
+<div class="prose" data-blk="b7" data-reveal="">
+<p data-ed="t9">The bottleneck is data. An underwater demonstration means teleoperating an ROV — a pilot, a tether, a pool or a boat — and it buys one demonstration at a time.</p>
+<p data-ed="t10">So the demonstrations were collected on land instead, where picking an object off a patio table takes a few seconds. That moves the whole difficulty into one place: the gap between what a camera sees in air and what it sees in water.</p>
+</div>
+<div class="figgrid two" data-blk="b8" data-d="60" data-reveal="">
+<figure class="fig" data-blk="b58">
+<img alt="A grid of on-land data-collection frames showing everyday objects being grasped on patios, tables and gravel." decoding="async" loading="lazy" src="assets/media/img/land-data-grid.jpg"/>
+<figcaption data-ed="t11">On-land collection: ordinary objects, recorded in the ordinary places they already sit.</figcaption>
+</figure>
+<figure class="fig" data-blk="b59">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-land-data.jpg" preload="none" width="1280">
+<source src="assets/media/vid/land-data-collection.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t12">Land demonstrations are cheap enough to collect in bulk. No tether, no pilot, no pool.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<!-- 02 DEPTH -->
+<section class="section bg-ink" id="depth">
+<div class="wrap" data-wrap="w3">
+<div class="section-head measure" data-blk="b9">
+<div class="eyebrow acc" data-ed="t13" data-reveal="">02 · The domain shift</div>
+<h2 class="h2" data-d="60" data-ed="t14" data-reveal="">To an RGB encoder, air and water are two different worlds.</h2>
+<p class="lead" data-d="140" data-ed="t15" data-reveal="">Same can, same viewpoint, same background. Only the medium changes. To a person the two photographs are obviously the same object, and to a vision encoder they are not.</p>
+</div>
+<div class="prose" data-blk="b10" data-reveal="">
+<p data-ed="t16">Water shifts color balance, flattens contrast, changes the lighting, and refracts and scatters what is left. The object has not moved, but every pixel describing it has.</p>
+<p data-ed="t17">To put a number on it I used a <strong>DINOv2</strong> encoder. It turns each image into a feature vector; the cosine distance between two vectors says how differently the network sees the two pictures.</p>
+</div>
+<div class="cmp" data-blk="b11" data-reveal="">
+<div class="cmp-row">
+<div class="cmp-cell" data-blk="b60">
+<img alt="An aluminum can resting on pool tiles, photographed in air, in ordinary color." decoding="async" loading="lazy" src="assets/media/img/domain-air-rgb.jpg"/>
+<div class="cl" data-ed="t18">Air — RGB</div>
+</div>
+<div class="cmp-cell" data-blk="b61">
+<img alt="The identical can, viewpoint and background, photographed underwater and visibly shifted toward cyan." decoding="async" loading="lazy" src="assets/media/img/domain-water-rgb.jpg"/>
+<div class="cl" data-ed="t19">Water — RGB</div>
+</div>
+</div>
+<div class="cmp-verdict">
+<span class="m">0.166</span><span class="ml" data-ed="t20">cosine distance</span>
+<span class="mn">In RGB the two images land far apart in feature space. As far as the encoder is concerned, it is not looking at the same object twice.</span>
+</div>
+</div>
+<div class="prose" data-blk="b12" data-reveal="" style="margin-top:clamp(28px,4vh,44px)">
+<p data-ed="t21">Then convert both images to monocular depth maps with <strong>Depth Anything V2</strong> and take the same measurement again.</p>
+</div>
+<div class="cmp" data-blk="b13" data-reveal="">
+<div class="cmp-row">
+<div class="cmp-cell" data-blk="b62">
+<img alt="The air photograph of the can converted to a monocular depth map." decoding="async" loading="lazy" src="assets/media/img/domain-air-depth.jpg"/>
+<div class="cl" data-ed="t22">Air — depth</div>
+</div>
+<div class="cmp-cell" data-blk="b63">
+<img alt="The underwater photograph of the can converted to a depth map, nearly identical to the air one." decoding="async" loading="lazy" src="assets/media/img/domain-water-depth.jpg"/>
+<div class="cl" data-ed="t23">Water — depth</div>
+</div>
+</div>
+<div class="cmp-verdict">
+<span class="m">0.003</span><span class="ml" data-ed="t24">cosine distance</span>
+<span class="mn">The same pair, roughly 50 times closer. Geometry crosses the boundary between the two media essentially intact.</span>
+</div>
+</div>
+<div class="callout" data-blk="b14" data-reveal="">
+<span class="cl" data-ed="t25">The perception choice</span>
+<p data-ed="t26">Color is a property of the water. Shape is a property of the object. Once the policy reads geometry, an image taken in air and one taken underwater are nearly the same input — and everything downstream can be trained where the data is cheap.</p>
+</div>
+</div>
+</section>
+<!-- 03 PIPELINE -->
+<section class="section bg-paper" id="pipeline">
+<div class="wrap" data-wrap="w4">
+<div class="section-head measure" data-blk="b15">
+<div class="eyebrow gold" data-ed="t27" data-reveal="">03 · The method</div>
+<h2 class="h2" data-d="60" data-ed="t28" data-reveal="">An affordance-conditioned diffusion policy, trained without underwater teleoperation.</h2>
+<p class="lead" data-d="140" data-ed="t29" data-reveal="">The published pipeline [1] carries the domain gap in the depth map, carries the task in a grasp affordance, and lets the robot collect its own data instead of asking a human to fly it.</p>
+</div>
+<div class="steps" data-blk="b16" data-reveal="">
+<div class="step" data-blk="b64">
+<div class="sn" data-ed="t30">01</div>
+<div>
+<h3 data-ed="t31">Depth first</h3>
+<p data-ed="t32">Depth Anything V2 converts the camera image into a monocular depth map, and every stage after this point works on that map rather than the RGB frame. This is the step that makes data recorded on land usable under water.</p>
+<div class="sk" data-ed="t33"><span>Depth Anything V2</span><span>monocular depth</span></div>
+</div>
+</div>
+<div class="step" data-blk="b65">
+<div class="sn" data-ed="t34">02</div>
+<div>
+<h3 data-ed="t35">An affordance from geometry</h3>
+<p data-ed="t36">A convolutional U-Net takes the depth map (1 × 244 × 244) and predicts a 1 × 112 × 112 affordance map, trained against a goal image with binary cross-entropy. The supervision is a picture of the outcome, not a hand-labeled grasp.</p>
+<div class="sk" data-ed="t37"><span>Conv U-Net</span><span>BCE loss</span><span>goal image</span></div>
+</div>
+</div>
+<div class="step" data-blk="b66">
+<div class="sn" data-ed="t38">03</div>
+<div>
+<h3 data-ed="t39">The robot collects its own data</h3>
+<p data-ed="t40">That affordance then drives self-supervised data collection. A PD controller servos the object centroid to stage-specific pixel setpoints and the robot attempts the grasp. This is what removes the need for human teleoperation entirely.</p>
+<div class="sk" data-ed="t41"><span>PD servo</span><span>self-supervised</span><span>no teleoperation</span></div>
+</div>
+</div>
+<div class="step" data-blk="b67">
+<div class="sn" data-ed="t42">04</div>
+<div>
+<h3 data-ed="t43">An affordance-conditioned diffusion policy</h3>
+<p data-ed="t44">The policy takes depth, the grasp affordance, and proprioception, meaning the robot command and the IMU. A ViT-B/16 CLIP encoder feeds a 1D U-Net denoiser, which produces a 16-step action horizon at 1 Hz, six dimensions per step.</p>
+<div class="sk" data-ed="t45"><span>ViT-B/16 CLIP</span><span>1D U-Net</span><span>16-step horizon</span><span>1 Hz</span><span>6D action</span></div>
+</div>
+</div>
+</div>
+<div class="figgrid two" data-blk="b17" data-d="60" data-reveal="">
+<figure class="fig plain" data-blk="b68">
+<img alt="Block diagram of the diffusion policy architecture: RGB and robot command with IMU feed DepthAnything, which produces an affordance that conditions the policy pi, which outputs an action." decoding="async" loading="lazy" src="assets/media/img/dp-architecture.png"/>
+<figcaption data-ed="t46">The diffusion policy architecture, from camera image to action.</figcaption>
+</figure>
+<figure class="fig plain" data-blk="b69">
+<img alt="Block diagram of the affordance network: a depth map and a goal image enter a U-Net, which outputs a grasp affordance prediction trained with a binary cross-entropy loss." decoding="async" loading="lazy" src="assets/media/img/affordance-unet.png"/>
+<figcaption data-ed="t47">Depth goes in and an affordance comes out. RGB never enters this network.</figcaption>
+</figure>
+</div>
+<div class="figgrid three" data-blk="b18" data-d="60" data-reveal="">
+<figure class="fig" data-blk="b70">
+<img alt="Camera RGB of the pool scene showing a dark rock, a red pom and a yellow object on the pool floor." decoding="async" loading="lazy" src="assets/media/img/perception-rgb.jpg"/>
+<figcaption data-ed="t48">What the camera sees.</figcaption>
+</figure>
+<figure class="fig" data-blk="b71">
+<img alt="The same pool frame rendered as a monocular depth map in a magma color map." decoding="async" loading="lazy" src="assets/media/img/perception-depth.jpg"/>
+<figcaption data-ed="t49">The same frame as depth. Color is gone, shape remains.</figcaption>
+</figure>
+<figure class="fig" data-blk="b72">
+<img alt="The same pool frame as a grasp-affordance heat map, with a hot spot over the graspable region of the object." decoding="async" loading="lazy" src="assets/media/img/perception-affordance.jpg"/>
+<figcaption data-ed="t50">The predicted grasp affordance, hot where the gripper should close.</figcaption>
+</figure>
+</div>
+<figure class="fig" data-blk="b19" data-reveal="">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-self-supervised.jpg" preload="none" width="1280">
+<source src="assets/media/vid/self-supervised-pool.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t51">Self-supervised collection in the pool, with the depth and affordance panels alongside.</figcaption>
+</figure>
+</div>
+</section>
+<!-- 04 RESULTS -->
+<section class="section bg-ink" id="results">
+<div class="wrap" data-wrap="w5">
+<div class="section-head measure" data-blk="b20">
+<div class="eyebrow acc" data-ed="t52" data-reveal="">04 · Results</div>
+<h2 class="h2" data-d="60" data-ed="t53" data-reveal="">85% in distribution, and it survives a background change.</h2>
+<p class="lead" data-d="140" data-ed="t54" data-reveal="">Twenty grasp trials per condition, in two settings: the distribution the policy was trained on, and the same task with the background changed underneath it.</p>
+</div>
+<div class="rtable-wrap" data-blk="b21" data-reveal="">
+<table class="rtable">
+<caption data-ed="t55">Grasping success, in distribution — 20 trials each</caption>
+<thead>
+<tr><th data-ed="t56" scope="col">Method</th><th data-ed="t57" scope="col">Trials</th><th data-ed="t58" scope="col">Success</th></tr>
+</thead>
+<tbody>
+<tr class="win"><th data-ed="t59" scope="row">DP + affordance + depth (ours)</th><td class="num" data-ed="t60">17 / 20</td><td class="num" data-ed="t61">85%</td></tr>
+<tr><th data-ed="t62" scope="row">DP + RGB</th><td class="num" data-ed="t63">13 / 20</td><td class="num" data-ed="t64">65%</td></tr>
+</tbody>
+</table>
+</div>
+<div class="rtable-wrap" data-blk="b22" data-reveal="">
+<table class="rtable">
+<caption data-ed="t65">Visual generalization, background shift — 20 trials each</caption>
+<thead>
+<tr><th data-ed="t66" scope="col">Method</th><th data-ed="t67" scope="col">Trials</th><th data-ed="t68" scope="col">Success</th></tr>
+</thead>
+<tbody>
+<tr class="win"><th data-ed="t69" scope="row">DP + affordance + depth (ours)</th><td class="num" data-ed="t70">16 / 20</td><td class="num" data-ed="t71">80%</td></tr>
+<tr><th data-ed="t72" scope="row">DP + depth</th><td class="num" data-ed="t73">12 / 20</td><td class="num" data-ed="t74">60%</td></tr>
+<tr class="zero"><th data-ed="t75" scope="row">DP + RGB</th><td class="num" data-ed="t76">0 / 20</td><td class="num" data-ed="t77">0%</td></tr>
+<tr class="zero"><th data-ed="t78" scope="row">DP + RGB + affordance + depth</th><td class="num" data-ed="t79">0 / 20</td><td class="num" data-ed="t80">0%</td></tr>
+</tbody>
+</table>
+</div>
+<div class="metrics" data-blk="b23" data-reveal="">
+<div class="metric" data-blk="b73"><div class="mv" data-ed="t81">85%</div><div class="mk" data-ed="t82">In-distribution grasp success</div></div>
+<div class="metric" data-blk="b74"><div class="mv" data-ed="t83">80%</div><div class="mk" data-ed="t84">Held under a background shift</div></div>
+<div class="metric" data-blk="b75"><div class="mv" data-ed="t85">0%</div><div class="mk" data-ed="t86">RGB baseline, same shift</div></div>
+</div>
+<div class="prose" data-blk="b24" data-reveal="" style="margin-top:clamp(28px,4vh,44px)">
+<p data-ed="t87">In distribution the gap is real but not dramatic: 85% against 65%. The background shift is where the argument settles. The RGB policy does not degrade, it stops — twenty failures out of twenty.</p>
+<p data-ed="t88">The fourth row is worth staring at. Giving the policy RGB <strong>in addition to</strong> depth and the affordance also scores zero. When RGB is available the policy leans on it, and when the colors change there is nothing underneath.</p>
+</div>
+<div class="figgrid two" data-blk="b25" data-d="60" data-reveal="">
+<figure class="fig" data-blk="b76">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-grasp-ours.jpg" preload="none" width="1280">
+<source src="assets/media/vid/grasp-ours.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t89">Ours, in distribution, at 4x speed, with the affordance heat map inset.</figcaption>
+</figure>
+<figure class="fig" data-blk="b77">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-grasp-rgb.jpg" preload="none" width="1280">
+<source src="assets/media/vid/grasp-rgb-baseline.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t90">The RGB baseline policy on the same scene.</figcaption>
+</figure>
+</div>
+<figure class="fig" data-blk="b26" data-reveal="">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-visual-gen.jpg" preload="none" width="1280">
+<source src="assets/media/vid/visual-generalization.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t91">The two panels in the clip are labeled OOD Task and OOD Visual. The numbers above are the visual one: the same task with the background changed underneath the policy.</figcaption>
+</figure>
+</div>
+</section>
+<!-- 05 FIELD -->
+<section class="section bg-paper" id="field">
+<div class="wrap" data-wrap="w6">
+<div class="section-head measure" data-blk="b27">
+<div class="eyebrow gold" data-ed="t92" data-reveal="">05 · Field</div>
+<h2 class="h2" data-d="60" data-ed="t93" data-reveal="">Hopkins Marine Station, Monterey Bay.</h2>
+</div>
+<div class="prose" data-blk="b28" data-reveal="">
+<p data-ed="t94">Hopkins Marine Station is Stanford's marine lab on Monterey Bay, and it is where the robot goes when I want to know whether the pool numbers mean anything. I reached out to Jack, one of the divers there, and he helped record the deployment below.</p>
+</div>
+<figure class="fig tall" data-blk="b29" data-reveal="">
+<img alt="The field team on a boat at Monterey Bay in wet suits and life jackets, with the Hopkins Marine Station shoreline behind them." decoding="async" loading="lazy" src="assets/media/img/monterey-team.jpg"/>
+<figcaption data-ed="t95">Days like this one are a large part of why I work on this.</figcaption>
+</figure>
+<figure class="fig" data-blk="b30" data-reveal="">
+<video controls="" height="720" poster="assets/media/img/poster-field-hopkins.jpg" preload="metadata" width="1280">
+<source src="assets/media/vid/field-hopkins.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t96">The Hopkins deployment, 48 seconds. Divers place a white pitcher on the sand and the ROV approaches to grasp it. Across the deployment the success rate dropped below 5%.</figcaption>
+</figure>
+</div>
+</section>
+<!-- 06 REALITY -->
+<section class="section bg-ink" id="reality">
+<div class="wrap" data-wrap="w7">
+<div class="section-head measure" data-blk="b31">
+<div class="eyebrow acc" data-ed="t97" data-reveal="">06 · Reality</div>
+<h2 class="h2" data-d="60" data-ed="t98" data-reveal="">In the pool it worked. In the ocean it did not.</h2>
+<p class="lead" data-d="140" data-ed="t99" data-reveal="">Currents and waves are not a background condition, they are a continuous input. They push the vehicle the entire time it is trying to do something.</p>
+</div>
+<div class="prose" data-blk="b32" data-reveal="">
+<p data-ed="t100">In the lab pool there was never a problem. In the last field deployment at Hopkins the same policy failed again and again, and the success rate dropped <strong>below 5%</strong>.</p>
+<p data-ed="t101"><strong>The robot does not know a disturbance is there.</strong> Nothing in its state carries the fact that the water is moving it, so it plans from a view that has already been displaced.</p>
+</div>
+<div class="callout" data-blk="b33" data-reveal="">
+<span class="cl" data-ed="t102">Why the gap never closes</span>
+<p data-ed="t103">Every 1 Hz update is computed as though the vehicle were still and the water were still, so the bias is identical each time. The robot corrects toward the target, the water carries it back by about as much, and the next update starts from the same error. Replanning faster would not help: the missing quantity is not in the loop at all.</p>
+</div>
+<div class="figgrid two" data-blk="b34" data-d="60" data-reveal="">
+<figure class="fig tall" data-blk="b78">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-disturbance-pool.jpg" preload="none" width="1280">
+<source src="assets/media/vid/disturbance-pool.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t104">Top-down view of the tent pool with the surface churning, the vehicle trying to hold position under wave disturbance.</figcaption>
+</figure>
+<figure class="fig" data-blk="b79">
+<img alt="Underwater view at Hopkins Marine Station: a white pitcher resting on the sand with the ROV hovering nearby." decoding="async" loading="lazy" src="assets/media/img/hopkins-scene.jpg"/>
+<figcaption data-ed="t105">The target on the sand at Hopkins. The task is not the hard part.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<!-- PULL QUOTE (carried over from the old research page) -->
+<section class="pull" data-wrap="w14">
+<p data-blk="b102" data-ed="t174" data-reveal="">The robot could see the object.<br/>It did not know it was being pushed.</p>
+<div class="src" data-blk="b103" data-d="160" data-ed="t175" data-reveal="">Research statement &#183; 2026</div>
+</section>
+<!-- 07 REBUILD -->
+<section class="section bg-paper" id="rebuild">
+<div class="wrap" data-wrap="w8">
+<div class="section-head measure" data-blk="b35">
+<div class="eyebrow gold" data-ed="t106" data-reveal="">07 · The rebuild</div>
+<h2 class="h2" data-d="60" data-ed="t107" data-reveal="">Three problems in the old pipeline, and three fixes.</h2>
+<p class="lead" data-d="140" data-ed="t108" data-reveal="">Each failed for a separate reason, so each needed a separate answer.</p>
+</div>
+<div class="pcards" data-blk="b36" data-reveal="">
+<div class="pcard" data-blk="b80">
+<div class="pk" data-ed="t109">Problem 01</div>
+<h3 data-ed="t110">RGB to depth</h3>
+<p data-ed="t111">The depth map was inferred from a single monocular camera, so the depth error was about ±10%. On a grasp that is the difference between closing on the object and closing on the water beside it.</p>
+<div class="fix"><b>The fix</b>A stereo camera in a waterproof housing replaces the monocular one, so depth is measured rather than estimated. Stanford Robotics Center funding made that straightforward, and the robot platform changed with it.</div>
+</div>
+<div class="pcard" data-blk="b81">
+<div class="pk" data-ed="t112">Problem 02</div>
+<h3 data-ed="t113">Action space</h3>
+<p data-ed="t114">The diffusion policy emitted thruster-level actions. Those overshoot, and the numbers are only meaningful for the QYSEA robot they were learned on, so nothing transfers to another vehicle. Position feedback also arrived only at the 1 Hz policy rate.</p>
+<div class="fix"><b>The fix</b>A state estimator using SAM2-Tiny on the camera image, fused with depth and IMU, gives the ROV's state relative to the object. The policy can then predict a relative end-effector trajectory: a 5D action, dx, dy, dz, dyaw, gripper.</div>
+</div>
+<div class="pcard" data-blk="b82">
+<div class="pk" data-ed="t115">Problem 03</div>
+<h3 data-ed="t116">Low-level control</h3>
+<p data-ed="t117">A PID controller cannot handle the nonlinear, coupled dynamics of a vehicle moving through water, and more to the point there is nowhere in a PID loop to put an external disturbance even if you had measured one.</p>
+<div class="fix"><b>The fix</b>Model predictive control, with a disturbance observer that back-calculates the external disturbance from the ROV's state and feeds it in.</div>
+</div>
+</div>
+<div class="prose" data-blk="b37" data-reveal="">
+<p data-ed="t118">The rebuilt loop runs in order: stereo depth, the SAM2-Tiny mask and the IMU give the state; the policy turns state into a relative end-effector trajectory; an MPC turns that into thrust. The disturbance observer sits alongside the MPC.</p>
+<p data-ed="t119">The bet is that ocean disturbance is not noise. Waves and currents are <strong>quasi-periodic</strong>, so an observed disturbance should be predictable, and a predicted one lets the controller correct before the displacement rather than after. Whether that holds in real water is untested.</p>
+<p data-ed="t120">I am still working out how the disturbance observer should actually be used: what to estimate, how far ahead to trust the estimate, and where in the MPC it belongs. None of the rebuilt pipeline has been validated in the field yet.</p>
+</div>
+<div class="figgrid two" data-blk="b38" data-d="60" data-reveal="">
+<figure class="fig plain" data-blk="b83">
+<img alt="Block diagram of the state estimator: an RGB image enters SAM2-Tiny, and its output is combined with depth and IMU to produce the vehicle's state as a pose relative to the object." decoding="async" loading="lazy" src="assets/media/img/state-estimator.png"/>
+<figcaption data-ed="t121">Pose is expressed relative to the object, not to a world frame the vehicle has already drifted out of.</figcaption>
+</figure>
+<figure class="fig plain" data-blk="b84">
+<img alt="The five-element action vector written as a column: dx, dy, dz, dyaw and gripper." decoding="async" loading="lazy" src="assets/media/img/action-vector.png"/>
+<figcaption data-ed="t122">The new action: five numbers that mean the same thing on any vehicle.</figcaption>
+</figure>
+</div>
+<div class="figgrid two" data-blk="b39" data-d="60" data-reveal="">
+<figure class="fig plain" data-blk="b85">
+<img alt="Product render of the QYSEA FIFISH ROV, the earlier platform used for this work." decoding="async" loading="lazy" src="assets/media/img/hw-fifish.png"/>
+<figcaption data-ed="t123">Before: the QYSEA FIFISH, the platform the thruster-level actions were valid for.</figcaption>
+</figure>
+<figure class="fig plain" data-blk="b86">
+<img alt="Product render of the BlueROV2, the current platform." decoding="async" loading="lazy" src="assets/media/img/hw-bluerov2.png"/>
+<figcaption data-ed="t124">After: a BlueROV2, which I assembled from scratch with SRC support, carrying a MarineSitu C3 stereo camera and a Newton subsea gripper.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<!-- PULL QUOTE -->
+<section class="pull" data-wrap="w13">
+<p data-blk="b100" data-ed="t125" data-reveal="">Waves and currents are not random.<br/>They are quasi-periodic. So they can be predicted.</p>
+<div class="src" data-blk="b101" data-d="160" data-ed="t126" data-reveal="">The bet the rebuild rests on</div>
+</section>
+<!-- 08 CONTROL -->
+<section class="section bg-paper" id="control">
+<div class="wrap" data-wrap="w9">
+<div class="section-head measure" data-blk="b40">
+<div class="eyebrow gold" data-ed="t127" data-reveal="">08 · What works today</div>
+<h2 class="h2" data-d="60" data-ed="t128" data-reveal="">MPC alone, on simple trajectories.</h2>
+<p class="lead" data-d="140" data-ed="t129" data-reveal="">The observer is not in the loop yet. What is running right now is the model predictive controller by itself, on tests small enough that I can see exactly what failed.</p>
+</div>
+<div class="specs" data-blk="b41" data-reveal="">
+<div class="spec" data-blk="b87"><div class="sk" data-ed="t130">Trajectory</div><div class="sv" data-ed="t131">1.00 x 1.00 m square</div><div class="sn" data-ed="t132">Origin fixed to AprilTag 37 on the pool floor</div></div>
+<div class="spec" data-blk="b88"><div class="sk" data-ed="t133">Speed and laps</div><div class="sv" data-ed="t134">0.10 m/s, 5 laps</div></div>
+<div class="spec" data-blk="b89"><div class="sk" data-ed="t135">Cross-track RMS</div><div class="sv" data-ed="t136">1.4 cm</div><div class="sn" data-ed="t137">1.1 cm after tuning</div></div>
+<div class="spec" data-blk="b90"><div class="sk" data-ed="t138">Solver</div><div class="sv" data-ed="t139">acados</div></div>
+</div>
+<div class="figgrid two" data-blk="b42" data-d="60" data-reveal="">
+<figure class="fig plain" data-blk="b91">
+<img alt="Trajectory plot labeled MPC acados: the commanded 1.00 by 1.00 meter square and the tracked path over five laps, with a cross-track RMS of 1.4 centimeters." decoding="async" loading="lazy" src="assets/media/img/mpc-square.png"/>
+<figcaption data-ed="t140">MPC on the square, before tuning.</figcaption>
+</figure>
+<figure class="fig plain" data-blk="b92">
+<img alt="The same square-tracking plot for the tuned controller, with a cross-track RMS of 1.1 centimeters." decoding="async" loading="lazy" src="assets/media/img/mpc-square-tuned.png"/>
+<figcaption data-ed="t141">After tuning: 0.3 cm better on the same test, and still in nearly still water.</figcaption>
+</figure>
+</div>
+<div class="prose" data-blk="b43" data-reveal="">
+<p data-ed="t142">I have also run pose-holding and station-keeping trials over the AprilTag mat. I have not measured a hold duration or a position RMS for those yet, so the square is the only number in this section I would quote.</p>
+</div>
+<div class="figgrid two" data-blk="b44" data-d="60" data-reveal="">
+<figure class="fig tall" data-blk="b93">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-tent-pool.jpg" preload="none" width="1280">
+<source src="assets/media/vid/mpc-tent-pool.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t143">The same controller from outside the water, running a trajectory over the tag floor that gives it ground truth.</figcaption>
+</figure>
+<figure class="fig tall" data-blk="b94">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-station-keeping.jpg" preload="none" width="1280">
+<source src="assets/media/vid/station-keeping.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t144">Station keeping: the vehicle holding a pose over the tag mat.</figcaption>
+</figure>
+</div>
+<div class="callout" data-blk="b45" data-reveal="">
+<span class="cl" data-ed="t145">A caveat I want on the record</span>
+<p data-ed="t146">These numbers flatter the controller. The disturbance was weaker than it looks on camera, and it was a wave, not a current — a wave gives the displacement back, a current does not. How to generate a real current in the tank is still open, so this says the controller tracks well in nearly still water and nothing more.</p>
+</div>
+</div>
+</section>
+<!-- 09 SIMULATION -->
+<section class="section bg-ink" id="simulation">
+<div class="wrap" data-wrap="w10">
+<div class="section-head measure" data-blk="b46">
+<div class="eyebrow acc" data-ed="t147" data-reveal="">09 · Simulation</div>
+<h2 class="h2" data-d="60" data-ed="t148" data-reveal="">An ocean I can run a thousand times.</h2>
+<p class="lead" data-d="140" data-ed="t149" data-reveal="">The reinforcement-learning controller is planned, not built. What is being built is the environment I would train it in: a simulation that mimics ocean conditions, so a low-level controller has somewhere to fail cheaply.</p>
+</div>
+<div class="prose" data-blk="b47" data-reveal="">
+<p data-ed="t150">Dynamics from Fossen's equations of motion [5], on the open-source BlueROV2 benchmark simulator [7]. Mass properties from CAD; added mass and damping both empirically (DNV) and analytically; drag from a surrogate model trained on OpenFOAM sweeps over random orientation and velocity.</p>
+<p data-ed="t151">Two disturbance terms. The slow one, the <strong>current</strong>, is a first-order Gauss-Markov process with low-frequency drift (Fossen 2011, §8.3, eq. 8.152). The fast one, the <strong>waves</strong>, comes from a JONSWAP spectrum [6]. Three sea states: gentle, moderate, rough.</p>
+</div>
+<div class="figgrid three" data-blk="b48" data-d="60" data-reveal="">
+<figure class="fig" data-blk="b95">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/sim-gentle.jpg" preload="none" width="1280">
+<source src="assets/media/vid/sim-gentle.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t152">Gentle sea state.</figcaption>
+</figure>
+<figure class="fig" data-blk="b96">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/sim-moderate.jpg" preload="none" width="1280">
+<source src="assets/media/vid/sim-moderate.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t153">Moderate sea state.</figcaption>
+</figure>
+<figure class="fig" data-blk="b97">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-sim-rough.jpg" preload="none" width="1280">
+<source src="assets/media/vid/sim-rough.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t154">Rough sea state.</figcaption>
+</figure>
+</div>
+<div class="prose" data-blk="b49" data-reveal="">
+<p data-ed="t155">Others have trained 6-DoF control for thruster-driven underwater vehicles this way [4]. Before I train anything in this environment, the simulated vehicle has to behave enough like the real one that a policy learned inside it is worth carrying outside.</p>
+</div>
+</div>
+</section>
+<!-- 10 TRANSFER -->
+<section class="section bg-paper" id="transfer">
+<div class="wrap" data-wrap="w11">
+<div class="section-head measure" data-blk="b50">
+<div class="eyebrow gold" data-ed="t156" data-reveal="">10 · Where this goes</div>
+<h2 class="h2" data-d="60" data-ed="t157" data-reveal="">Data collected on land, used under water, with no robot in the loop.</h2>
+<p class="lead" data-d="140" data-ed="t158" data-reveal="">The change in the action space was made to fix overshoot and cross-platform transfer. It also opens something the old pipeline could not reach.</p>
+</div>
+<div class="prose" data-blk="b51" data-reveal="">
+<p data-ed="t159">UMI, the Universal Manipulation Interface [3], collects manipulation data without a robot. A person holds a gripper with an action camera on it and does the task by hand — video only, no IMU. The signal that transfers is the <strong>camera’s spatial pose</strong>: an end-effector-relative trajectory, handed straight to the robot.</p>
+</div>
+<div class="figgrid two" data-blk="b52" data-d="60" data-reveal="">
+<figure class="fig" data-blk="b98">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-umi-human.jpg" preload="none" width="1280">
+<source src="assets/media/vid/umi-human.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t160">A person folding a cloth with two handheld UMI grippers. No robot present.</figcaption>
+</figure>
+<figure class="fig" data-blk="b99">
+<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-umi-robot.jpg" preload="none" width="1280">
+<source src="assets/media/vid/umi-robot.mp4" type="video/mp4"/>
+</video>
+<figcaption data-ed="t161">Two arms replaying the same demonstration. The trajectory was never recorded on them.</figcaption>
+</figure>
+</div>
+<div class="prose" data-blk="b53" data-reveal="">
+<p data-ed="t162">The rebuilt policy emits exactly that. Its action is a UMI-style relative pose trajectory rather than thruster commands valid for one vehicle, so it is <strong>embodiment-agnostic</strong>. Depth made the input medium-agnostic. Together those two run a demonstration recorded on land straight to a robot at depth.</p>
+<p data-ed="t163">To be precise: this is what the new action space <em>makes possible</em>. No land-to-water zero-shot transfer has been run. That is the next milestone. After grasping, the targets are cable routing and connector mating, both contact-rich.</p>
+</div>
+<div class="refs" data-blk="b54" data-reveal="">
+<div class="rl" data-ed="t164">References</div>
+<ol>
+<li data-ed="t165">H. Li, L. Y. Chung, J. Goler, R. Zhang, X. Xie, H. Ha, S. Song, and M. Cutkosky, "Learning underwater manipulation without underwater teleoperation," Robotics: Science and Systems (RSS), 2026.</li>
+<li data-ed="t166">R. Liu, H. Ha, M. Hou, S. Song, and C. Vondrick, "Self-Improving Autonomous Underwater Manipulation," IEEE International Conference on Robotics and Automation (ICRA), Atlanta, 2025.</li>
+<li data-ed="t167">C. Chi et al., "Universal Manipulation Interface: In-The-Wild Robot Teaching Without In-The-Wild Robots," Robotics: Science and Systems (RSS), 2024.</li>
+<li data-ed="t168">L. Cai, K. Chang, and Y. Girdhar, "Learning to swim: Reinforcement learning for 6-DoF control of thruster-driven autonomous underwater vehicles," ICRA 2025, pp. 11286-11293.</li>
+<li data-ed="t169">T. I. Fossen, Handbook of Marine Craft Hydrodynamics and Motion Control. Wiley, 2011.</li>
+<li data-ed="t170">DNV GL, Environmental Conditions and Environmental Loads, DNVGL-RP-C205, Aug. 2017.</li>
+<li data-ed="t171">M. von Benzon, F. F. Sorensen, E. Uth, J. Jouffroy, J. Liniger, and S. Pedersen, "An Open-Source Benchmark Simulator: Control of a BlueROV2 Underwater Robot," Journal of Marine Science and Engineering, vol. 10, no. 12, p. 1898, 2022.</li>
+</ol>
+</div>
+</div>
+</section>
+<!-- CLOSING -->
+<section class="section bg-ink">
+<div class="wrap" data-wrap="w12">
+<div class="cta-strip" data-blk="b55" data-reveal="" style="border-top:none;padding-top:0">
+<div>
+<div class="big" data-ed="t172">The rest of the work.</div>
+<div class="sub" data-ed="t173">The buoy project, the pool and the robot this one runs on, and the whisker sensor I contribute to.</div>
+</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<a class="btn accent" data-magnetic="" href="research.html">All the research <span class="arr">→</span></a>
+<a class="btn" data-magnetic="" href="whisker.html">The whisker sensor <span class="arr">→</span></a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="wrap">
+<div class="footer-grid">
+<div class="fbrand">
+<a class="fbrand-word" data-magnetic="" href="index.html">Juhyun Jung</a>
+<p>Underwater manipulation and control in moving water, and bio-inspired hydrodynamic sensing. M.S. Mechanical Engineering, Stanford University.</p>
+</div>
+<div class="fcol">
+<div class="ftitle">Navigate</div>
+<div class="flist">
+<a href="index.html">Home</a>
+<a href="research.html">Research</a>
+<a href="underwater-manipulation.html">Underwater manipulation</a>
+<a href="whisker.html">Whisker sensing</a>
+<a href="powerbuoy.html">PowerBuoy</a>
+<a href="publications.html">Publications</a>
+<a href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">CV</a>
+</div>
+</div>
+<div class="fcol">
+<div class="ftitle">Elsewhere</div>
+<div class="flist">
+<a href="mailto:jj0523@stanford.edu">jj0523@stanford.edu</a>
+<a href="https://github.com/Juhyunn0" rel="noopener" target="_blank">GitHub</a>
+<a href="https://www.instagram.com/juhyunn0" rel="noopener" target="_blank">Instagram</a>
+<a href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">Curriculum Vitae</a>
+</div>
+</div>
+<div class="fcol">
+<div class="ftitle">Lab</div>
+<div class="offices">
+<div><span class="city">Stanford BDML</span>Biomimetics &amp; Dexterous Manipulation Lab</div>
+<div><span class="city">Advisors</span>Prof. Mark Cutkosky &amp; Prof. Shuran Song</div>
+<div><span class="city">Location</span>Stanford Robotics Center, Stanford, CA</div>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 Juhyun Jung</span>
+<button class="admin-link" data-login="" type="button">Admin</button>
+<span>Built to sense, plan, and move</span>
+</div>
+</div>
+</footer>
+<!-- shared admin surface: inert until authenticated (js/admin.js) -->
+<div aria-labelledby="loginTitle" aria-modal="true" id="loginModal" role="dialog">
+<form class="login-box" id="loginForm" novalidate="">
+<h2 id="loginTitle">Admin</h2>
+<div class="sub">Sign in to edit this site</div>
+<div class="fld">
+<label class="study-label" for="loginId">ID</label>
+<input autocomplete="username" class="study-input" id="loginId" name="username" required="" type="text"/>
+</div>
+<div class="fld">
+<label class="study-label" for="loginPw">Password</label>
+<input autocomplete="current-password" class="study-input" id="loginPw" name="password" required="" type="password"/>
+</div>
+<div aria-live="polite" class="err" id="loginError" role="alert"></div>
+<div class="acts">
+<button class="btn ghost" id="loginCancel" type="button">Cancel</button>
+<button class="btn accent" type="submit">Sign in</button>
+</div>
+<p class="fine">This is a convenience lock on a static site, not real security. Nothing sensitive is stored behind it.</p>
+</form>
+</div>
+<div id="adminBar">
+<span class="who">Admin mode</span>
+<span class="acts">
+<button id="abEditToggle" type="button">Edit text</button>
+<button id="abGA" type="button">Analytics</button>
+<button id="abReset" type="button">Reset</button>
+<button id="abLogout" type="button">Log out</button>
+</span>
+</div>
+<script src="js/admin.js?v=2026-09-02d"></script>
+<script src="js/site.js?v=2026-09-02d"></script>
+</body>
+</html>
