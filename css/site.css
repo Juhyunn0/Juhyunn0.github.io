@@ -875,6 +875,9 @@ body.editing [data-editable]{outline:1px dashed var(--accent);outline-offset:3px
 .figgrid .fig.tall video,.figgrid .fig.tall img{max-height:min(520px,68vh);width:auto;margin-inline:auto}
 /* a figure that reads better below full measure -- capped and centred */
 .fig.narrow{max-width:min(100%,640px);margin-inline:auto}
+/* a wide diagram: cap it below the measure so it stays crisp rather than
+   being upscaled past its natural width, and centre it */
+.fig.mid{max-width:min(100%,960px);margin-inline:auto}
 
 /* .even -- two figures side by side at identical size: same width from the
    grid, a shared aspect ratio so the media boxes match, and captions pinned
