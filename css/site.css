@@ -978,9 +978,15 @@ body.editing [data-editable]{outline:1px dashed var(--accent);outline-offset:3px
 .projcard:hover{border-color:var(--accent);transform:translateY(-2px)}
 .projcard .pc-media{position:relative;min-height:230px;background:#000;order:2}
 .projcard .pc-media img,.projcard .pc-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-/* a cover with type set into it has nothing to spare at the edges, so it is
-   fitted whole against the black rather than cropped to fill */
-.projcard .pc-media.fit img,.projcard .pc-media.fit video{object-fit:contain}
+/* The lead card carries a title card, not a photograph: type is set into it,
+   and it has nothing to spare at the edges. Fitted into the media column it is
+   either letterboxed or has the type cropped off -- that column runs from 1.12
+   to 1.67 in aspect, so filling it costs up to 37% of the width. Laid out full
+   width it sits at exactly 16:9, so it neither crops nor letterboxes, and the
+   subtitle and advisor lines are legible. */
+.projcard.pc-lead{grid-template-columns:1fr}
+.projcard.pc-lead .pc-media{order:1;min-height:0;aspect-ratio:16/9}
+.projcard.pc-lead .pc-body{order:2}
 .projcard .pc-body{padding:clamp(26px,3.2vw,44px);display:flex;flex-direction:column;gap:16px;order:1}
 .projcard .pc-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.5)}
 .bg-ink .projcard .pc-top{color:rgba(23,24,26,.5)}
