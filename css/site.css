@@ -978,15 +978,12 @@ body.editing [data-editable]{outline:1px dashed var(--accent);outline-offset:3px
 .projcard:hover{border-color:var(--accent);transform:translateY(-2px)}
 .projcard .pc-media{position:relative;min-height:230px;background:#000;order:2}
 .projcard .pc-media img,.projcard .pc-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-/* The lead card carries a title card, not a photograph: type is set into it,
-   and it has nothing to spare at the edges. Fitted into the media column it is
-   either letterboxed or has the type cropped off -- that column runs from 1.12
-   to 1.67 in aspect, so filling it costs up to 37% of the width. Laid out full
-   width it sits at exactly 16:9, so it neither crops nor letterboxes, and the
-   subtitle and advisor lines are legible. */
-.projcard.pc-lead{grid-template-columns:1fr}
-.projcard.pc-lead .pc-media{order:1;min-height:0;aspect-ratio:16/9}
-.projcard.pc-lead .pc-body{order:2}
+/* A cover with type set into it, filling a column that is not 16:9 -- it runs
+   from 1.12 at 860px to 1.79 wide, since the body text beside it sets the
+   height. It fills like any other card so there is no letterbox, and the crop
+   is taken off the right, which keeps the title block on the left whole
+   however square the column gets. */
+.projcard .pc-media.title-card img,.projcard .pc-media.title-card video{object-position:left center}
 .projcard .pc-body{padding:clamp(26px,3.2vw,44px);display:flex;flex-direction:column;gap:16px;order:1}
 .projcard .pc-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.5)}
 .bg-ink .projcard .pc-top{color:rgba(23,24,26,.5)}
