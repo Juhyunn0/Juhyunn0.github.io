@@ -829,6 +829,13 @@ body.editing [data-editable]{outline:1px dashed var(--accent);outline-offset:3px
 
 /* ---- project hero ---- */
 .phero{background:var(--paper);color:#000;padding:calc(var(--header-h) + clamp(36px,7vh,84px)) var(--pad-x) clamp(48px,7vh,88px)}
+/* Full-bleed project cover. The page opens on the title card, edge to edge and
+   at its own 16:9 -- no crop and no letterbox, because the type in it runs to
+   all four edges and any other box would take a bite out of one of them. On a
+   normal laptop that lands at roughly the height of the fold. */
+.pcover{padding-top:var(--header-h);background:#000;line-height:0}
+.pcover video{display:block;width:100%;height:auto}
+.pcover + .phero{padding-top:clamp(36px,7vh,84px)}
 .phero .kicker{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(0,0,0,.5)}
 .phero .kicker .st{color:var(--accent-deep);font-weight:700}
 .phero h1{margin:26px 0 0;font-weight:800;font-size:clamp(34px,5.6vw,80px);line-height:1;letter-spacing:-.04em;max-width:17ch;text-wrap:balance}
