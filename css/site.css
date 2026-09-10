@@ -132,17 +132,11 @@ h1.eyebrow,h2.eyebrow{margin-top:0;font-weight:400}
 .lead{margin:28px 0 0;max-width:680px;font-size:clamp(16px,1.4vw,21px);line-height:1.5}
 /* Copy set to the full width of the figure grid it belongs to, rather than
    stopping at its own measure and leaving the right half of the row empty
-   next to the photographs. Two tracks, so the line length still reads: one
-   paragraph per column for .prose.wide, and a single lead flowed across. */
+   next to the photographs. One flow, so each line runs the whole width. */
 .section-head.split{max-width:none}
 .section-head.split > .h2{max-width:1000px}
-.section-head.split > .lead{max-width:none;columns:2;column-gap:clamp(24px,3.2vw,56px)}
-.prose.wide{max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,3.2vw,56px)}
-.prose.wide > p{margin-top:0}
-@media (max-width:820px){
-  .section-head.split > .lead{columns:1}
-  .prose.wide{grid-template-columns:1fr}
-}
+.section-head.split > .lead{max-width:none}
+.prose.wide{max-width:none}
 .bg-paper .lead{color:rgba(0,0,0,.62)}
 .bg-ink .lead{color:rgba(23,24,26,.66)}
 
