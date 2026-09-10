@@ -119,7 +119,10 @@ main{display:block;background:var(--paper)}
 .section{padding:clamp(72px,11vh,150px) var(--pad-x)}
 .section-pad-top{padding-top:calc(var(--header-h) + clamp(40px,7vh,90px))}
 .wrap{max-width:var(--maxw);margin:0 auto;width:100%}
-.measure{max-width:1000px}
+/* Copy runs the width of the column it sits in. Headings and body text are
+   not capped short of it -- a heading broken over three lines in the middle
+   of an empty row was the thing being fixed. */
+.measure{max-width:none}
 .bg-paper{background:var(--paper);color:#000}
 .bg-ink{background:var(--paper-2);color:var(--ink)}
 .bg-accent{background:var(--paper-3);color:var(--ink);border-top:1px solid var(--accent)}
@@ -129,14 +132,10 @@ h1.eyebrow,h2.eyebrow{margin-top:0;font-weight:400}
 .section-head .eyebrow.gold{color:var(--accent-deep)}
 .section-head .eyebrow.acc{color:var(--accent-deep)}
 .h2{margin:0;font-weight:800;font-size:clamp(30px,4.6vw,64px);line-height:1.02;letter-spacing:-.035em;text-wrap:balance}
-.lead{margin:28px 0 0;max-width:680px;font-size:clamp(16px,1.4vw,21px);line-height:1.5}
+.lead{margin:28px 0 0;max-width:none;font-size:clamp(16px,1.4vw,21px);line-height:1.5}
 /* Copy set to the full width of the figure grid it belongs to, rather than
    stopping at its own measure and leaving the right half of the row empty
    next to the photographs. One flow, so each line runs the whole width. */
-.section-head.split{max-width:none}
-.section-head.split > .h2{max-width:1000px}
-.section-head.split > .lead{max-width:none}
-.prose.wide{max-width:none}
 .bg-paper .lead{color:rgba(0,0,0,.62)}
 .bg-ink .lead{color:rgba(23,24,26,.66)}
 
@@ -520,7 +519,7 @@ h1.eyebrow,h2.eyebrow{margin-top:0;font-weight:400}
 .bg-ink .pub-authors{color:rgba(23,24,26,.6)}
 .pub-authors .me{font-weight:700;color:#000;border-bottom:2px solid var(--accent)}
 .bg-ink .pub-authors .me{color:var(--ink)}
-.pub-body p{margin:16px 0 0;max-width:70ch;font-size:16px;line-height:1.65;color:rgba(0,0,0,.66)}
+.pub-body p{margin:16px 0 0;max-width:none;font-size:16px;line-height:1.65;color:rgba(0,0,0,.66)}
 .bg-ink .pub-body p{color:rgba(23,24,26,.62)}
 .pub-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .pub-links a{
@@ -624,7 +623,7 @@ h1.eyebrow,h2.eyebrow{margin-top:0;font-weight:400}
 .tl h3,.tl h2{margin:8px 0 0;font-weight:700;font-size:clamp(18px,1.8vw,24px);letter-spacing:-.02em;line-height:1.25}
 .tl .where{margin:6px 0 0;font-size:15px;color:rgba(0,0,0,.6)}
 .bg-ink .tl .where{color:rgba(23,24,26,.58)}
-.tl p{margin:12px 0 0;max-width:64ch;font-size:15px;line-height:1.65;color:rgba(0,0,0,.62)}
+.tl p{margin:12px 0 0;max-width:none;font-size:15px;line-height:1.65;color:rgba(0,0,0,.62)}
 .bg-ink .tl p{color:rgba(23,24,26,.58)}
 
 /* ---- contact cards ---- */
@@ -847,8 +846,8 @@ body.editing [data-editable]{outline:1px dashed var(--accent);outline-offset:3px
 .pcover + .phero{padding-top:clamp(36px,7vh,84px)}
 .phero .kicker{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(0,0,0,.5)}
 .phero .kicker .st{color:var(--accent-deep);font-weight:700}
-.phero h1{margin:26px 0 0;font-weight:800;font-size:clamp(34px,5.6vw,80px);line-height:1;letter-spacing:-.04em;max-width:17ch;text-wrap:balance}
-.phero .dek{margin:26px 0 0;max-width:70ch;font-size:clamp(16px,1.5vw,22px);line-height:1.5;color:rgba(0,0,0,.62)}
+.phero h1{margin:26px 0 0;font-weight:800;font-size:clamp(34px,5.6vw,80px);line-height:1;letter-spacing:-.04em;text-wrap:balance}
+.phero .dek{margin:26px 0 0;max-width:none;font-size:clamp(16px,1.5vw,22px);line-height:1.5;color:rgba(0,0,0,.62)}
 .phero .credits{margin-top:clamp(28px,4vh,44px);border-top:1px solid rgba(0,0,0,.16);padding-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px}
 .phero .credits div > span:first-child{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(0,0,0,.45);margin-bottom:7px}
 /* links in a credits value read as the value, not as the label */
@@ -865,7 +864,7 @@ body.editing [data-editable]{outline:1px dashed var(--accent);outline-offset:3px
 .bg-ink .step:last-child{border-bottom-color:rgba(23,24,26,.16)}
 .step .sn{font-family:var(--mono);font-size:clamp(22px,2.4vw,34px);font-weight:700;color:var(--accent-deep);line-height:1;letter-spacing:-.03em}
 .step h3,.step h2{margin:0;font-weight:700;font-size:clamp(19px,2vw,28px);letter-spacing:-.025em;line-height:1.2}
-.step p{margin:14px 0 0;max-width:68ch;font-size:16px;line-height:1.65;color:rgba(0,0,0,.64)}
+.step p{margin:14px 0 0;max-width:none;font-size:16px;line-height:1.65;color:rgba(0,0,0,.64)}
 .bg-ink .step p{color:rgba(23,24,26,.62)}
 .step .sk{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
 .step .sk span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(0,0,0,.24);border-radius:100px;padding:6px 12px;color:rgba(0,0,0,.6)}
@@ -960,7 +959,7 @@ body.editing [data-editable]{outline:1px dashed var(--accent);outline-offset:3px
 /* ---- callout ---- */
 .callout{
   margin:clamp(28px,4vh,44px) 0 0;padding:clamp(20px,2.6vw,28px) clamp(20px,2.6vw,30px);
-  border-left:3px solid var(--accent);background:rgba(0,132,66,.06);border-radius:0 8px 8px 0;max-width:72ch;
+  border-left:3px solid var(--accent);background:rgba(0,132,66,.06);border-radius:0 8px 8px 0;
 }
 .bg-ink .callout{background:rgba(0,132,66,.1)}
 .callout p{margin:0;font-size:16px;line-height:1.65;color:rgba(0,0,0,.72)}
@@ -969,7 +968,7 @@ body.editing [data-editable]{outline:1px dashed var(--accent);outline-offset:3px
 .callout .cl{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:10px;font-weight:700}
 
 /* ---- prose block (long-form body copy inside a section) ---- */
-.prose{max-width:70ch;margin-top:clamp(26px,3.5vh,44px)}
+.prose{max-width:none;margin-top:clamp(26px,3.5vh,44px)}
 .wrap > .prose:first-child,.section-head + .prose:first-of-type:empty{margin-top:0}
 .prose p{margin:20px 0 0;font-size:clamp(16px,1.25vw,18px);line-height:1.68;color:rgba(0,0,0,.68)}
 .bg-ink .prose p{color:rgba(23,24,26,.65)}
