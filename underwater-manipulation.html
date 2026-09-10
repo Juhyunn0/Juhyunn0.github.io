@@ -14,8 +14,8 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/site.css?v=2026-09-09f" rel="stylesheet"/>
-<link href="css/admin.css?v=2026-09-09f" rel="stylesheet"/>
+<link href="css/site.css?v=2026-09-09j" rel="stylesheet"/>
+<link href="css/admin.css?v=2026-09-09j" rel="stylesheet"/>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YJNN4WK6NG"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -43,7 +43,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <a class="m-cta" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">View the CV →</a>
 <div class="m-meta">Stanford BDML · Underwater robotics</div>
 </nav>
-<main data-build="2026-09-09h" id="main" tabindex="-1">
+<main data-build="2026-09-09j" id="main" tabindex="-1">
 <section class="pcover" data-blk="b108">
 <video autoplay="" aria-label="Project cover: the title &#8220;UMI under Water — robust manipulation in dynamic ocean environments&#8221; over footage of the ROV reaching for a white pitcher on the seabed." data-inline="always" height="1080" loop="" muted="" playsinline="" poster="assets/media/img/poster-manipulation-cover.jpg" preload="metadata" width="1920">
 <source src="assets/media/vid/manipulation-cover.mp4" type="video/mp4"/>
@@ -93,14 +93,12 @@ gtag('config', 'G-YJNN4WK6NG');
 <div class="num" data-ed="t178">01</div>
 <h3 data-ed="t179">Control that knows it is being pushed</h3>
 <p class="q" data-ed="t180">How does a plan stay valid once a current has moved the robot?</p>
-<p data-ed="t181">The grasp is not what broke at Hopkins. Nothing in the robot&#8217;s state says the water is pushing, so each new plan inherits the offset the last one had. SAM2 on the camera image, with depth and IMU, supplies the missing state. The plan from there is an MPC fed a disturbance estimate &#8212; still being worked out.</p>
 </div>
 <div class="thesis-card" data-blk="b107" data-d="220" data-reveal="">
 <canvas data-motif="gather" data-tone="ink"></canvas>
 <div class="num" data-ed="t182">02</div>
 <h3 data-ed="t183">Manipulation without underwater demonstrations</h3>
 <p class="q" data-ed="t184">Where does the training data come from?</p>
-<p data-ed="t185">Teleoperating an ROV is slow and expensive, so demonstrations are recorded on land. Depth maps supply the grasp affordance, the affordance drives a self-supervised loop, and the human drops out. The action is now a relative end-effector trajectory &#8212; the same form UMI uses, and tied to no particular vehicle.</p>
 </div>
 </div>
 </div>
@@ -108,7 +106,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <!-- 01 MOTIVATION -->
 <section class="section bg-paper" id="motivation">
 <div class="wrap" data-wrap="w2">
-<div class="section-head measure" data-blk="b5">
+<div class="section-head split" data-blk="b5">
 <div class="eyebrow gold" data-ed="t4" data-reveal="">01 · Motivation</div>
 <h2 class="h2" data-d="60" data-ed="t5" data-reveal="">Underwater data is the bottleneck, not underwater learning.</h2>
 <p class="lead" data-d="140" data-ed="t6" data-reveal="">Prof. Song's group had already shown that an end-to-end visuomotor policy can work under water when it is trained on human teleoperation data. The result held, but only inside tightly controlled experimental conditions.</p>
@@ -125,7 +123,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <figcaption data-ed="t7">The prior teleoperation-trained result: an ROV with a gripper descending on a target in clear, controlled water.</figcaption>
 </figure>
 </div>
-<div class="prose" data-blk="b7" data-reveal="">
+<div class="prose wide" data-blk="b7" data-reveal="">
 <p data-ed="t9">The bottleneck is data. An underwater demonstration means teleoperating an ROV — a pilot, a tether, a pool or a boat — and it buys one demonstration at a time.</p>
 <p data-ed="t10">So the demonstrations were collected on land instead, where picking an object off a patio table takes a few seconds. That moves the whole difficulty into one place: the gap between what a camera sees in air and what it sees in water.</p>
 </div>
@@ -629,7 +627,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <button id="abLogout" type="button">Log out</button>
 </span>
 </div>
-<script src="js/admin.js?v=2026-09-09f"></script>
-<script src="js/site.js?v=2026-09-09f"></script>
+<script src="js/admin.js?v=2026-09-09j"></script>
+<script src="js/site.js?v=2026-09-09j"></script>
 </body>
 </html>
