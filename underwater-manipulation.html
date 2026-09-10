@@ -43,7 +43,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <a class="m-cta" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">View the CV →</a>
 <div class="m-meta">Stanford BDML · Underwater robotics</div>
 </nav>
-<main data-build="2026-09-10d" id="main" tabindex="-1">
+<main data-build="2026-09-10e" id="main" tabindex="-1">
 <section class="pcover" data-blk="b108">
 <video autoplay="" aria-label="Project cover: the title &#8220;UMI under Water — robust manipulation in dynamic ocean environments&#8221; over footage of the ROV reaching for a white pitcher on the seabed." data-inline="always" height="1080" loop="" muted="" playsinline="" poster="assets/media/img/poster-manipulation-cover.jpg" preload="metadata" width="1920">
 <source src="assets/media/vid/manipulation-cover.mp4" type="video/mp4"/>
@@ -71,7 +71,6 @@ gtag('config', 'G-YJNN4WK6NG');
 <a href="#motivation">Motivation</a>
 <a href="#depth">Depth</a>
 <a href="#pipeline">Pipeline</a>
-<a href="#results">Results</a>
 <a href="#field">Field</a>
 <a href="#reality">Reality</a>
 <a href="#rebuild">Rebuild</a>
@@ -232,90 +231,11 @@ gtag('config', 'G-YJNN4WK6NG');
 <figure class="fig plain mid" data-blk="b17" data-d="60" data-reveal="">
 <img alt="The pipeline in three panels. Left, the affordance model: a depth map and a goal image enter a U-Net, which predicts a grasp affordance trained with a binary cross-entropy loss. Middle, self-supervised data collection: a PD controller servos the object centroid to stage-specific pixel setpoints. Right, the diffusion policy: RGB and the robot command with IMU feed DepthAnything, whose depth and affordance condition the policy pi, which outputs an action." decoding="async" loading="lazy" src="assets/media/img/pipeline-overview.png" width="932" height="443"/>
 </figure>
-<div class="figgrid three" data-blk="b18" data-d="60" data-reveal="">
-<figure class="fig" data-blk="b70">
-<img alt="Camera RGB of the pool scene showing a dark rock, a red pom and a yellow object on the pool floor." decoding="async" loading="lazy" src="assets/media/img/perception-rgb.jpg"/>
-<figcaption data-ed="t48">What the camera sees.</figcaption>
-</figure>
-<figure class="fig" data-blk="b71">
-<img alt="The same pool frame rendered as a monocular depth map in a magma color map." decoding="async" loading="lazy" src="assets/media/img/perception-depth.jpg"/>
-<figcaption data-ed="t49">The same frame as depth. Color is gone, shape remains.</figcaption>
-</figure>
-<figure class="fig" data-blk="b72">
-<img alt="The same pool frame as a grasp-affordance heat map, with a hot spot over the graspable region of the object." decoding="async" loading="lazy" src="assets/media/img/perception-affordance.jpg"/>
-<figcaption data-ed="t50">The predicted grasp affordance, hot where the gripper should close.</figcaption>
-</figure>
-</div>
 <figure class="fig" data-blk="b19" data-reveal="">
 <video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-self-supervised.jpg" preload="none" width="1280">
 <source src="assets/media/vid/self-supervised-pool.mp4" type="video/mp4"/>
 </video>
 <figcaption data-ed="t51">Self-supervised collection in the pool, with the depth and affordance panels alongside.</figcaption>
-</figure>
-</div>
-</section>
-<!-- 04 RESULTS -->
-<section class="section bg-ink" id="results">
-<div class="wrap" data-wrap="w5">
-<div class="section-head measure" data-blk="b20">
-<div class="eyebrow acc" data-ed="t52" data-reveal="">04 · Results</div>
-<h2 class="h2" data-d="60" data-ed="t53" data-reveal="">85% in distribution, and it survives a background change.</h2>
-<p class="lead" data-d="140" data-ed="t54" data-reveal="">Twenty grasp trials per condition, in two settings: the distribution the policy was trained on, and the same task with the background changed underneath it.</p>
-</div>
-<div class="rtable-wrap" data-blk="b21" data-reveal="">
-<table class="rtable">
-<caption data-ed="t55">Grasping success, in distribution — 20 trials each</caption>
-<thead>
-<tr><th data-ed="t56" scope="col">Method</th><th data-ed="t57" scope="col">Trials</th><th data-ed="t58" scope="col">Success</th></tr>
-</thead>
-<tbody>
-<tr class="win"><th data-ed="t59" scope="row">DP + affordance + depth (ours)</th><td class="num" data-ed="t60">17 / 20</td><td class="num" data-ed="t61">85%</td></tr>
-<tr><th data-ed="t62" scope="row">DP + RGB</th><td class="num" data-ed="t63">13 / 20</td><td class="num" data-ed="t64">65%</td></tr>
-</tbody>
-</table>
-</div>
-<div class="rtable-wrap" data-blk="b22" data-reveal="">
-<table class="rtable">
-<caption data-ed="t65">Visual generalization, background shift — 20 trials each</caption>
-<thead>
-<tr><th data-ed="t66" scope="col">Method</th><th data-ed="t67" scope="col">Trials</th><th data-ed="t68" scope="col">Success</th></tr>
-</thead>
-<tbody>
-<tr class="win"><th data-ed="t69" scope="row">DP + affordance + depth (ours)</th><td class="num" data-ed="t70">16 / 20</td><td class="num" data-ed="t71">80%</td></tr>
-<tr><th data-ed="t72" scope="row">DP + depth</th><td class="num" data-ed="t73">12 / 20</td><td class="num" data-ed="t74">60%</td></tr>
-<tr class="zero"><th data-ed="t75" scope="row">DP + RGB</th><td class="num" data-ed="t76">0 / 20</td><td class="num" data-ed="t77">0%</td></tr>
-<tr class="zero"><th data-ed="t78" scope="row">DP + RGB + affordance + depth</th><td class="num" data-ed="t79">0 / 20</td><td class="num" data-ed="t80">0%</td></tr>
-</tbody>
-</table>
-</div>
-<div class="metrics" data-blk="b23" data-reveal="">
-<div class="metric" data-blk="b73"><div class="mv" data-ed="t81">85%</div><div class="mk" data-ed="t82">In-distribution grasp success</div></div>
-<div class="metric" data-blk="b74"><div class="mv" data-ed="t83">80%</div><div class="mk" data-ed="t84">Held under a background shift</div></div>
-<div class="metric" data-blk="b75"><div class="mv" data-ed="t85">0%</div><div class="mk" data-ed="t86">RGB baseline, same shift</div></div>
-</div>
-<div class="prose" data-blk="b24" data-reveal="" style="margin-top:clamp(28px,4vh,44px)">
-<p data-ed="t87">In distribution the gap is real but not dramatic: 85% against 65%. The background shift is where the argument settles. The RGB policy does not degrade, it stops — twenty failures out of twenty.</p>
-<p data-ed="t88">The fourth row is worth staring at. Giving the policy RGB <strong>in addition to</strong> depth and the affordance also scores zero. When RGB is available the policy leans on it, and when the colors change there is nothing underneath.</p>
-</div>
-<div class="figgrid two" data-blk="b25" data-d="60" data-reveal="">
-<figure class="fig" data-blk="b76">
-<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-grasp-ours.jpg" preload="none" width="1280">
-<source src="assets/media/vid/grasp-ours.mp4" type="video/mp4"/>
-</video>
-<figcaption data-ed="t89">Ours, in distribution, at 4x speed, with the affordance heat map inset.</figcaption>
-</figure>
-<figure class="fig" data-blk="b77">
-<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-grasp-rgb.jpg" preload="none" width="1280">
-<source src="assets/media/vid/grasp-rgb-baseline.mp4" type="video/mp4"/>
-</video>
-<figcaption data-ed="t90">The RGB baseline policy on the same scene.</figcaption>
-</figure>
-</div>
-<figure class="fig" data-blk="b26" data-reveal="">
-<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-visual-gen.jpg" preload="none" width="1280">
-<source src="assets/media/vid/visual-generalization.mp4" type="video/mp4"/>
-</video>
-<figcaption data-ed="t91">The two panels in the clip are labeled OOD Task and OOD Visual. The numbers above are the visual one: the same task with the background changed underneath the policy.</figcaption>
 </figure>
 </div>
 </section>
