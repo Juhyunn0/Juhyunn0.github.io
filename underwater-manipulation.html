@@ -43,7 +43,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <a class="m-cta" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">View the CV →</a>
 <div class="m-meta">Stanford BDML · Underwater robotics</div>
 </nav>
-<main data-build="2026-09-10c" id="main" tabindex="-1">
+<main data-build="2026-09-10d" id="main" tabindex="-1">
 <section class="pcover" data-blk="b108">
 <video autoplay="" aria-label="Project cover: the title &#8220;UMI under Water — robust manipulation in dynamic ocean environments&#8221; over footage of the ROV reaching for a white pitcher on the seabed." data-inline="always" height="1080" loop="" muted="" playsinline="" poster="assets/media/img/poster-manipulation-cover.jpg" preload="metadata" width="1920">
 <source src="assets/media/vid/manipulation-cover.mp4" type="video/mp4"/>
@@ -229,16 +229,9 @@ gtag('config', 'G-YJNN4WK6NG');
 </div>
 </div>
 </div>
-<div class="figgrid two" data-blk="b17" data-d="60" data-reveal="">
-<figure class="fig plain" data-blk="b68">
-<img alt="Block diagram of the diffusion policy architecture: RGB and robot command with IMU feed DepthAnything, which produces an affordance that conditions the policy pi, which outputs an action." decoding="async" loading="lazy" src="assets/media/img/dp-architecture.png"/>
-<figcaption data-ed="t46">The diffusion policy architecture, from camera image to action.</figcaption>
+<figure class="fig plain mid" data-blk="b17" data-d="60" data-reveal="">
+<img alt="The pipeline in three panels. Left, the affordance model: a depth map and a goal image enter a U-Net, which predicts a grasp affordance trained with a binary cross-entropy loss. Middle, self-supervised data collection: a PD controller servos the object centroid to stage-specific pixel setpoints. Right, the diffusion policy: RGB and the robot command with IMU feed DepthAnything, whose depth and affordance condition the policy pi, which outputs an action." decoding="async" loading="lazy" src="assets/media/img/pipeline-overview.png" width="932" height="443"/>
 </figure>
-<figure class="fig plain" data-blk="b69">
-<img alt="Block diagram of the affordance network: a depth map and a goal image enter a U-Net, which outputs a grasp affordance prediction trained with a binary cross-entropy loss." decoding="async" loading="lazy" src="assets/media/img/affordance-unet.png"/>
-<figcaption data-ed="t47">Depth goes in and an affordance comes out. RGB never enters this network.</figcaption>
-</figure>
-</div>
 <div class="figgrid three" data-blk="b18" data-d="60" data-reveal="">
 <figure class="fig" data-blk="b70">
 <img alt="Camera RGB of the pool scene showing a dark rock, a red pom and a yellow object on the pool floor." decoding="async" loading="lazy" src="assets/media/img/perception-rgb.jpg"/>
