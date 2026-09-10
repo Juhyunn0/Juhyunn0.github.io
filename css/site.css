@@ -132,6 +132,11 @@ h1.eyebrow,h2.eyebrow{margin-top:0;font-weight:400}
 .section-head .eyebrow.gold{color:var(--accent-deep)}
 .section-head .eyebrow.acc{color:var(--accent-deep)}
 .h2{margin:0;font-weight:800;font-size:clamp(30px,4.6vw,64px);line-height:1.02;letter-spacing:-.035em;text-wrap:balance}
+/* A heading held to one line. .h2 fits roughly 40 characters across the
+   measure before it breaks; these run to 54, so the size steps down by an
+   eighth. The vw term steps down with it, at 4/4.6 of the default, so the
+   line holds at narrow viewports too rather than only at the cap. */
+.h2.oneline{font-size:clamp(26px,4vw,56px)}
 .lead{margin:28px 0 0;max-width:none;font-size:clamp(16px,1.4vw,21px);line-height:1.5}
 /* Copy set to the full width of the figure grid it belongs to, rather than
    stopping at its own measure and leaving the right half of the row empty
