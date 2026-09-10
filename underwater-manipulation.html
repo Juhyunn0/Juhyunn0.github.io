@@ -14,8 +14,8 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/site.css?v=2026-09-10k" rel="stylesheet"/>
-<link href="css/admin.css?v=2026-09-10k" rel="stylesheet"/>
+<link href="css/site.css?v=2026-09-10m" rel="stylesheet"/>
+<link href="css/admin.css?v=2026-09-10m" rel="stylesheet"/>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YJNN4WK6NG"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -43,7 +43,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <a class="m-cta" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">View the CV →</a>
 <div class="m-meta">Stanford BDML · Underwater robotics</div>
 </nav>
-<main data-build="2026-09-10l" id="main" tabindex="-1">
+<main data-build="2026-09-10m" id="main" tabindex="-1">
 <section class="pcover" data-blk="b108">
 <video autoplay="" aria-label="Project cover: the title &#8220;UMI under Water — robust manipulation in dynamic ocean environments&#8221; over footage of the ROV reaching for a white pitcher on the seabed." data-inline="always" height="1080" loop="" muted="" playsinline="" poster="assets/media/img/poster-manipulation-cover.jpg" preload="metadata" width="1920">
 <source src="assets/media/vid/manipulation-cover.mp4" type="video/mp4"/>
@@ -338,32 +338,23 @@ gtag('config', 'G-YJNN4WK6NG');
 <div class="spec" data-blk="b89"><div class="sk" data-ed="t135">Cross-track RMS</div><div class="sv" data-ed="t136">1.4 cm</div><div class="sn" data-ed="t137">1.1 cm after tuning</div></div>
 <div class="spec" data-blk="b90"><div class="sk" data-ed="t138">Solver</div><div class="sv" data-ed="t139">acados</div></div>
 </div>
-<div class="figgrid two" data-blk="b42" data-d="60" data-reveal="">
-<figure class="fig plain" data-blk="b91">
-<img alt="Trajectory plot labeled MPC acados: the commanded 1.00 by 1.00 meter square and the tracked path over five laps, with a cross-track RMS of 1.4 centimeters." decoding="async" loading="lazy" src="assets/media/img/mpc-square.png"/>
-<figcaption data-ed="t140">MPC on the square, before tuning.</figcaption>
+<figure class="fig" data-blk="b109" data-d="60" data-reveal="">
+<video autoplay="" aria-label="A PID baseline on the square: the vehicle in the tag-floor pool beside its tracked path, with the corners marked where inertia carries it wide of the reference." data-inline="always" height="954" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-pid-baseline.jpg" preload="metadata" width="1920">
+<source src="assets/media/vid/mpc-pid-baseline.mp4" type="video/mp4"/>
+</video>
 </figure>
-<figure class="fig plain" data-blk="b92">
-<img alt="The same square-tracking plot for the tuned controller, with a cross-track RMS of 1.1 centimeters." decoding="async" loading="lazy" src="assets/media/img/mpc-square-tuned.png"/>
-<figcaption data-ed="t141">After tuning: 0.3 cm better on the same test, and still in nearly still water.</figcaption>
+<figure class="fig" data-blk="b110" data-d="60" data-reveal="">
+<video autoplay="" aria-label="MPC on the same 1.00 by 1.00 m square at 0.10 m/s over five laps, run with the water disturbed, tracking to a cross-track RMS of 1.4 cm." data-inline="always" height="782" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-with-disturbance.jpg" preload="metadata" width="1920">
+<source src="assets/media/vid/mpc-with-disturbance.mp4" type="video/mp4"/>
+</video>
 </figure>
-</div>
+<figure class="fig" data-blk="b111" data-d="60" data-reveal="">
+<video autoplay="" aria-label="Station keeping at 4x speed: the vehicle holding a pose above the AprilTag mat." data-inline="always" height="1344" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-station-mode.jpg" preload="metadata" width="1920">
+<source src="assets/media/vid/mpc-station-mode.mp4" type="video/mp4"/>
+</video>
+</figure>
 <div class="prose" data-blk="b43" data-reveal="">
 <p data-ed="t142">I have also run pose-holding and station-keeping trials over the AprilTag mat. I have not measured a hold duration or a position RMS for those yet, so the square is the only number in this section I would quote.</p>
-</div>
-<div class="figgrid two" data-blk="b44" data-d="60" data-reveal="">
-<figure class="fig tall" data-blk="b93">
-<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-tent-pool.jpg" preload="none" width="1280">
-<source src="assets/media/vid/mpc-tent-pool.mp4" type="video/mp4"/>
-</video>
-<figcaption data-ed="t143">The same controller from outside the water, running a trajectory over the tag floor that gives it ground truth.</figcaption>
-</figure>
-<figure class="fig tall" data-blk="b94">
-<video data-inline="" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-station-keeping.jpg" preload="none" width="1280">
-<source src="assets/media/vid/station-keeping.mp4" type="video/mp4"/>
-</video>
-<figcaption data-ed="t144">Station keeping: the vehicle holding a pose over the tag mat.</figcaption>
-</figure>
 </div>
 <div class="callout" data-blk="b45" data-reveal="">
 <span class="cl" data-ed="t145">A caveat I want on the record</span>
@@ -541,7 +532,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <button id="abLogout" type="button">Log out</button>
 </span>
 </div>
-<script src="js/admin.js?v=2026-09-10k"></script>
-<script src="js/site.js?v=2026-09-10k"></script>
+<script src="js/admin.js?v=2026-09-10m"></script>
+<script src="js/site.js?v=2026-09-10m"></script>
 </body>
 </html>

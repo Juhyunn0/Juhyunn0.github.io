@@ -136,7 +136,7 @@ h1.eyebrow,h2.eyebrow{margin-top:0;font-weight:400}
    measure before it breaks; these run to 54, so the size steps down by an
    eighth. The vw term steps down with it, at 4/4.6 of the default, so the
    line holds at narrow viewports too rather than only at the cap. */
-.h2.oneline{font-size:clamp(26px,4vw,56px)}
+.h2.oneline{font-size:clamp(25px,3.85vw,54px)}
 .lead{margin:28px 0 0;max-width:none;font-size:clamp(16px,1.4vw,21px);line-height:1.5}
 /* Copy set to the full width of the figure grid it belongs to, rather than
    stopping at its own measure and leaving the right half of the row empty
