@@ -14,8 +14,8 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/site.css?v=2026-09-10m" rel="stylesheet"/>
-<link href="css/admin.css?v=2026-09-10m" rel="stylesheet"/>
+<link href="css/site.css?v=2026-09-15a" rel="stylesheet"/>
+<link href="css/admin.css?v=2026-09-15a" rel="stylesheet"/>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YJNN4WK6NG"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -43,7 +43,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <a class="m-cta" href="Juhyun_Jung_CV.pdf" rel="noopener" target="_blank">View the CV →</a>
 <div class="m-meta">Stanford BDML · Underwater robotics</div>
 </nav>
-<main data-build="2026-09-10m" id="main" tabindex="-1">
+<main data-build="2026-09-15a" id="main" tabindex="-1">
 <section class="pcover" data-blk="b108">
 <video autoplay="" aria-label="Project cover: the title &#8220;UMI under Water — robust manipulation in dynamic ocean environments&#8221; over footage of the ROV reaching for a white pitcher on the seabed." data-inline="always" height="1080" loop="" muted="" playsinline="" poster="assets/media/img/poster-manipulation-cover.jpg" preload="metadata" width="1920">
 <source src="assets/media/vid/manipulation-cover.mp4" type="video/mp4"/>
@@ -317,6 +317,9 @@ gtag('config', 'G-YJNN4WK6NG');
 <p data-ed="t119">The bet is that ocean disturbance is not noise. Waves and currents are <strong>quasi-periodic</strong>, so an observed disturbance should be predictable, and a predicted one lets the controller correct before the displacement rather than after. Whether that holds in real water is untested.</p>
 <p data-ed="t120">I am still working out how the disturbance observer should actually be used: what to estimate, how far ahead to trust the estimate, and where in the MPC it belongs. None of the rebuilt pipeline has been validated in the field yet.</p>
 </div>
+<figure class="fig plain" data-blk="b112" data-d="60" data-reveal="">
+<img alt="Block diagram of the rebuilt loop. A 1 x 244 x 244 depth map and proprioception enter a diffusion policy running at 1 Hz, with a ViT-B/16 CLIP encoder and a 1D U-Net denoiser. It emits a 16-step horizon end-effector trajectory of dx, dy, dz, dyaw and gripper, which an MPC at 20 Hz turns into thruster commands, fed by a relative-pose state estimate at 20 Hz." decoding="async" loading="lazy" src="assets/media/img/current-pipeline.png" width="1110" height="606"/>
+</figure>
 </div>
 </section>
 <!-- PULL QUOTE -->
@@ -367,7 +370,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <div class="wrap" data-wrap="w10">
 <div class="section-head measure" data-blk="b46">
 <div class="eyebrow acc" data-ed="t147" data-reveal="">09 · Simulation</div>
-<h2 class="h2" data-d="60" data-ed="t148" data-reveal="">An ocean I can run a thousand times.</h2>
+<h2 class="h2" data-d="60" data-ed="t148" data-reveal="">Real Ocean Simulation</h2>
 <p class="lead" data-d="140" data-ed="t149" data-reveal="">The reinforcement-learning controller is planned, not built. What is being built is the environment I would train it in: a simulation that mimics ocean conditions, so a low-level controller has somewhere to fail cheaply.</p>
 </div>
 <div class="prose" data-blk="b47" data-reveal="">
@@ -532,7 +535,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <button id="abLogout" type="button">Log out</button>
 </span>
 </div>
-<script src="js/admin.js?v=2026-09-10m"></script>
-<script src="js/site.js?v=2026-09-10m"></script>
+<script src="js/admin.js?v=2026-09-15a"></script>
+<script src="js/site.js?v=2026-09-15a"></script>
 </body>
 </html>
