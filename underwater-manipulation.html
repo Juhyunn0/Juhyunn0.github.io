@@ -14,6 +14,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link as="video" href="assets/media/vid/manipulation-cover.mp4" rel="preload"/>
 <link href="css/site.css?v=2026-09-15a" rel="stylesheet"/>
 <link href="css/admin.css?v=2026-09-15a" rel="stylesheet"/>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-YJNN4WK6NG"></script>
@@ -43,9 +44,9 @@ gtag('config', 'G-YJNN4WK6NG');
 <a class="m-cta" href="Juhyun_Jung_CV_1.pdf" rel="noopener" target="_blank">View the CV →</a>
 <div class="m-meta">Stanford BDML · Underwater robotics</div>
 </nav>
-<main data-build="2026-09-16c" id="main" tabindex="-1">
+<main data-build="2026-10-01b" id="main" tabindex="-1">
 <section class="pcover" data-blk="b108">
-<video autoplay="" aria-label="Project cover: the title &#8220;UMI under Water — robust manipulation in dynamic ocean environments&#8221; over footage of the ROV reaching for a white pitcher on the seabed." data-inline="always" height="1080" loop="" muted="" playsinline="" poster="assets/media/img/poster-manipulation-cover.jpg" preload="metadata" width="1920">
+<video autoplay="" aria-label="Project cover: the title &#8220;UMI under Water — robust manipulation in dynamic ocean environments&#8221; over footage of the ROV reaching for a white pitcher on the seabed." data-inline="always" height="1080" loop="" muted="" playsinline="" poster="assets/media/img/poster-manipulation-cover.jpg" preload="auto" width="1920">
 <source src="assets/media/vid/manipulation-cover.mp4" type="video/mp4"/>
 </video>
 </section>
@@ -116,8 +117,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <figcaption data-ed="t8">This is the cost the first project set out to remove.</figcaption>
 </figure>
 <figure class="fig" data-blk="b56">
-<video autoplay="" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-prior-work.jpg" preload="metadata" width="1280">
-<source src="assets/media/vid/prior-work.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/prior-work.mp4" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-prior-work.jpg" preload="none" width="1280">
 </video>
 <figcaption data-ed="t7">The prior teleoperation-trained result: an ROV with a gripper descending on a target in clear, controlled water.</figcaption>
 </figure>
@@ -127,8 +127,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <p data-ed="t10">So the demonstrations were collected on land instead, where picking an object off a patio table takes a few seconds. That moves the whole difficulty into one place: the gap between what a camera sees in air and what it sees in water.</p>
 </div>
 <figure class="fig" data-blk="b59" data-d="60" data-reveal="">
-<video autoplay="" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-land-data.jpg" preload="metadata" width="1280">
-<source src="assets/media/vid/land-data-collection.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/land-data-collection.mp4" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-land-data.jpg" preload="none" width="1280">
 </video>
 </figure>
 </div>
@@ -232,8 +231,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <img alt="The pipeline in three panels. Left, the affordance model: a depth map and a goal image enter a U-Net, which predicts a grasp affordance trained with a binary cross-entropy loss. Middle, self-supervised data collection: a PD controller servos the object centroid to stage-specific pixel setpoints. Right, the diffusion policy: RGB and the robot command with IMU feed DepthAnything, whose depth and affordance condition the policy pi, which outputs an action." decoding="async" loading="lazy" src="assets/media/img/pipeline-overview.png" width="932" height="443"/>
 </figure>
 <figure class="fig" data-blk="b19" data-reveal="">
-<video autoplay="" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-self-supervised.jpg" preload="metadata" width="1280">
-<source src="assets/media/vid/self-supervised-pool.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/self-supervised-pool.mp4" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-self-supervised.jpg" preload="none" width="1280">
 </video>
 <figcaption data-ed="t51">Self-supervised collection in the pool, with the depth and affordance panels alongside.</figcaption>
 </figure>
@@ -253,8 +251,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <img alt="Five photographs from the Monterey field day: the team on the boat in wet suits and life jackets with the Hopkins Marine Station shoreline behind them, sunrise over the dock, a diver in the water beside the boat, the boat on its trailer at the ramp, and the team indoors that evening." decoding="async" loading="lazy" src="assets/media/img/monterey-field-day.jpg" width="2400" height="1275"/>
 </figure>
 <figure class="fig" data-blk="b30" data-reveal="">
-<video autoplay="" aria-label="The Hopkins deployment: the ROV closes its gripper on a white pitcher resting on the sand and lifts it clear." data-inline="always" height="902" loop="" muted="" playsinline="" poster="assets/media/img/poster-monterey-result.jpg" preload="metadata" width="1920">
-<source src="assets/media/vid/monterey-result.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/monterey-result.mp4" aria-label="The Hopkins deployment: the ROV closes its gripper on a white pitcher resting on the sand and lifts it clear." data-inline="always" height="902" loop="" muted="" playsinline="" poster="assets/media/img/poster-monterey-result.jpg" preload="none" width="1920">
 </video>
 </figure>
 </div>
@@ -270,8 +267,7 @@ gtag('config', 'G-YJNN4WK6NG');
 <p data-ed="t99">Currents and waves are not a background condition, they are a continuous input. They push the vehicle the entire time it is trying to do something. In the lab pool there was never a problem. In the last field deployment at Hopkins the same policy failed again and again, and the success rate dropped <strong>below 5%</strong>. <strong>The robot does not know a disturbance is there.</strong> Nothing in its state carries the fact that the water is moving it, so it plans from a view that has already been displaced.</p>
 </div>
 <figure class="fig" data-blk="b104" data-d="60" data-reveal="">
-<video autoplay="" aria-label="The Hopkins deployment: the ROV approaches a white pitcher on the sand over and over as the current carries it off the target." data-inline="always" height="562" loop="" muted="" playsinline="" poster="assets/media/img/poster-field-hopkins.jpg" preload="metadata" width="1000">
-<source src="assets/media/vid/field-hopkins.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/field-hopkins.mp4" aria-label="The Hopkins deployment: the ROV approaches a white pitcher on the sand over and over as the current carries it off the target." data-inline="always" height="562" loop="" muted="" playsinline="" poster="assets/media/img/poster-field-hopkins.jpg" preload="none" width="1000">
 </video>
 </figure>
 <div class="callout" data-blk="b33" data-reveal="">
@@ -342,18 +338,15 @@ gtag('config', 'G-YJNN4WK6NG');
 <div class="spec" data-blk="b90"><div class="sk" data-ed="t138">Solver</div><div class="sv" data-ed="t139">acados</div></div>
 </div>
 <figure class="fig" data-blk="b109" data-d="60" data-reveal="">
-<video autoplay="" aria-label="A PID baseline on the square: the vehicle in the tag-floor pool beside its tracked path, with the corners marked where inertia carries it wide of the reference." data-inline="always" height="954" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-pid-baseline.jpg" preload="metadata" width="1920">
-<source src="assets/media/vid/mpc-pid-baseline.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/mpc-pid-baseline.mp4" aria-label="A PID baseline on the square: the vehicle in the tag-floor pool beside its tracked path, with the corners marked where inertia carries it wide of the reference." data-inline="always" height="954" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-pid-baseline.jpg" preload="none" width="1920">
 </video>
 </figure>
 <figure class="fig" data-blk="b110" data-d="60" data-reveal="">
-<video autoplay="" aria-label="MPC on the same 1.00 by 1.00 m square at 0.10 m/s over five laps, run with the water disturbed, tracking to a cross-track RMS of 1.4 cm." data-inline="always" height="782" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-with-disturbance.jpg" preload="metadata" width="1920">
-<source src="assets/media/vid/mpc-with-disturbance.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/mpc-with-disturbance.mp4" aria-label="MPC on the same 1.00 by 1.00 m square at 0.10 m/s over five laps, run with the water disturbed, tracking to a cross-track RMS of 1.4 cm." data-inline="always" height="782" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-with-disturbance.jpg" preload="none" width="1920">
 </video>
 </figure>
 <figure class="fig" data-blk="b111" data-d="60" data-reveal="">
-<video autoplay="" aria-label="Station keeping at 4x speed: the vehicle holding a pose above the AprilTag mat." data-inline="always" height="1344" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-station-mode.jpg" preload="metadata" width="1920">
-<source src="assets/media/vid/mpc-station-mode.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/mpc-station-mode.mp4" aria-label="Station keeping at 4x speed: the vehicle holding a pose above the AprilTag mat." data-inline="always" height="1344" loop="" muted="" playsinline="" poster="assets/media/img/poster-mpc-station-mode.jpg" preload="none" width="1920">
 </video>
 </figure>
 <div class="callout" data-blk="b45" data-reveal="">
@@ -376,20 +369,17 @@ gtag('config', 'G-YJNN4WK6NG');
 </div>
 <div class="figgrid three" data-blk="b48" data-d="60" data-reveal="">
 <figure class="fig" data-blk="b95">
-<video autoplay="" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/sim-gentle.jpg" preload="metadata" width="1280">
-<source src="assets/media/vid/sim-gentle.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/sim-gentle.mp4" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/sim-gentle.jpg" preload="none" width="1280">
 </video>
 <figcaption data-ed="t152">Gentle sea state.</figcaption>
 </figure>
 <figure class="fig" data-blk="b96">
-<video autoplay="" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/sim-moderate.jpg" preload="metadata" width="1280">
-<source src="assets/media/vid/sim-moderate.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/sim-moderate.mp4" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/sim-moderate.jpg" preload="none" width="1280">
 </video>
 <figcaption data-ed="t153">Moderate sea state.</figcaption>
 </figure>
 <figure class="fig" data-blk="b97">
-<video autoplay="" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-sim-rough.jpg" preload="metadata" width="1280">
-<source src="assets/media/vid/sim-rough.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/sim-rough.mp4" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-sim-rough.jpg" preload="none" width="1280">
 </video>
 <figcaption data-ed="t154">Rough sea state.</figcaption>
 </figure>
@@ -412,14 +402,12 @@ gtag('config', 'G-YJNN4WK6NG');
 </div>
 <div class="figgrid two" data-blk="b52" data-d="60" data-reveal="">
 <figure class="fig" data-blk="b98">
-<video autoplay="" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-umi-human.jpg" preload="metadata" width="1280">
-<source src="assets/media/vid/umi-human.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/umi-human.mp4" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-umi-human.jpg" preload="none" width="1280">
 </video>
 <figcaption data-ed="t160">A person folding a cloth with two handheld UMI grippers. No robot present.</figcaption>
 </figure>
 <figure class="fig" data-blk="b99">
-<video autoplay="" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-umi-robot.jpg" preload="metadata" width="1280">
-<source src="assets/media/vid/umi-robot.mp4" type="video/mp4"/>
+<video data-src="assets/media/vid/umi-robot.mp4" data-inline="always" height="720" loop="" muted="" playsinline="" poster="assets/media/img/poster-umi-robot.jpg" preload="none" width="1280">
 </video>
 <figcaption data-ed="t161">Two arms replaying the same demonstration. The trajectory was never recorded on them.</figcaption>
 </figure>

@@ -644,6 +644,18 @@
     // triangle reads as broken next to the clip it is being compared against.
     var always = function (v) { return v.getAttribute('data-inline') === 'always'; };
 
+    // A clip marked data-src ships without a <source>, so the browser cannot
+    // start downloading it until it is wanted. Any path that skips the
+    // observers has to attach it by hand.
+    function attachDeferred(v) {
+      if (!v.dataset.src || v.querySelector('source[src]')) return;
+      var src = document.createElement('source');
+      src.src = v.dataset.src;
+      src.type = 'video/mp4';
+      v.appendChild(src);
+      try { v.load(); } catch (err) { /* nothing more to try */ }
+    }
+
     function keepPlaying(v) {
       if (v.preload === 'none') v.preload = 'auto';
       var p = v.play();
@@ -661,6 +673,7 @@
 
     if (reduce) {
       vids.forEach(function (v) {
+        attachDeferred(v);
         // an "always" clip is muted and looping by the author's explicit choice,
         // so it keeps running; everything else defers to the motion preference
         if (always(v)) { v.muted = true; keepPlaying(v); return; }
@@ -669,9 +682,28 @@
       return;
     }
     if (!('IntersectionObserver' in window)) {
-      vids.forEach(function (v) { if (always(v)) keepPlaying(v); else v.controls = true; });
+      vids.forEach(function (v) { attachDeferred(v); if (always(v)) keepPlaying(v); else v.controls = true; });
       return;
     }
+
+    // Two observers, because buffering and playing want different timing.
+    //
+    // warm (one viewport out): raise preload so the bytes are already arriving
+    // by the time the clip can be seen. This is what makes a clip start the
+    // instant it scrolls in rather than a second or two later -- a clip that
+    // only begins loading at 25% visible is always late.
+    //
+    // play (a little out, low threshold): start and stop playback. Pausing
+    // off-screen still keeps a page of loops from decoding all at once.
+    var warm = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var v = e.target;
+        if (v.preload !== 'auto') v.preload = 'auto';
+        attachDeferred(v);
+        warm.unobserve(v);
+      });
+    }, { rootMargin: '100% 0px' });
 
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -679,11 +711,12 @@
         if (e.isIntersecting) keepPlaying(v);
         else if (!v.paused) v.pause();
       });
-    }, { threshold: 0.25 });
+    }, { threshold: 0, rootMargin: '25% 0px' });
 
     vids.forEach(function (v) {
       v.muted = true;                 // required for programmatic play()
       v.setAttribute('playsinline', '');
+      warm.observe(v);
       io.observe(v);
       if (always(v)) return;          // no click-to-controls: this one just loops
       // a click anywhere on the loop hands control back to the viewer
