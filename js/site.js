@@ -657,6 +657,7 @@
     }
 
     function keepPlaying(v) {
+      attachDeferred(v);              // may be called before warm reaches this clip
       if (v.preload === 'none') v.preload = 'auto';
       var p = v.play();
       if (!p || !p.catch) return;
@@ -672,14 +673,20 @@
     }
 
     if (reduce) {
-      vids.forEach(function (v) {
+      // An "always" clip is muted and looping by the author's explicit choice,
+      // so it keeps running; everything else defers to the motion preference.
+      vids.filter(function (v) { return !always(v); }).forEach(function (v) {
         attachDeferred(v);
-        // an "always" clip is muted and looping by the author's explicit choice,
-        // so it keeps running; everything else defers to the motion preference
-        if (always(v)) { v.muted = true; keepPlaying(v); return; }
         v.controls = true; v.autoplay = false; v.removeAttribute('loop');
       });
-      return;
+      // The always-clips used to be started here and the function returned
+      // before either observer existed, so a reduced-motion visitor fetched
+      // every clip on the page at once and left all of them decoding for the
+      // session -- 27 MiB and fifteen loops on the manipulation page, strictly
+      // worse than the default path, which at least pauses off-screen. They
+      // fall through to the observers instead, and keep looping as intended.
+      vids = vids.filter(always);
+      if (!vids.length) return;
     }
     if (!('IntersectionObserver' in window)) {
       vids.forEach(function (v) { attachDeferred(v); if (always(v)) keepPlaying(v); else v.controls = true; });
@@ -728,20 +735,44 @@
     });
 
     // Last resort for a browser that refuses muted autoplay outright (Safari in
-    // Low Power Mode, or with auto-play switched off for the site): the first
-    // real interaction anywhere on the page counts as a gesture, so use it to
-    // start every always-loop clip. One shot, then the listeners are dropped.
+    // Low Power Mode, or with auto-play switched off for the site). Any real
+    // interaction counts as a gesture, so it is used to start whatever should
+    // be running and is not.
+    //
+    // This used to drop its listeners after the first gesture, which was close
+    // to useless: the first gesture is the scroll that brings the top clip into
+    // view, and at that moment every clip further down still has no <source>,
+    // so they were left stranded behind a poster. Now the listeners stay until
+    // each loop has actually reported playing at least once.
     var loops = vids.filter(always);
     if (!loops.length) return;
-    var unlock = function () {
-      loops.forEach(function (v) { if (v.paused) keepPlaying(v); });
-      ['pointerdown', 'touchend', 'keydown', 'wheel'].forEach(function (ev) {
-        document.removeEventListener(ev, unlock, true);
+    var EVENTS = ['pointerdown', 'touchend', 'keydown', 'wheel', 'scroll'];
+    var OPTS = { capture: true, passive: true };
+    var waiting = loops.length;
+
+    function drop() {
+      EVENTS.forEach(function (ev) { document.removeEventListener(ev, unlock, OPTS); });
+    }
+
+    function unlock() {
+      var vh = window.innerHeight || document.documentElement.clientHeight || 0;
+      loops.forEach(function (v) {
+        if (!v.paused) return;
+        // only nudge what the play observer would want running, so an
+        // off-screen clip is not dragged back into decoding
+        var r = v.getBoundingClientRect();
+        if (r.bottom < -vh * 0.25 || r.top > vh * 1.25) return;
+        keepPlaying(v);
       });
-    };
-    ['pointerdown', 'touchend', 'keydown', 'wheel'].forEach(function (ev) {
-      document.addEventListener(ev, unlock, true);
+    }
+
+    loops.forEach(function (v) {
+      v.addEventListener('playing', function () {
+        waiting -= 1;
+        if (waiting <= 0) drop();
+      }, { once: true });
     });
+    EVENTS.forEach(function (ev) { document.addEventListener(ev, unlock, OPTS); });
   }
 
   /* ---- held-back clip: stays blurred until the reader asks for it ----
